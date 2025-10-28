@@ -29,11 +29,11 @@ description: "Task list for tech baseline implementation"
 
 **Purpose**: Initialize Next.js project and install dependencies
 
-- [ ] T001 Create Next.js application with TypeScript, Tailwind CSS, and App Router
-- [ ] T002 [P] Initialize ShadCN UI with default configuration
-- [ ] T003 [P] Create project directory structure (app/, components/, lib/, data/)
-- [ ] T004 [P] Create TypeScript types file at types/birthday.ts
-- [ ] T005 Install ShadCN Card component
+- [X] T001 Create Next.js application with TypeScript, Tailwind CSS, and App Router
+- [X] T002 [P] Initialize ShadCN UI with default configuration
+- [X] T003 [P] Create project directory structure (app/, components/, lib/, data/)
+- [X] T004 [P] Create TypeScript types file at types/birthday.ts
+- [X] T005 Install ShadCN Card component
 
 ---
 
@@ -43,11 +43,11 @@ description: "Task list for tech baseline implementation"
 
 **⚠️ CRITICAL**: User Story 1 cannot begin until this phase is complete
 
-- [ ] T006 Create initial birthdays.json seed file in data/ directory with three test birthdays (Paula, Thomas, Isabel)
-- [ ] T007 [P] Implement FileStore module in lib/filestore.ts with readBirthdays and writeBirthdays functions
-- [ ] T008 [P] Create utility functions in lib/utils.ts for date formatting and validation
-- [ ] T009 [P] Configure environment variables in .env.local for DATA_DIR
-- [ ] T010 Create Next.js root layout in app/layout.tsx with mobile-first responsive meta tags
+- [X] T006 Create initial birthdays.json seed file in data/ directory with three test birthdays (Paula, Thomas, Isabel)
+- [X] T007 [P] Implement FileStore module in lib/filestore.ts with readBirthdays and writeBirthdays functions
+- [X] T008 [P] Create utility functions in lib/utils.ts for date formatting and validation
+- [X] T009 [P] Configure environment variables in .env.local for DATA_DIR
+- [X] T010 Create Next.js root layout in app/layout.tsx with mobile-first responsive meta tags
 
 **Checkpoint**: Foundation ready - User Story 1 implementation can now begin
 
@@ -61,13 +61,13 @@ description: "Task list for tech baseline implementation"
 
 ### Implementation for User Story 1
 
-- [ ] T011 [P] [US1] Create GET /api/birthdays route handler in app/api/birthdays/route.ts
-- [ ] T012 [P] [US1] Create BirthdayCard component in components/birthday-card.tsx using ShadCN Card
-- [ ] T013 [US1] Implement home page in app/page.tsx with API data fetching and birthday list rendering
-- [ ] T014 [US1] Add loading state UI in app/page.tsx
-- [ ] T015 [US1] Add error state UI in app/page.tsx for API failures
-- [ ] T016 [US1] Add responsive CSS styling with Tailwind for mobile (320px), tablet (768px), and desktop (1920px) viewports
-- [ ] T017 [US1] Test responsive layout across all viewport sizes (320px, 768px, 1920px)
+- [X] T011 [P] [US1] Create GET /api/birthdays route handler in app/api/birthdays/route.ts
+- [X] T012 [P] [US1] Create BirthdayCard component in components/birthday-card.tsx using ShadCN Card
+- [X] T013 [US1] Implement home page in app/page.tsx with API data fetching and birthday list rendering
+- [X] T014 [US1] Add loading state UI in app/page.tsx
+- [X] T015 [US1] Add error state UI in app/page.tsx for API failures
+- [X] T016 [US1] Add responsive CSS styling with Tailwind for mobile (320px), tablet (768px), and desktop (1920px) viewports
+- [X] T017 [US1] Test responsive layout across all viewport sizes (320px, 768px, 1920px)
 
 **Checkpoint**: User Story 1 is complete and independently testable. Application shows birthday list on all device sizes.
 
@@ -77,12 +77,12 @@ description: "Task list for tech baseline implementation"
 
 **Purpose**: Containerize application for home lab deployment
 
-- [ ] T018 [P] Create Dockerfile with multi-stage build (build and production stages)
-- [ ] T019 [P] Create docker-compose.yml with volume mount for /data directory
-- [ ] T020 [P] Create .dockerignore file
-- [ ] T021 Configure Next.js for standalone output in next.config.js
-- [ ] T022 Build and test Docker image locally
-- [ ] T023 Verify volume mount persists data across container restarts
+- [X] T018 [P] Create Dockerfile with multi-stage build (build and production stages)
+- [X] T019 [P] Create docker-compose.yml with volume mount for /data directory
+- [X] T020 [P] Create .dockerignore file
+- [X] T021 Configure Next.js for standalone output in next.config.js
+- [X] T022 Build and test Docker image locally
+- [X] T023 Verify volume mount persists data across container restarts
 
 ---
 
@@ -90,11 +90,11 @@ description: "Task list for tech baseline implementation"
 
 **Purpose**: Final touches and validation
 
-- [ ] T024 [P] Add README.md with quickstart instructions
-- [ ] T025 [P] Validate all acceptance scenarios from spec.md
-- [ ] T026 [P] Test page load time (must be under 2 seconds per SC-001)
-- [ ] T027 [P] Verify no horizontal scrolling on any device size (SC-005)
-- [ ] T028 Run complete validation checklist from quickstart.md
+- [X] T024 [P] Add README.md with quickstart instructions
+- [X] T025 [P] Validate all acceptance scenarios from spec.md
+- [X] T026 [P] Test page load time (must be under 2 seconds per SC-001)
+- [X] T027 [P] Verify no horizontal scrolling on any device size (SC-005)
+- [X] T028 Run complete validation checklist from quickstart.md
 
 ---
 
