@@ -57,6 +57,7 @@ export function getNextOccurrence(
 }
 
 // T008: calculateAge function with null handling
+// Returns the age the person will be at their next birthday
 export function calculateAge(
   birthday: Birthday,
   referenceDate: Date
@@ -68,19 +69,11 @@ export function calculateAge(
   // Validate year is not in future (data error)
   if (year > referenceDate.getFullYear()) return null;
 
-  let age = referenceDate.getFullYear() - year;
+  // Calculate age at next occurrence (next birthday)
+  const nextOccurrence = getNextOccurrence(birthday, referenceDate);
+  const ageAtNextBirthday = nextOccurrence.getFullYear() - year;
 
-  // Adjust if birthday hasn't occurred yet this year
-  const birthdayThisYear = new Date(
-    referenceDate.getFullYear(),
-    month - 1,
-    day
-  );
-  if (referenceDate < birthdayThisYear) {
-    age -= 1;
-  }
-
-  return age;
+  return ageAtNextBirthday;
 }
 
 // T009: sortBirthdays function with two-level sort
