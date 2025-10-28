@@ -16,7 +16,7 @@ Represents a person's birthday in the system.
 |-------|------|----------|-------------|------------|
 | id | string (UUID) | Yes | Unique identifier | UUID v4 format |
 | name | string | Yes | Person's name | 1-100 characters, non-empty |
-| birthDate | string | Yes | Date of birth | MM.DD.YY format |
+| birthDate | string | Yes | Date of birth | DD.MM (no year) or DD.MM.YYYY (4-digit year) - German/European format |
 | createdAt | string (ISO-8601) | Yes | Creation timestamp | ISO 8601 datetime |
 | updatedAt | string (ISO-8601) | Yes | Last update timestamp | ISO 8601 datetime |
 
@@ -25,7 +25,7 @@ Represents a person's birthday in the system.
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
   "name": "Paula",
-  "birthDate": "02.20.24",
+  "birthDate": "02.10.2024",
   "createdAt": "2025-10-28T10:00:00.000Z",
   "updatedAt": "2025-10-28T10:00:00.000Z"
 }
@@ -39,17 +39,17 @@ The master data file containing all birthday records.
 
 **Location**: `/data/birthdays.json` (Docker volume mount)
 
-**Schema Version**: 1.0.0
+**Schema Version**: 1.1.0
 
 **Structure**:
 ```json
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "birthdays": [
     {
       "id": "string (UUID)",
       "name": "string",
-      "birthDate": "string (MM.DD.YY)",
+      "birthDate": "string (DD.MM or DD.MM.YYYY)",
       "createdAt": "string (ISO-8601)",
       "updatedAt": "string (ISO-8601)"
     }
@@ -60,26 +60,33 @@ The master data file containing all birthday records.
 **Full Example**:
 ```json
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "birthdays": [
     {
       "id": "550e8400-e29b-41d4-a716-446655440000",
       "name": "Paula",
-      "birthDate": "02.20.24",
+      "birthDate": "02.10.2024",
       "createdAt": "2025-10-28T10:00:00.000Z",
       "updatedAt": "2025-10-28T10:00:00.000Z"
     },
     {
       "id": "550e8400-e29b-41d4-a716-446655440001",
       "name": "Thomas",
-      "birthDate": "29.08.88",
+      "birthDate": "29.08.1988",
       "createdAt": "2025-10-28T10:00:00.000Z",
       "updatedAt": "2025-10-28T10:00:00.000Z"
     },
     {
       "id": "550e8400-e29b-41d4-a716-446655440002",
       "name": "Isabel",
-      "birthDate": "12.07.90",
+      "birthDate": "12.07.1990",
+      "createdAt": "2025-10-28T10:00:00.000Z",
+      "updatedAt": "2025-10-28T10:00:00.000Z"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440003",
+      "name": "Oma",
+      "birthDate": "18.11",
       "createdAt": "2025-10-28T10:00:00.000Z",
       "updatedAt": "2025-10-28T10:00:00.000Z"
     }
@@ -97,10 +104,10 @@ The master data file containing all birthday records.
    - Length between 1 and 100 characters
    - Can contain letters, numbers, spaces, hyphens, apostrophes
 3. **birthDate**:
-   - Must match format MM.DD.YY
-   - Month: 01-12
+   - Must match format DD.MM (no year) or DD.MM.YYYY (4-digit year) - German/European format
    - Day: 01-31 (basic validation, no month-specific day validation for baseline)
-   - Year: 00-99 (two-digit year)
+   - Month: 01-12
+   - Year: Optional; if provided, must be 4-digit year (1900-2100)
 4. **createdAt**: Must be valid ISO 8601 datetime string
 5. **updatedAt**: Must be valid ISO 8601 datetime string, >= createdAt
 
@@ -139,6 +146,19 @@ Future considerations:
 ### Version 1.0.0 (Initial)
 
 Initial schema - no migration needed.
+
+### Version 1.1.0 (Optional Year Support)
+
+**Changes**:
+- birthDate format updated from DD.MM.YY to DD.MM or DD.MM.YYYY (German/European format)
+- Years migrated from 2-digit to 4-digit format
+- Optional year support added (dates without year allowed)
+
+**Migration Rules**:
+- 2-digit years converted to 4-digit using century inference:
+  - 00-30 → 20xx (e.g., 24 → 2024)
+  - 31-99 → 19xx (e.g., 88 → 1988, 90 → 1990)
+- New dates can omit year (e.g., "18.11" for unknown birth year)
 
 **Migration Strategy for Future Versions**:
 1. Check `version` field in JSON file
@@ -192,7 +212,7 @@ Initial schema - no migration needed.
 export interface Birthday {
   id: string;
   name: string;
-  birthDate: string; // Format: MM.DD.YY
+  birthDate: string; // Format: DD.MM (no year) or DD.MM.YYYY (4-digit year)
   createdAt: string; // ISO-8601
   updatedAt: string; // ISO-8601
 }
@@ -217,26 +237,33 @@ On first run, if `birthdays.json` doesn't exist, initialize with:
 
 ```json
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "birthdays": [
     {
       "id": "550e8400-e29b-41d4-a716-446655440000",
       "name": "Paula",
-      "birthDate": "02.20.24",
+      "birthDate": "02.10.2024",
       "createdAt": "2025-10-28T10:00:00.000Z",
       "updatedAt": "2025-10-28T10:00:00.000Z"
     },
     {
       "id": "550e8400-e29b-41d4-a716-446655440001",
       "name": "Thomas",
-      "birthDate": "29.08.88",
+      "birthDate": "29.08.1988",
       "createdAt": "2025-10-28T10:00:00.000Z",
       "updatedAt": "2025-10-28T10:00:00.000Z"
     },
     {
       "id": "550e8400-e29b-41d4-a716-446655440002",
       "name": "Isabel",
-      "birthDate": "12.07.90",
+      "birthDate": "12.07.1990",
+      "createdAt": "2025-10-28T10:00:00.000Z",
+      "updatedAt": "2025-10-28T10:00:00.000Z"
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440003",
+      "name": "Oma",
+      "birthDate": "18.11",
       "createdAt": "2025-10-28T10:00:00.000Z",
       "updatedAt": "2025-10-28T10:00:00.000Z"
     }
@@ -244,4 +271,4 @@ On first run, if `birthdays.json` doesn't exist, initialize with:
 }
 ```
 
-This matches the requirement from FR-008 in the specification.
+This matches the requirement from FR-008 in the specification, now updated to version 1.1.0 with optional year support.

@@ -43,13 +43,13 @@ A user opens the birthday planner application on their mobile device or desktop 
 - **FR-005**: System MUST render properly on mobile devices (responsive design)
 - **FR-006**: System MUST render properly on tablet and desktop devices
 - **FR-007**: System MUST store birthday data in JSON file format
-- **FR-008**: System MUST initialize with three test birthdays (Paula 02.20.24, Thomas 29.08.88, Isabel 12.07.90)
+- **FR-008**: System MUST initialize with test birthdays (Paula 02.10.2024, Thomas 29.08.1988, Isabel 12.07.1990, Oma 18.11)
 - **FR-009**: System MUST display an appropriate message or indicator when data is loading
 - **FR-010**: System MUST display an appropriate message or indicator when API requests fail
 
 ### Assumptions
 
-- Birth dates use MM.DD.YY format as provided in the user input
+- Birth dates use DD.MM (no year) or DD.MM.YYYY (4-digit year) format (German/European format)
 - "Upcoming birthdays" means all birthdays in the system (no filtering by date for this baseline)
 - The API endpoint will be a simple GET request returning JSON data
 - Error states will show simple, user-friendly messages
@@ -58,7 +58,7 @@ A user opens the birthday planner application on their mobile device or desktop 
 
 ### Key Entities
 
-- **Birthday**: Represents a person's birthday with their name and birth date. Contains: person's name (string), birth date (date in MM.DD.YY format)
+- **Birthday**: Represents a person's birthday with their name and birth date. Contains: person's name (string), birth date (date in DD.MM format for unknown year, or DD.MM.YYYY format with 4-digit year)
 
 ## Success Criteria *(mandatory)*
 
@@ -67,5 +67,5 @@ A user opens the birthday planner application on their mobile device or desktop 
 - **SC-001**: Users can view the complete birthday list within 2 seconds of opening the application
 - **SC-002**: The application displays correctly on mobile devices with screen widths as small as 320px
 - **SC-003**: The application displays correctly on desktop browsers with screen widths up to 1920px
-- **SC-004**: All three test birthday entries (Paula, Thomas, Isabel) are visible and readable on first load
+- **SC-004**: All test birthday entries (Paula, Thomas, Isabel, Oma) are visible and readable on first load
 - **SC-005**: Users can read all birthday information without horizontal scrolling on any device size
