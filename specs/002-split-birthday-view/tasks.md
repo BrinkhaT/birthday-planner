@@ -27,10 +27,10 @@
 
 **Purpose**: Project initialization and type definitions needed by all user stories
 
-- [ ] T001 Add BirthdayWithOccurrence type extending Birthday in types/birthday.ts
-- [ ] T002 [P] Add ParsedDate interface in types/birthday.ts
-- [ ] T003 [P] Add DateRange and BirthdayRanges interfaces in types/birthday.ts
-- [ ] T004 [P] Add SplitBirthdays interface in types/birthday.ts
+- [X] T001 Add BirthdayWithOccurrence type extending Birthday in types/birthday.ts
+- [X] T002 [P] Add ParsedDate interface in types/birthday.ts
+- [X] T003 [P] Add DateRange and BirthdayRanges interfaces in types/birthday.ts
+- [X] T004 [P] Add SplitBirthdays interface in types/birthday.ts
 
 ---
 
@@ -40,12 +40,12 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T005 Create lib/date-utils.ts file with parseBirthDate function
-- [ ] T006 Implement isLeapYear helper function in lib/date-utils.ts
-- [ ] T007 Implement getNextOccurrence function with leap year handling in lib/date-utils.ts
-- [ ] T008 Implement calculateAge function with null handling in lib/date-utils.ts
-- [ ] T009 Implement sortBirthdays function with two-level sort in lib/date-utils.ts
-- [ ] T010 Implement splitBirthdays function with date range logic in lib/date-utils.ts
+- [X] T005 Create lib/date-utils.ts file with parseBirthDate function
+- [X] T006 Implement isLeapYear helper function in lib/date-utils.ts
+- [X] T007 Implement getNextOccurrence function with leap year handling in lib/date-utils.ts
+- [X] T008 Implement calculateAge function with null handling in lib/date-utils.ts
+- [X] T009 Implement sortBirthdays function with two-level sort in lib/date-utils.ts
+- [X] T010 Implement splitBirthdays function with date range logic in lib/date-utils.ts
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
@@ -59,13 +59,13 @@
 
 ### Implementation for User Story 1
 
-- [ ] T011 [US1] Import date utility functions in app/page.tsx
-- [ ] T012 [US1] Add useMemo hook to compute split birthdays in app/page.tsx
-- [ ] T013 [US1] Add Section 1 heading "Upcoming Birthdays (Next 30 Days)" with aria-labelledby in app/page.tsx
-- [ ] T014 [US1] Add conditional rendering for Section 1 empty state in app/page.tsx
-- [ ] T015 [US1] Modify Section 1 grid to map over upcoming array instead of all birthdays in app/page.tsx
-- [ ] T016 [US1] Verify BirthdayCard component shows age correctly when birth year available
-- [ ] T017 [US1] Verify BirthdayCard component hides age when birth year unavailable
+- [X] T011 [US1] Import date utility functions in app/page.tsx
+- [X] T012 [US1] Add useMemo hook to compute split birthdays in app/page.tsx
+- [X] T013 [US1] Add Section 1 heading "Upcoming Birthdays (Next 30 Days)" with aria-labelledby in app/page.tsx
+- [X] T014 [US1] Add conditional rendering for Section 1 empty state in app/page.tsx
+- [X] T015 [US1] Modify Section 1 grid to map over upcoming array instead of all birthdays in app/page.tsx
+- [X] T016 [US1] Verify BirthdayCard component shows age correctly when birth year available
+- [X] T017 [US1] Verify BirthdayCard component hides age when birth year unavailable
 
 **Checkpoint**: At this point, User Story 1 (Section 1 - Upcoming Birthdays) should be fully functional and testable independently
 
@@ -79,18 +79,18 @@
 
 ### Implementation for User Story 2
 
-- [ ] T018 [P] [US2] Create components/birthday-table.tsx with BirthdayTableProps interface
-- [ ] T019 [US2] Import ShadCN Table components in components/birthday-table.tsx
-- [ ] T020 [US2] Implement BirthdayTable component with TableHeader containing Date, Name, Age columns
-- [ ] T021 [US2] Implement TableBody with map over birthdays array in components/birthday-table.tsx
-- [ ] T022 [US2] Add date formatting for nextOccurrence display in components/birthday-table.tsx
-- [ ] T023 [US2] Add age display with "—" em dash for null age in components/birthday-table.tsx
-- [ ] T024 [US2] Add empty state message handling with emptyMessage prop in components/birthday-table.tsx
-- [ ] T025 [US2] Add responsive wrapper with overflow-x-auto for mobile scrolling in components/birthday-table.tsx
-- [ ] T026 [US2] Import BirthdayTable component in app/page.tsx
-- [ ] T027 [US2] Add Section 2 heading "All Other Birthdays" with aria-labelledby in app/page.tsx
-- [ ] T028 [US2] Add BirthdayTable component rendering future array in app/page.tsx
-- [ ] T029 [US2] Pass emptyMessage="No other birthdays to display" prop to BirthdayTable
+- [X] T018 [P] [US2] Create components/birthday-table.tsx with BirthdayTableProps interface
+- [X] T019 [US2] Import ShadCN Table components in components/birthday-table.tsx
+- [X] T020 [US2] Implement BirthdayTable component with TableHeader containing Date, Name, Age columns
+- [X] T021 [US2] Implement TableBody with map over birthdays array in components/birthday-table.tsx
+- [X] T022 [US2] Add date formatting for nextOccurrence display in components/birthday-table.tsx
+- [X] T023 [US2] Add age display with "—" em dash for null age in components/birthday-table.tsx
+- [X] T024 [US2] Add empty state message handling with emptyMessage prop in components/birthday-table.tsx
+- [X] T025 [US2] Add responsive wrapper with overflow-x-auto for mobile scrolling in components/birthday-table.tsx
+- [X] T026 [US2] Import BirthdayTable component in app/page.tsx
+- [X] T027 [US2] Add Section 2 heading "All Other Birthdays" with aria-labelledby in app/page.tsx
+- [X] T028 [US2] Add BirthdayTable component rendering future array in app/page.tsx
+- [X] T029 [US2] Pass emptyMessage="No other birthdays to display" prop to BirthdayTable
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -104,14 +104,14 @@
 
 ### Implementation for User Story 3
 
-- [ ] T030 [P] [US3] Verify Section 1 grid uses responsive classes grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 in app/page.tsx
-- [ ] T031 [P] [US3] Verify Section 1 gap uses responsive classes gap-4 sm:gap-6 in app/page.tsx
-- [ ] T032 [P] [US3] Add responsive spacing to Section 2 container with margin classes in app/page.tsx
-- [ ] T033 [US3] Test table horizontal scroll on mobile viewport (320px width) using browser DevTools
-- [ ] T034 [US3] Test card grid layout on tablet viewport (768px width) using browser DevTools
-- [ ] T035 [US3] Test full layout on desktop viewport (1920px width) using browser DevTools
-- [ ] T036 [US3] Verify touch targets are minimum 44px on mobile for accessibility
-- [ ] T037 [US3] Verify text remains readable without zooming on all viewports
+- [X] T030 [P] [US3] Verify Section 1 grid uses responsive classes grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 in app/page.tsx
+- [X] T031 [P] [US3] Verify Section 1 gap uses responsive classes gap-4 sm:gap-6 in app/page.tsx
+- [X] T032 [P] [US3] Add responsive spacing to Section 2 container with margin classes in app/page.tsx
+- [X] T033 [US3] Test table horizontal scroll on mobile viewport (320px width) using browser DevTools
+- [X] T034 [US3] Test card grid layout on tablet viewport (768px width) using browser DevTools
+- [X] T035 [US3] Test full layout on desktop viewport (1920px width) using browser DevTools
+- [X] T036 [US3] Verify touch targets are minimum 44px on mobile for accessibility
+- [X] T037 [US3] Verify text remains readable without zooming on all viewports
 
 **Checkpoint**: All user stories should now be independently functional across all devices
 
@@ -121,18 +121,18 @@
 
 **Purpose**: Final improvements and validation across all user stories
 
-- [ ] T038 [P] Verify partition completeness invariant (upcoming + future = total birthdays)
-- [ ] T039 [P] Test edge case: birthday exactly 30 days from today appears in Section 1
-- [ ] T040 [P] Test edge case: birthday on today's date appears in Section 1
-- [ ] T041 [P] Test edge case: Feb 29 birthday displays as Feb 28 in non-leap years
-- [ ] T042 [P] Test edge case: year boundary handling (December birthdays when testing in January)
-- [ ] T043 [P] Test sorting: multiple birthdays on same date sorted alphabetically by name
-- [ ] T044 [P] Verify semantic HTML with proper section and h2 tags
-- [ ] T045 [P] Verify ARIA labels (aria-labelledby) link sections to headings
-- [ ] T046 [P] Test keyboard navigation through sections (tab order)
-- [ ] T047 [P] Verify color contrast meets WCAG AA standards using browser DevTools
-- [ ] T048 Run full quickstart.md validation checklist
-- [ ] T049 Manual performance check: page load < 1 second, calculations < 20ms
+- [X] T038 [P] Verify partition completeness invariant (upcoming + future = total birthdays)
+- [X] T039 [P] Test edge case: birthday exactly 30 days from today appears in Section 1
+- [X] T040 [P] Test edge case: birthday on today's date appears in Section 1
+- [X] T041 [P] Test edge case: Feb 29 birthday displays as Feb 28 in non-leap years
+- [X] T042 [P] Test edge case: year boundary handling (December birthdays when testing in January)
+- [X] T043 [P] Test sorting: multiple birthdays on same date sorted alphabetically by name
+- [X] T044 [P] Verify semantic HTML with proper section and h2 tags
+- [X] T045 [P] Verify ARIA labels (aria-labelledby) link sections to headings
+- [X] T046 [P] Test keyboard navigation through sections (tab order)
+- [X] T047 [P] Verify color contrast meets WCAG AA standards using browser DevTools
+- [X] T048 Run full quickstart.md validation checklist
+- [X] T049 Manual performance check: page load < 1 second, calculations < 20ms
 
 ---
 

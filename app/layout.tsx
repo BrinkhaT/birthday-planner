@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Birthday Planner",
-  description: "Home lab birthday calendar application",
+  title: "Geburtstagplaner",
+  description: "Home Lab Geburtstags-Kalender Anwendung",
 };
 
 export const viewport: Viewport = {
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="de">
       <body className="antialiased" suppressHydrationWarning>
         {children}
       </body>
