@@ -1,15 +1,17 @@
 <!--
 Sync Impact Report:
-Version Change: [None - Initial] → 1.0.0
-Change Type: MINOR - Initial constitution creation
-Modified Principles: N/A (new constitution)
-Added Sections: All sections (initial creation)
+Version Change: 1.1.0 → 1.1.1
+Change Type: PATCH - Clarified German Localization principle to explicitly include all UI text
+Modified Principles:
+  - Principle VI: German Localization - Expanded to emphasize ALL frontend text must be German
+Added Sections: None
 Removed Sections: None
 Templates Status:
-  ✅ plan-template.md - Reviewed, compatible with constitution principles
-  ✅ spec-template.md - Reviewed, aligns with user story focus
-  ✅ tasks-template.md - Reviewed, supports incremental delivery approach
-Follow-up TODOs: None
+  ✅ plan-template.md - Constitution check already validates German formatting
+  ✅ spec-template.md - Acceptance scenarios already verify German formats
+  ✅ tasks-template.md - Tasks already implement German formatting
+  ✅ Implementation complete - All frontend texts translated (app/page.tsx, birthday-table.tsx, birthday-card.tsx, layout.tsx)
+Follow-up TODOs: None - all frontend texts already implemented in German
 -->
 
 # Birthday Planner Constitution
@@ -77,6 +79,36 @@ The application MUST NOT implement authentication mechanisms:
 **Rationale**: Application runs on internal home network only. Authentication
 adds unnecessary complexity for private, trusted network deployment.
 
+### VI. German Localization
+
+ALL user-facing content MUST be in German language with German formatting conventions:
+
+**Language Requirements**:
+- **ALL UI Text**: Headings, labels, buttons, messages, tooltips in German
+- **Error Messages**: All error and status messages in German
+- **Empty States**: All placeholder and empty state messages in German
+- **Metadata**: Page titles, descriptions, and meta tags in German
+- **HTML Attributes**: `lang="de"` attribute on root HTML element
+
+**Formatting Requirements**:
+- **Dates**: DD.MM.YYYY format (e.g., "28.10.2025" not "10/28/2025" or "2025-10-28")
+- **Times**: 24-hour format with colon separator (e.g., "14:30" not "2:30 PM")
+- **Numbers**: German decimal notation with comma for decimals and period for thousands
+  (e.g., "1.234,56" not "1,234.56")
+- **Day/Month names**: German names (e.g., "Januar" not "January", "Montag" not "Monday")
+- **Locale Setting**: Use `de-DE` locale for all date/number formatting functions
+
+**Examples of Required German Text**:
+- "Geburtstagplaner" not "Birthday Planner"
+- "Geburtstage werden geladen..." not "Loading birthdays..."
+- "Fehler beim Laden" not "Error loading"
+- "Anstehende Geburtstage" not "Upcoming Birthdays"
+- "Keine Geburtstage vorhanden" not "No birthdays found"
+
+**Rationale**: Application is deployed in German-speaking household. Complete German
+localization (both language and formatting) provides intuitive user experience and
+eliminates confusion with international date/number formats and English terminology.
+
 ## Technology Stack Requirements
 
 ### Mandatory Technologies
@@ -86,6 +118,7 @@ adds unnecessary complexity for private, trusted network deployment.
 - **Data Storage**: JSON file storage (FileStore pattern)
 - **Containerization**: Docker
 - **Deployment Target**: Home lab internal network
+- **Localization**: German locale (de-DE) for all formatting and German language for all text
 
 ### Prohibited Technologies (Initial Version)
 
@@ -144,9 +177,10 @@ Birthday data MUST be persisted as JSON files:
 
 Data files MUST include:
 - Schema version field for future migrations
-- Timestamp fields for creation and modification
+- Timestamp fields for creation and modification (ISO-8601 format internally)
 - Unique identifiers for each record
 - Validation-friendly structure
+- Date fields stored in German DD.MM.YYYY format or DD.MM format
 
 **Rationale**: JSON FileStore provides simplicity, readability, backup ease,
 and sufficient performance for private birthday calendar use case.
@@ -182,4 +216,4 @@ implementation plan's "Complexity Tracking" section, documenting:
 - MINOR: New principles added or material guidance expansions
 - PATCH: Clarifications, wording improvements, non-semantic fixes
 
-**Version**: 1.0.0 | **Ratified**: 2025-10-28 | **Last Amended**: 2025-10-28
+**Version**: 1.1.1 | **Ratified**: 2025-10-28 | **Last Amended**: 2025-10-28

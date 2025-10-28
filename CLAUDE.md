@@ -114,6 +114,8 @@ Birthday data is persisted in JSON FileStore:
 - No database required
 
 ## Active Technologies
+- TypeScript 5.9+, Next.js 16 with App Router, React 19 + ShadCN UI components, Tailwind CSS, Lucide React icons (002-split-birthday-view)
+- JSON FileStore (existing - no changes required) (002-split-birthday-view)
 
 **Frontend Stack:**
 - TypeScript 5.9+
