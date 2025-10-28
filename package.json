@@ -2,6 +2,10 @@
   "name": "birthday-planner-speckit",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "20.x",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,7 +16,7 @@
   "license": "ISC",
   "description": "Birthday Planner - Home lab birthday calendar application",
   "dependencies": {
-    "@types/node": "^24.9.1",
+    "@types/node": "^20.17.14",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "autoprefixer": "^10.4.21",
