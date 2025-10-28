@@ -65,3 +65,10 @@ Birthday data is persisted as JSON files in a FileStore:
 - Simple JSON file structure
 - Mounted as Docker volume for persistence
 - No database required for initial version
+
+## Active Technologies
+- TypeScript with Next.js 14+ (App Router) + Next.js, React, ShadCN UI components, Tailwind CSS (001-tech-baseline)
+- JSON file storage (FileStore pattern, no database) (001-tech-baseline)
+
+## Recent Changes
+- 001-tech-baseline: Added TypeScript with Next.js 14+ (App Router) + Next.js, React, ShadCN UI components, Tailwind CSS
