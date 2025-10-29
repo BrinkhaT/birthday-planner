@@ -6,7 +6,7 @@
       "name": "Paula",
       "birthDate": "2024-10-02",
       "createdAt": "2025-10-28T10:00:00.000Z",
-      "updatedAt": "2025-10-28T10:00:00.000Z"
+      "updatedAt": "2025-10-29T06:42:54.098Z"
     },
     {
       "id": "550e8400-e29b-41d4-a716-446655440001",
@@ -27,14 +27,7 @@
       "name": "Oma",
       "birthDate": "1942-11-18",
       "createdAt": "2025-10-28T10:00:00.000Z",
-      "updatedAt": "2025-10-28T10:00:00.000Z"
-    },
-    {
-      "id": "5dc3846d-bedf-4b1b-a4f6-f04b8c220dda",
-      "name": "Max Mustermann",
-      "birthDate": "--12-25",
-      "createdAt": "2025-10-28T22:17:21.554Z",
-      "updatedAt": "2025-10-28T22:17:21.554Z"
+      "updatedAt": "2025-10-29T06:36:05.324Z"
     },
     {
       "id": "eb7dcd11-45c2-462d-817a-9ed511e05ee9",
@@ -42,83 +35,6 @@
       "birthDate": "--11-11",
       "createdAt": "2025-10-28T22:17:22.194Z",
       "updatedAt": "2025-10-28T22:17:22.194Z"
-    },
-    {
-      "id": "b5f02c23-515e-4e5d-8b10-66f4e2e44aff",
-      "name": "Erika Beispiel",
-      "birthDate": "1985-06-01",
-      "createdAt": "2025-10-28T22:17:35.498Z",
-      "updatedAt": "2025-10-28T22:17:35.498Z"
-    },
-    {
-      "id": "3ea736b8-7553-4b51-8e90-23147b6ca59f",
-      "name": "Test",
-      "birthDate": "--02-31",
-      "createdAt": "2025-10-28T22:17:35.859Z",
-      "updatedAt": "2025-10-28T22:17:35.859Z"
-    },
-    {
-      "id": "ade227a0-99f2-45ee-9cc9-c35447da52e4",
-      "name": "Test",
-      "birthDate": "--02-31",
-      "createdAt": "2025-10-28T22:17:42.791Z",
-      "updatedAt": "2025-10-28T22:17:42.791Z"
-    },
-    {
-      "id": "9182f937-2c3f-4460-9bfe-abb811422897",
-      "name": "Valid Date",
-      "birthDate": "--02-29",
-      "createdAt": "2025-10-28T22:18:47.129Z",
-      "updatedAt": "2025-10-28T22:18:47.129Z"
-    },
-    {
-      "id": "d8e9a34e-fbca-447d-a0d8-ce5a443b831e",
-      "name": "Santa",
-      "birthDate": "--12-24",
-      "createdAt": "2025-10-28T22:18:47.321Z",
-      "updatedAt": "2025-10-28T22:18:47.321Z"
-    },
-    {
-      "id": "7ec47840-e8ad-414f-af6e-eb470047a1db",
-      "name": "Rodger Fleischer",
-      "birthDate": "--11-11",
-      "createdAt": "2025-10-29T06:02:25.446Z",
-      "updatedAt": "2025-10-29T06:02:25.446Z"
-    },
-    {
-      "id": "3f951dce-6530-47f2-ae12-9b58ed863f28",
-      "name": "Test Display",
-      "birthDate": "--03-15",
-      "createdAt": "2025-10-29T06:17:09.403Z",
-      "updatedAt": "2025-10-29T06:17:09.403Z"
-    },
-    {
-      "id": "68e7ba60-b13f-407f-b02c-e604fc99a955",
-      "name": "Test Format",
-      "birthDate": "--04-18",
-      "createdAt": "2025-10-29T06:22:50.136Z",
-      "updatedAt": "2025-10-29T06:22:50.136Z"
-    },
-    {
-      "id": "e295aa15-0a21-4575-9bb1-c5797d7c5594",
-      "name": "Test Format 2",
-      "birthDate": "--05-20",
-      "createdAt": "2025-10-29T06:22:50.408Z",
-      "updatedAt": "2025-10-29T06:22:50.408Z"
-    },
-    {
-      "id": "f4bf3639-081e-4801-b4a7-a1d15ab77c19",
-      "name": "Format Test",
-      "birthDate": "--07-20",
-      "createdAt": "2025-10-29T06:22:58.874Z",
-      "updatedAt": "2025-10-29T06:22:58.874Z"
-    },
-    {
-      "id": "01118100-08fc-4c23-aaad-48535242ba54",
-      "name": "Format Test 2",
-      "birthDate": "--08-21",
-      "createdAt": "2025-10-29T06:23:00.958Z",
-      "updatedAt": "2025-10-29T06:23:00.958Z"
     }
   ]
 }

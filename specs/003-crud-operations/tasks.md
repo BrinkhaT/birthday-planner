@@ -84,14 +84,14 @@ This is a Next.js App Router web application:
 
 ### Implementation for User Story 2
 
-- [ ] T015 [P] [US2] Add "Edit" icon buttons (Edit icon from Lucide) to each birthday entry in components/birthday-card.tsx with German tooltip "Geburtstag bearbeiten"
-- [ ] T016 [P] [US2] Add "Edit" icon buttons (Edit icon from Lucide) to each row in components/birthday-table.tsx with German tooltip "Geburtstag bearbeiten"
-- [ ] T017 [P] [US2] Create PUT /api/birthdays/[id]/route.ts route handler accepting id parameter and UpdateBirthdayRequest, updating birthday, updating updatedAt timestamp, writing to FileStore
-- [ ] T018 [US2] Wire Edit buttons to open BirthdayModal in 'edit' mode with selectedBirthday in components/birthday-card.tsx and components/birthday-table.tsx
-- [ ] T019 [US2] Implement form pre-fill logic in BirthdayForm when in edit mode (populate name and birthdate from selectedBirthday)
-- [ ] T020 [US2] Implement form submit handler in BirthdayModal for edit mode: validate input, call PUT endpoint, optimistic update, close modal on success
-- [ ] T021 [US2] Add error handling for edit operations (404 if birthday not found, validation errors, save failures)
-- [ ] T022 [US2] Test edit flow end-to-end: validation on empty fields, successful update, cancel without saving, data persistence
+- [x] T015 [P] [US2] Add "Edit" icon buttons (Edit icon from Lucide) to each birthday entry in components/birthday-card.tsx with German tooltip "Geburtstag bearbeiten"
+- [x] T016 [P] [US2] Add "Edit" icon buttons (Edit icon from Lucide) to each row in components/birthday-table.tsx with German tooltip "Geburtstag bearbeiten"
+- [x] T017 [P] [US2] Create PUT /api/birthdays/[id]/route.ts route handler accepting id parameter and UpdateBirthdayRequest, updating birthday, updating updatedAt timestamp, writing to FileStore
+- [x] T018 [US2] Wire Edit buttons to open BirthdayModal in 'edit' mode with selectedBirthday in components/birthday-card.tsx and components/birthday-table.tsx
+- [x] T019 [US2] Implement form pre-fill logic in BirthdayForm when in edit mode (populate name and birthdate from selectedBirthday)
+- [x] T020 [US2] Implement form submit handler in BirthdayModal for edit mode: validate input, call PUT endpoint, optimistic update, close modal on success
+- [x] T021 [US2] Add error handling for edit operations (404 if birthday not found, validation errors, save failures)
+- [x] T022 [US2] Test edit flow end-to-end: validation on empty fields, successful update, cancel without saving, data persistence
 
 **Checkpoint**: User Stories 1 AND 2 are both functional and independently testable
 
@@ -105,13 +105,13 @@ This is a Next.js App Router web application:
 
 ### Implementation for User Story 3
 
-- [ ] T023 [P] [US3] Add "Delete" icon buttons (Trash2 icon from Lucide) to each birthday entry in components/birthday-card.tsx with German tooltip "Geburtstag löschen"
-- [ ] T024 [P] [US3] Add "Delete" icon buttons (Trash2 icon from Lucide) to each row in components/birthday-table.tsx with German tooltip "Geburtstag löschen"
-- [ ] T025 [P] [US3] Create DELETE handler in app/api/birthdays/[id]/route.ts accepting id parameter, removing birthday from FileStore, returning success message
-- [ ] T026 [US3] Wire Delete buttons to open DeleteConfirmation dialog with selectedBirthday in components/birthday-card.tsx and components/birthday-table.tsx
-- [ ] T027 [US3] Implement delete confirmation handler in DeleteConfirmation component: show birthday name in confirmation text, call DELETE endpoint on confirm, optimistic update on success
-- [ ] T028 [US3] Add error handling for delete operations (404 if birthday not found, FileStore write errors)
-- [ ] T029 [US3] Test delete flow end-to-end: cancel without deleting, successful delete, delete last birthday, data persistence
+- [x] T023 [P] [US3] Add "Delete" icon buttons (Trash2 icon from Lucide) to each birthday entry in components/birthday-card.tsx with German tooltip "Geburtstag löschen"
+- [x] T024 [P] [US3] Add "Delete" icon buttons (Trash2 icon from Lucide) to each row in components/birthday-table.tsx with German tooltip "Geburtstag löschen"
+- [x] T025 [P] [US3] Create DELETE handler in app/api/birthdays/[id]/route.ts accepting id parameter, removing birthday from FileStore, returning success message
+- [x] T026 [US3] Wire Delete buttons to open DeleteConfirmation dialog with selectedBirthday in components/birthday-card.tsx and components/birthday-table.tsx
+- [x] T027 [US3] Implement delete confirmation handler in DeleteConfirmation component: show birthday name in confirmation text, call DELETE endpoint on confirm, optimistic update on success
+- [x] T028 [US3] Add error handling for delete operations (404 if birthday not found, FileStore write errors)
+- [x] T029 [US3] Test delete flow end-to-end: cancel without deleting, successful delete, delete last birthday, data persistence
 
 **Checkpoint**: All user stories (US1, US2, US3) are independently functional
 
@@ -121,17 +121,17 @@ This is a Next.js App Router web application:
 
 **Purpose**: Improvements that affect multiple user stories and final validation
 
-- [ ] T030 [P] Ensure all icon buttons have minimum 44x44px tap targets for mobile accessibility in components/birthday-card.tsx and components/birthday-table.tsx
-- [ ] T031 [P] Verify responsive behavior of modals on 320px mobile width (test all modals)
-- [ ] T032 [P] Verify responsive behavior of modals on 1920px desktop width (test all modals)
-- [ ] T033 [P] Ensure ESC key closes all modals (Dialog component should handle this automatically)
-- [ ] T034 [P] Ensure click-outside closes modals (Dialog component should handle this automatically)
-- [ ] T035 Test all German localization strings display correctly (no English text, proper umlauts for ä/ö/ü)
-- [ ] T036 Test date format displays as DD.MM.YYYY everywhere (not ISO format or MM/DD/YYYY)
-- [ ] T037 Run complete manual test checklist from quickstart.md (functional tests, UI/UX tests, data persistence, edge cases)
-- [ ] T038 Test Docker deployment: build image, start container, verify CRUD operations, verify data persists after container restart
-- [ ] T039 Code cleanup: remove console.logs, unused imports, ensure TypeScript strict mode compliance
-- [ ] T040 Update CLAUDE.md with implementation notes if needed (feature complete)
+- [x] T030 [P] Ensure all icon buttons have minimum 44x44px tap targets for mobile accessibility in components/birthday-card.tsx and components/birthday-table.tsx
+- [x] T031 [P] Verify responsive behavior of modals on 320px mobile width (test all modals)
+- [x] T032 [P] Verify responsive behavior of modals on 1920px desktop width (test all modals)
+- [x] T033 [P] Ensure ESC key closes all modals (Dialog component should handle this automatically)
+- [x] T034 [P] Ensure click-outside closes modals (Dialog component should handle this automatically)
+- [x] T035 Test all German localization strings display correctly (no English text, proper umlauts for ä/ö/ü)
+- [x] T036 Test date format displays as DD.MM.YYYY everywhere (not ISO format or MM/DD/YYYY)
+- [x] T037 Run complete manual test checklist from quickstart.md (functional tests, UI/UX tests, data persistence, edge cases)
+- [x] T038 Test Docker deployment: build image, start container, verify CRUD operations, verify data persists after container restart
+- [x] T039 Code cleanup: remove console.logs, unused imports, ensure TypeScript strict mode compliance
+- [x] T040 Update CLAUDE.md with implementation notes if needed (feature complete)
 
 **Checkpoint**: Feature complete and production-ready
 

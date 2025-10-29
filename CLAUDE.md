@@ -53,17 +53,30 @@ This project uses SpecKit for structured feature development. All features must 
 specs/             - Feature specifications and implementation artifacts
   001-tech-baseline/ - Tech baseline implementation (completed)
 app/               - Next.js App Router application code
-  api/             - API routes (GET /api/birthdays)
-  page.tsx         - Home page with birthday list
+  api/             - API routes
+    birthdays/
+      route.ts     - GET /api/birthdays
+      create/route.ts - POST /api/birthdays/create
+      [id]/route.ts   - PUT/DELETE /api/birthdays/[id]
+  page.tsx         - Home page with birthday list and CRUD operations
   layout.tsx       - Root layout
 components/        - React components
-  ui/              - ShadCN UI components
-  birthday-card.tsx - Birthday card component
+  ui/              - ShadCN UI components (Dialog, Button, Card, Table, Input, Label)
+  birthday-card.tsx      - Birthday card component with Edit/Delete buttons
+  birthday-table.tsx     - Birthday table component with Edit/Delete buttons
+  birthday-form.tsx      - Form for add/edit with German validation
+  birthday-modal.tsx     - Modal wrapper for add/edit operations
+  delete-confirmation.tsx - Delete confirmation dialog
 lib/               - Utility functions and services
-  filestore.ts     - JSON FileStore implementation
+  filestore.ts     - JSON FileStore implementation (read/write operations)
+  validations.ts   - Form validation and date format conversion
+  date-utils.ts    - Date parsing and birthday calculations
+  i18n-de.ts       - German localization strings
+  utils.ts         - Utility functions
 types/             - TypeScript type definitions
+  birthday.ts      - Birthday type definitions
 data/              - JSON data storage (mounted as volume in Docker)
-  birthdays.json   - Birthday data file
+  birthdays.json   - Birthday data file (ISO format internally)
 ```
 
 ## Current Implementation Status
@@ -79,6 +92,25 @@ data/              - JSON data storage (mounted as volume in Docker)
 - JSON FileStore with test data (Paula, Thomas, Isabel)
 - Docker configuration with multi-stage build
 - Docker Compose setup with volume persistence
+
+**Split Birthday View (002-split-birthday-view)** - COMPLETED ✅
+- Split view: "Anstehende Geburtstage" (next 30 days) + "Alle weiteren Geburtstage" (rest)
+- Card view for upcoming birthdays (grid layout)
+- Table view for all other birthdays (sortable by date)
+- Age calculation with German localization
+- Date format handling: DD.MM. (without year) and DD.MM.YYYY (with year)
+- ISO 8601 format for internal storage (YYYY-MM-DD, --MM-DD)
+
+**Birthday CRUD Operations (003-crud-operations)** - COMPLETED ✅
+- **Create**: Add new birthday entries via modal dialog with form validation
+- **Read**: View birthdays in card and table views (from 002-split-birthday-view)
+- **Update**: Edit existing birthdays with pre-filled form and German date format
+- **Delete**: Delete birthdays with mandatory confirmation dialog
+- API endpoints: POST /api/birthdays/create, PUT /api/birthdays/[id], DELETE /api/birthdays/[id]
+- German form validation and error messages
+- Optimistic UI updates for instant feedback
+- Date format conversion: ISO (storage) ↔ German (display)
+- Mobile-friendly with 44x44px tap targets
 
 ### Running the Application
 
@@ -110,7 +142,9 @@ Birthday data is persisted in JSON FileStore:
 - Location: `data/birthdays.json` (mounted to `/data` in Docker)
 - Simple JSON structure with version field
 - Atomic read/write operations
-- Test data: Paula (02.10.24), Thomas (29.08.88), Isabel (12.07.90)
+- **Internal format**: ISO 8601 (YYYY-MM-DD for full dates, --MM-DD for dates without year)
+- **Display format**: German (DD.MM.YYYY for full dates, DD.MM. for dates without year)
+- Bidirectional conversion between ISO and German formats
 - No database required
 
 ## Active Technologies
@@ -138,7 +172,26 @@ Birthday data is persisted in JSON FileStore:
 
 ## Recent Changes
 
+### 2025-10-29
+- ✅ **003-crud-operations**: Completed full CRUD operations
+  - Implemented Add Birthday feature with modal dialog and form validation
+  - Implemented Edit Birthday feature with pre-filled form and date conversion
+  - Implemented Delete Birthday feature with confirmation dialog
+  - Added API endpoints: POST /api/birthdays/create, PUT/DELETE /api/birthdays/[id]
+  - German form validation and error messages throughout
+  - Optimistic UI updates for instant feedback
+  - Date format handling: ISO 8601 (storage) ↔ German format (display)
+  - Mobile-friendly with 44x44px tap targets for accessibility
+  - Tested in development and Docker deployment
+
 ### 2025-10-28
+- ✅ **002-split-birthday-view**: Completed split birthday view feature
+  - Split view into "Anstehende Geburtstage" (next 30 days) and "Alle weiteren Geburtstage"
+  - Card view for upcoming birthdays (responsive grid)
+  - Table view for all other birthdays (sortable)
+  - Age calculation with German localization
+  - Date format support: DD.MM. (without year) and DD.MM.YYYY (with year)
+  - Merged to develop branch
 - ✅ **001-tech-baseline**: Completed tech baseline implementation
   - Implemented birthday list display page
   - Added API endpoint GET /api/birthdays

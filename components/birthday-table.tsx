@@ -8,17 +8,23 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { Edit, Trash2 } from 'lucide-react';
 
 export interface BirthdayTableProps {
   birthdays: BirthdayWithOccurrence[];
   emptyMessage?: string;
   className?: string;
+  onEdit?: (birthday: BirthdayWithOccurrence) => void;
+  onDelete?: (birthday: BirthdayWithOccurrence) => void;
 }
 
 export function BirthdayTable({
   birthdays,
   emptyMessage = 'Keine Geburtstage anzuzeigen',
   className = '',
+  onEdit,
+  onDelete,
 }: BirthdayTableProps) {
   // T024: Empty state handling
   if (birthdays.length === 0) {
@@ -48,6 +54,7 @@ export function BirthdayTable({
             <TableHead>Datum</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Alter</TableHead>
+            {(onEdit || onDelete) && <TableHead className="w-[120px]">Aktionen</TableHead>}
           </TableRow>
         </TableHeader>
         {/* T021: TableBody with map over birthdays array */}
@@ -59,6 +66,36 @@ export function BirthdayTable({
               <TableCell>{birthday.name}</TableCell>
               {/* T023: Age display with "—" em dash for null age */}
               <TableCell>{birthday.age !== null ? birthday.age : '—'}</TableCell>
+              {(onEdit || onDelete) && (
+                <TableCell>
+                  <div className="flex gap-1">
+                    {onEdit && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onEdit(birthday)}
+                        className="h-11 w-11 min-h-[44px] min-w-[44px]"
+                        aria-label="Geburtstag bearbeiten"
+                        title="Geburtstag bearbeiten"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    )}
+                    {onDelete && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onDelete(birthday)}
+                        className="h-11 w-11 min-h-[44px] min-w-[44px] text-destructive hover:text-destructive hover:bg-destructive/10"
+                        aria-label="Geburtstag löschen"
+                        title="Geburtstag löschen"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>

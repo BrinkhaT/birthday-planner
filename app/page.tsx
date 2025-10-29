@@ -5,6 +5,7 @@ import { Plus } from 'lucide-react';
 import { BirthdayCard } from '@/components/birthday-card';
 import { BirthdayTable } from '@/components/birthday-table';
 import { BirthdayModal } from '@/components/birthday-modal';
+import { DeleteConfirmation } from '@/components/delete-confirmation';
 import { Birthday } from '@/types/birthday';
 import { splitBirthdays } from '@/lib/date-utils';
 import { i18nDE } from '@/lib/i18n-de';
@@ -20,6 +21,11 @@ export default function Home() {
   const [selectedBirthday, setSelectedBirthday] = useState<Birthday | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  // Delete confirmation dialog state
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [birthdayToDelete, setBirthdayToDelete] = useState<Birthday | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     async function fetchBirthdays() {
@@ -44,29 +50,97 @@ export default function Home() {
     fetchBirthdays();
   }, []);
 
-  // T012, T013: Handle birthday form submission (add mode)
+  // T018: Handle edit button click
+  const handleEdit = (birthday: Birthday) => {
+    setModalMode('edit');
+    setSelectedBirthday(birthday);
+    setIsModalOpen(true);
+  };
+
+  // T026: Handle delete button click
+  const handleDelete = (birthday: Birthday) => {
+    setBirthdayToDelete(birthday);
+    setIsDeleteDialogOpen(true);
+  };
+
+  // T027, T028: Handle delete confirmation
+  const handleDeleteConfirm = async () => {
+    if (!birthdayToDelete) return;
+
+    try {
+      setIsDeleting(true);
+
+      const response = await fetch(`/api/birthdays/${birthdayToDelete.id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || i18nDE.error.deleteFailed);
+      }
+
+      // Optimistic update: Remove birthday from state
+      setBirthdays((prev) => prev.filter((b) => b.id !== birthdayToDelete.id));
+
+      // Close dialog and reset state
+      setIsDeleteDialogOpen(false);
+      setBirthdayToDelete(null);
+    } catch (err) {
+      console.error('Error deleting birthday:', err);
+      // In a real app, you might want to show an error toast here
+      alert(err instanceof Error ? err.message : i18nDE.error.deleteFailed);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  // T012, T013, T020: Handle birthday form submission (add and edit modes)
   const handleBirthdaySubmit = async (data: { name: string; birthdate: string }) => {
     try {
       setIsSubmitting(true);
       setSubmitError(null);
 
-      const response = await fetch('/api/birthdays/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      if (modalMode === 'add') {
+        // Add mode: POST /api/birthdays/create
+        const response = await fetch('/api/birthdays/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || i18nDE.error.saveFailed);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || i18nDE.error.saveFailed);
+        }
+
+        const result = await response.json();
+
+        // Optimistic update: Add new birthday to state
+        setBirthdays((prev) => [...prev, result.birthday]);
+      } else if (modalMode === 'edit' && selectedBirthday) {
+        // Edit mode: PUT /api/birthdays/[id]
+        const response = await fetch(`/api/birthdays/${selectedBirthday.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || i18nDE.error.saveFailed);
+        }
+
+        const result = await response.json();
+
+        // Optimistic update: Update birthday in state
+        setBirthdays((prev) =>
+          prev.map((b) => (b.id === selectedBirthday.id ? result.birthday : b))
+        );
       }
-
-      const result = await response.json();
-
-      // Optimistic update: Add new birthday to state
-      setBirthdays((prev) => [...prev, result.birthday]);
 
       // Close modal and reset state
       setIsModalOpen(false);
@@ -168,7 +242,12 @@ export default function Home() {
           ) : (
             <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {upcoming.map((birthday) => (
-                <BirthdayCard key={birthday.id} birthday={birthday} />
+                <BirthdayCard
+                  key={birthday.id}
+                  birthday={birthday}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
               ))}
             </div>
           )}
@@ -185,6 +264,8 @@ export default function Home() {
           <BirthdayTable
             birthdays={future}
             emptyMessage="Keine weiteren Geburtstage vorhanden"
+            onEdit={handleEdit}
+            onDelete={handleDelete}
           />
         </section>
 
@@ -201,6 +282,18 @@ export default function Home() {
           onSubmit={handleBirthdaySubmit}
           isLoading={isSubmitting}
           error={submitError}
+        />
+
+        {/* Delete Confirmation Dialog */}
+        <DeleteConfirmation
+          isOpen={isDeleteDialogOpen}
+          birthday={birthdayToDelete}
+          onConfirm={handleDeleteConfirm}
+          onCancel={() => {
+            setIsDeleteDialogOpen(false);
+            setBirthdayToDelete(null);
+          }}
+          isLoading={isDeleting}
         />
       </div>
     </main>
