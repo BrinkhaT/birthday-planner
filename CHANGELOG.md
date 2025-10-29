@@ -1,5 +1,49 @@
 # Changelog
 
+## [1.1.0](https://github.com/BrinkhaT/birthday-planner/compare/1.0.0...1.1.0) (2025-10-29)
+
+
+### Features
+
+* add optional year support and migrate to 4-digit year format ([2fa5fae](https://github.com/BrinkhaT/birthday-planner/commit/2fa5fae63b2ac3977abcd605217c5fa863e699ff))
+* add split birthday view specification and planning artifacts ([428792b](https://github.com/BrinkhaT/birthday-planner/commit/428792b18bb2bcf490cfc7aebdf409ae18df84c8))
+* add tech baseline specification and implementation plan ([f468ce3](https://github.com/BrinkhaT/birthday-planner/commit/f468ce365fdc661f095f90a547c104e6dd14b0de))
+* complete CRUD operations for birthday management ([74aa33d](https://github.com/BrinkhaT/birthday-planner/commit/74aa33dab323bbd46345567eb29ccc4f9d01032e))
+* compress birthday table with year grouping and auto-create missing data file ([2735ee9](https://github.com/BrinkhaT/birthday-planner/commit/2735ee96c37856a3ae6ae132520737982cd1fd8c))
+* implement birthday CRUD with ISO format and German display ([7ac809b](https://github.com/BrinkhaT/birthday-planner/commit/7ac809bfec1641a0b976770781582eb46efc600d))
+* implement split birthday view with German localization ([2af07e6](https://github.com/BrinkhaT/birthday-planner/commit/2af07e6b97682753adfd8c6e523ecaea2546d4b6))
+* implement tech baseline - birthday list display (complete) ([90432ab](https://github.com/BrinkhaT/birthday-planner/commit/90432ab57aa7bb09cc911855750a94f548ed02d9))
+
+
+### Bug Fixes
+
+* add .gitkeep to public directory for Docker build ([6611197](https://github.com/BrinkhaT/birthday-planner/commit/66111977daac91832a398912cfefd898efa60352))
+* correct age calculation to show age at next birthday ([60f305d](https://github.com/BrinkhaT/birthday-planner/commit/60f305d51bc3490af0f9fd2b071a0b121e67d808))
+* correct birthday date comparison and improve card display ([46fde17](https://github.com/BrinkhaT/birthday-planner/commit/46fde17ffc1f1d203ad12590b656e0c6c4d178b4))
+* remove unused referenceDate parameter from groupBirthdaysByYear call ([86aebe6](https://github.com/BrinkhaT/birthday-planner/commit/86aebe6c1f0bf1ef00a21d4bed184aa899045968))
+
+
+### Documentation
+
+* establish constitution v1.0.0 and project guidance ([fed4d69](https://github.com/BrinkhaT/birthday-planner/commit/fed4d69e2e8686368a202734e73ae3c71ea17ded))
+* prepare repository for public release with AI-assisted development highlights ([4aa6d2e](https://github.com/BrinkhaT/birthday-planner/commit/4aa6d2e3462394968d5c6fee7edf56c06d65e832))
+* refocus documentation on birthday planner value and user benefits ([53c948c](https://github.com/BrinkhaT/birthday-planner/commit/53c948c5672e4af85de9fd1fe565981ed7e78a08))
+* update CLAUDE.md and README.md to reflect current implementation ([d901cdf](https://github.com/BrinkhaT/birthday-planner/commit/d901cdf25ad7f4cfd93f76290efeb0dad85f54bd))
+
+
+### Miscellaneous Chores
+
+* fix Node.js version alignment to 20.x ([0c8bd23](https://github.com/BrinkhaT/birthday-planner/commit/0c8bd233249057a8bd4c1d1064c6f5a130fc759f))
+* migrate to ESLint 9 flat config and fix all linting errors ([d940355](https://github.com/BrinkhaT/birthday-planner/commit/d940355056b6f4f4ed1fc32c20b75adf988c5534))
+* remove personal data and add local data store support ([e2b90fa](https://github.com/BrinkhaT/birthday-planner/commit/e2b90fac15a2e79c7f636717a2981c0013f8306d))
+* reorganize package.json dependencies for production optimization ([fa10b10](https://github.com/BrinkhaT/birthday-planner/commit/fa10b109d2c16ff69ab5d1caab6248e4ad218716))
+
+
+### Continuous Integration
+
+* add GitHub Actions workflow for develop branch ([a24cd62](https://github.com/BrinkhaT/birthday-planner/commit/a24cd6257f8aa92ef6acf3870363b5889c70609c))
+* implement release-please with multi-platform Docker builds ([5d8a4b9](https://github.com/BrinkhaT/birthday-planner/commit/5d8a4b9b2cd8508ec96541c704e9e003b3180ad9))
+
 ## [1.0.0](https://github.com/brinkhat/birthday-planner-speckit/compare/v0.0.0...v1.0.0) (2025-10-29)
 
 ### Features
