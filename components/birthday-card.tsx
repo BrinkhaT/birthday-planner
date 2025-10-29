@@ -31,8 +31,8 @@ export function BirthdayCard({ birthday, onEdit, onDelete }: BirthdayCardProps) 
           <div className="flex-1">
             <CardTitle className="text-xl">{birthday.name}</CardTitle>
             <CardDescription>
-              Geburtstag: {formatBirthDate(birthday.birthDate)}
-              {age !== null && ` • Alter: ${age}`}
+              {formatBirthDate(birthday.birthDate)}
+              {age !== null ? (<><br />{`${age} Jahre`}</>) : null}
             </CardDescription>
           </div>
           {(onEdit || onDelete) && (

@@ -35,6 +35,13 @@
       "birthDate": "--11-11",
       "createdAt": "2025-10-28T22:17:22.194Z",
       "updatedAt": "2025-10-28T22:17:22.194Z"
+    },
+    {
+      "id": "0c70c399-83d4-43fa-9b89-6855a043d9da",
+      "name": "Anett Brinkhaus",
+      "birthDate": "1964-10-29",
+      "createdAt": "2025-10-29T08:02:06.242Z",
+      "updatedAt": "2025-10-29T08:02:06.242Z"
     }
   ]
 }

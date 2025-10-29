@@ -59,6 +59,10 @@ export function getNextOccurrence(
 ): Date {
   const { day, month } = parseBirthDate(birthday.birthDate);
 
+  // Normalize reference date to start of day (00:00:00) for date-only comparison
+  const startOfToday = new Date(referenceDate);
+  startOfToday.setHours(0, 0, 0, 0);
+
   // Try to create date in current year
   let nextOccurrence = new Date(
     referenceDate.getFullYear(),
@@ -72,8 +76,9 @@ export function getNextOccurrence(
     nextOccurrence = new Date(referenceDate.getFullYear(), 1, 28);
   }
 
-  // If birthday already passed this year, use next year
-  if (nextOccurrence < referenceDate) {
+  // If birthday already passed this year (before today), use next year
+  // Compare only dates, not times - birthdays that are today should count as upcoming
+  if (nextOccurrence < startOfToday) {
     nextOccurrence.setFullYear(referenceDate.getFullYear() + 1);
 
     // Re-check Feb 29 for next year
