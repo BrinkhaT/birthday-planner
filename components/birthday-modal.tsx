@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Birthday } from "@/types/birthday";
 import { BirthdayForm } from "@/components/birthday-form";
 import { i18nDE } from "@/lib/i18n-de";
@@ -46,6 +45,7 @@ export function BirthdayModal({
           </div>
         )}
         <BirthdayForm
+          key={selectedBirthday?.id || "new"}
           birthday={selectedBirthday}
           onSubmit={onSubmit}
           onCancel={onClose}

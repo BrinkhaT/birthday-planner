@@ -1,7 +1,6 @@
 import { Birthday, BirthdayWithOccurrence } from '@/types/birthday';
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,

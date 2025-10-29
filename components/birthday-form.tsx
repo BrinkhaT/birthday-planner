@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Birthday } from "@/types/birthday";
 import { validateBirthdayName, validateBirthdayDate, isoToGermanDate } from "@/lib/validations";
 import { i18nDE } from "@/lib/i18n-de";
@@ -14,24 +14,23 @@ interface BirthdayFormProps {
   isLoading?: boolean;
 }
 
-export function BirthdayForm({ birthday, onSubmit, onCancel, isLoading = false }: BirthdayFormProps) {
-  const [name, setName] = useState("");
-  const [birthdate, setBirthdate] = useState("");
-  const [errors, setErrors] = useState<{ name?: string; birthdate?: string }>({});
+// Helper function to get initial form values
+function getInitialValues(birthday?: Birthday | null) {
+  if (!birthday) {
+    return { name: "", birthdate: "" };
+  }
+  const germanDate = isoToGermanDate(birthday.birthDate);
+  return {
+    name: birthday.name,
+    birthdate: germanDate || birthday.birthDate,
+  };
+}
 
-  // Pre-fill form when editing
-  useEffect(() => {
-    if (birthday) {
-      setName(birthday.name);
-      // Convert ISO format to German format for display in input field
-      const germanDate = isoToGermanDate(birthday.birthDate);
-      setBirthdate(germanDate || birthday.birthDate);
-    } else {
-      setName("");
-      setBirthdate("");
-    }
-    setErrors({});
-  }, [birthday]);
+export function BirthdayForm({ birthday, onSubmit, onCancel, isLoading = false }: BirthdayFormProps) {
+  const initialValues = getInitialValues(birthday);
+  const [name, setName] = useState(initialValues.name);
+  const [birthdate, setBirthdate] = useState(initialValues.birthdate);
+  const [errors, setErrors] = useState<{ name?: string; birthdate?: string }>({});
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

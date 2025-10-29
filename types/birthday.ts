@@ -14,7 +14,7 @@ export interface BirthdayStore {
 export interface BirthdayValidationError {
   field: string;
   message: string;
-  value: any;
+  value: unknown;
 }
 
 // T001: BirthdayWithOccurrence type extending Birthday

@@ -2,7 +2,6 @@ import {
   Birthday,
   BirthdayWithOccurrence,
   ParsedDate,
-  BirthdayRanges,
   SplitBirthdays,
   BirthdaysByYear,
 } from '@/types/birthday';
@@ -97,7 +96,7 @@ export function calculateAge(
   birthday: Birthday,
   referenceDate: Date
 ): number | null {
-  const { day, month, year } = parseBirthDate(birthday.birthDate);
+  const { year } = parseBirthDate(birthday.birthDate);
 
   if (!year) return null; // No birth year available
 
@@ -169,12 +168,10 @@ export function splitBirthdays(
 /**
  * Group birthdays by calendar year based on their next occurrence
  * @param birthdays - Array of birthdays with occurrence information
- * @param referenceDate - Reference date for grouping (typically today)
  * @returns Array of year groups with birthdays, sorted by year
  */
 export function groupBirthdaysByYear(
-  birthdays: BirthdayWithOccurrence[],
-  referenceDate: Date
+  birthdays: BirthdayWithOccurrence[]
 ): BirthdaysByYear[] {
   // Group birthdays by year of their next occurrence
   const yearMap = new Map<number, BirthdayWithOccurrence[]>();

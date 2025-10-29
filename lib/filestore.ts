@@ -1,6 +1,6 @@
 import { readFile, writeFile, rename, mkdir } from 'fs/promises';
 import { join } from 'path';
-import { BirthdayStore, Birthday } from '@/types/birthday';
+import { BirthdayStore } from '@/types/birthday';
 
 const DATA_DIR = process.env.DATA_DIR || join(process.cwd(), 'data');
 
@@ -10,9 +10,9 @@ export async function readBirthdays(): Promise<BirthdayStore> {
   try {
     const data = await readFile(filePath, 'utf-8');
     return JSON.parse(data) as BirthdayStore;
-  } catch (error: any) {
+  } catch (error: unknown) {
     // If file doesn't exist, create it with empty data
-    if (error.code === 'ENOENT') {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
       console.log('Birthday data file not found, creating empty file...');
       const emptyStore: BirthdayStore = {
         version: '1.0.0',
@@ -22,7 +22,7 @@ export async function readBirthdays(): Promise<BirthdayStore> {
       // Ensure data directory exists
       try {
         await mkdir(DATA_DIR, { recursive: true });
-      } catch (mkdirError) {
+      } catch {
         // Directory might already exist, ignore
       }
 
