@@ -2,16 +2,20 @@
 
 A responsive web application for tracking upcoming birthdays, built for home lab deployment.
 
-**Status:** ✅ Tech baseline complete - Application is fully functional and ready for deployment
+**Status:** ✅ CRUD operations complete - Application is fully functional and ready for deployment
 
 ## Features
 
-- 📅 View all birthdays in an easy-to-read list
+- ➕ **Create**: Add new birthday entries via modal dialog with form validation
+- 📅 **Read**: View birthdays in split view (upcoming 30 days + all others)
+- ✏️ **Update**: Edit existing birthdays with pre-filled forms
+- 🗑️ **Delete**: Remove birthdays with confirmation dialog
 - 📱 Mobile-first responsive design (320px - 1920px viewports)
+- 🌍 German localization (de-DE) for all UI text
 - 🎨 Modern UI with ShadCN components and Tailwind CSS
 - 🐳 Docker-ready with Docker Compose support
 - 💾 Simple JSON file storage (no database required)
-- ⚡ Fast API responses (<500ms)
+- ⚡ Fast API responses with optimistic UI updates
 - 🔒 Internal network deployment (no authentication needed)
 
 ## Tech Stack
@@ -57,19 +61,29 @@ The application will be available at [http://localhost:3000](http://localhost:30
 birthday-planner-speckit/
 ├── app/                      # Next.js App Router
 │   ├── api/birthdays/       # API routes
+│   │   ├── route.ts         # GET /api/birthdays
+│   │   ├── create/route.ts  # POST /api/birthdays/create
+│   │   └── [id]/route.ts    # PUT/DELETE /api/birthdays/[id]
 │   ├── layout.tsx           # Root layout
-│   ├── page.tsx             # Home page
+│   ├── page.tsx             # Home page with CRUD operations
 │   └── globals.css          # Global styles
 ├── components/              # React components
 │   ├── ui/                  # ShadCN UI components
-│   └── birthday-card.tsx    # Birthday card component
+│   ├── birthday-card.tsx    # Birthday card with edit/delete buttons
+│   ├── birthday-table.tsx   # Birthday table with edit/delete buttons
+│   ├── birthday-form.tsx    # Birthday form with validation
+│   ├── birthday-modal.tsx   # Modal wrapper for add/edit operations
+│   └── delete-confirmation.tsx  # Delete confirmation dialog
 ├── lib/                     # Utility functions
 │   ├── filestore.ts         # JSON file operations
+│   ├── validations.ts       # Form validation and date conversion
+│   ├── i18n-de.ts           # German localization strings
+│   ├── date-utils.ts        # Date utilities (split birthdays)
 │   └── utils.ts             # Helper functions
 ├── types/                   # TypeScript types
 │   └── birthday.ts          # Birthday type definitions
 ├── data/                    # JSON data directory
-│   └── birthdays.json       # Birthday data file
+│   └── birthdays.json       # Birthday data file (ISO format)
 ├── Dockerfile               # Docker configuration
 └── docker-compose.yml       # Docker Compose setup
 ```
@@ -85,7 +99,7 @@ Birthday data is stored in `data/birthdays.json` with the following structure:
     {
       "id": "550e8400-e29b-41d4-a716-446655440000",
       "name": "Paula",
-      "birthDate": "02.10.24",
+      "birthDate": "1924-10-02",
       "createdAt": "2025-10-28T10:00:00.000Z",
       "updatedAt": "2025-10-28T10:00:00.000Z"
     }
@@ -93,11 +107,21 @@ Birthday data is stored in `data/birthdays.json` with the following structure:
 }
 ```
 
-**Current test data:** Paula (02.10.24), Thomas (29.08.88), Isabel (12.07.90)
+**Date Format:**
+- **Internal storage**: ISO 8601 format (`YYYY-MM-DD` for full dates, `--MM-DD` for dates without year)
+- **User display**: German format (`DD.MM.YYYY` for full dates, `DD.MM.` for dates without year)
+- **Bidirectional conversion**: Automatic conversion between formats in forms and API
 
-### Adding Birthdays
+**Current test data:** Paula, Thomas, Isabel
 
-Edit `data/birthdays.json` and add new entries to the `birthdays` array. The application will automatically detect changes on next API call (no restart required).
+### Managing Birthdays
+
+Use the web interface to add, edit, or delete birthdays:
+- **Add**: Click the "+" button in the header
+- **Edit**: Click the edit icon on any birthday card or table row
+- **Delete**: Click the delete icon and confirm the action
+
+All operations provide instant feedback with optimistic UI updates.
 
 ## Environment Variables
 
@@ -179,6 +203,18 @@ This project uses [SpecKit](https://github.com/specify-systems/specify) for stru
   - Specification: `specs/001-tech-baseline/spec.md`
   - Implementation plan: `specs/001-tech-baseline/plan.md`
   - Tasks: `specs/001-tech-baseline/tasks.md`
+
+- **002-split-birthday-view** (✅ Complete): Split view with upcoming birthdays
+  - Specification: `specs/002-split-birthday-view/spec.md`
+  - Implementation plan: `specs/002-split-birthday-view/plan.md`
+  - Tasks: `specs/002-split-birthday-view/tasks.md`
+  - Features: Upcoming (next 30 days) + All others sections
+
+- **003-crud-operations** (✅ Complete): Full CRUD operations for birthdays
+  - Specification: `specs/003-crud-operations/spec.md`
+  - Implementation plan: `specs/003-crud-operations/plan.md`
+  - Tasks: `specs/003-crud-operations/tasks.md`
+  - Features: Add, Edit, Delete with German localization and validation
 
 ### Project Principles
 

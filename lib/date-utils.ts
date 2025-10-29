@@ -4,10 +4,40 @@ import {
   ParsedDate,
   BirthdayRanges,
   SplitBirthdays,
+  BirthdaysByYear,
 } from '@/types/birthday';
 
-// T005: parseBirthDate function
+// T005: parseBirthDate function - Parse ISO or German format
+/**
+ * Parse a birthday string and extract day, month, and optional year
+ * @param birthDate - Birthday string in ISO format (YYYY-MM-DD or --MM-DD) or German format (DD.MM or DD.MM.YYYY)
+ * @returns Parsed date components
+ */
 export function parseBirthDate(birthDate: string): ParsedDate {
+  // Check for ISO format first (YYYY-MM-DD or --MM-DD)
+  const isoFullPattern = /^(\d{4})-(\d{2})-(\d{2})$/;
+  const isoShortPattern = /^--(\d{2})-(\d{2})$/;
+
+  const isoFullMatch = birthDate.match(isoFullPattern);
+  const isoShortMatch = birthDate.match(isoShortPattern);
+
+  if (isoFullMatch) {
+    // Full ISO date: YYYY-MM-DD
+    return {
+      day: parseInt(isoFullMatch[3], 10),
+      month: parseInt(isoFullMatch[2], 10),
+      year: parseInt(isoFullMatch[1], 10),
+    };
+  } else if (isoShortMatch) {
+    // Short ISO date (recurring): --MM-DD
+    return {
+      day: parseInt(isoShortMatch[2], 10),
+      month: parseInt(isoShortMatch[1], 10),
+      year: null,
+    };
+  }
+
+  // Fallback: German format (DD.MM or DD.MM.YYYY)
   const parts = birthDate.split('.');
 
   return {
@@ -30,6 +60,10 @@ export function getNextOccurrence(
 ): Date {
   const { day, month } = parseBirthDate(birthday.birthDate);
 
+  // Normalize reference date to start of day (00:00:00) for date-only comparison
+  const startOfToday = new Date(referenceDate);
+  startOfToday.setHours(0, 0, 0, 0);
+
   // Try to create date in current year
   let nextOccurrence = new Date(
     referenceDate.getFullYear(),
@@ -43,8 +77,9 @@ export function getNextOccurrence(
     nextOccurrence = new Date(referenceDate.getFullYear(), 1, 28);
   }
 
-  // If birthday already passed this year, use next year
-  if (nextOccurrence < referenceDate) {
+  // If birthday already passed this year (before today), use next year
+  // Compare only dates, not times - birthdays that are today should count as upcoming
+  if (nextOccurrence < startOfToday) {
     nextOccurrence.setFullYear(referenceDate.getFullYear() + 1);
 
     // Re-check Feb 29 for next year
@@ -128,4 +163,38 @@ export function splitBirthdays(
     upcoming: sortBirthdays(upcoming),
     future: sortBirthdays(future),
   };
+}
+
+// groupBirthdaysByYear function - Group birthdays by calendar year
+/**
+ * Group birthdays by calendar year based on their next occurrence
+ * @param birthdays - Array of birthdays with occurrence information
+ * @param referenceDate - Reference date for grouping (typically today)
+ * @returns Array of year groups with birthdays, sorted by year
+ */
+export function groupBirthdaysByYear(
+  birthdays: BirthdayWithOccurrence[],
+  referenceDate: Date
+): BirthdaysByYear[] {
+  // Group birthdays by year of their next occurrence
+  const yearMap = new Map<number, BirthdayWithOccurrence[]>();
+
+  birthdays.forEach((birthday) => {
+    const year = birthday.nextOccurrence.getFullYear();
+
+    if (!yearMap.has(year)) {
+      yearMap.set(year, []);
+    }
+    yearMap.get(year)!.push(birthday);
+  });
+
+  // Convert map to array and sort by year
+  const yearGroups: BirthdaysByYear[] = Array.from(yearMap.entries())
+    .map(([year, birthdays]) => ({
+      year,
+      birthdays: sortBirthdays(birthdays),
+    }))
+    .sort((a, b) => a.year - b.year);
+
+  return yearGroups;
 }
