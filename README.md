@@ -1,24 +1,38 @@
 # Birthday Planner
 
-A responsive web application for tracking upcoming birthdays with full CRUD operations.
+**Self-hosted birthday tracking. Your data, your server, complete privacy.**
 
-> **🤖 AI-Generated Project**: This application was primarily built by an AI coding agent ([Claude Code](https://claude.com/claude-code)) using [SpecKit](https://github.com/specify-systems/specify) for structured feature development. The entire development process—from specification to implementation—was orchestrated through SpecKit's systematic workflow, demonstrating modern AI-assisted software engineering.
+A simple, privacy-focused birthday planner designed for families and small teams. Track birthdays with full CRUD operations, deploy in seconds with Docker, and keep your data sovereign in plain JSON files—no cloud services, no vendor lock-in.
 
-**Status:** ✅ CRUD operations complete - Application is fully functional and ready for deployment
+**Status:** ✅ Fully functional and ready for deployment
 
 ## Features
 
-- ➕ **Create**: Add new birthday entries via modal dialog with form validation
-- 📅 **Read**: View birthdays in split view (upcoming 30 days + all others)
+### Privacy & Data Sovereignty
+- 🔒 **Complete data ownership**: Your birthdays stored in plain JSON files on your server
+- 📦 **Git-versionable data**: Backup via Git, track changes, easy migration
+- 🚫 **Zero vendor lock-in**: No cloud services, no proprietary formats
+- 👁️ **Transparent storage**: Human-readable `birthdays.json` - inspect and edit anytime
+
+### Simple Deployment
+- 🐳 **One-command deployment**: `docker-compose up -d` - that's it
+- 💾 **No database required**: Eliminates setup complexity and maintenance overhead
+- 🪶 **Lightweight footprint**: Alpine-based Docker image, minimal resources
+- 🔄 **Persistent data**: Docker volumes ensure data survives container updates
+
+### User Experience
+- 📅 **Smart birthday view**: Upcoming birthdays (next 30 days) separated from all others
+- 🎂 **Automatic age calculation**: Shows age with German formatting
+- 🌍 **German localization**: Perfect for DE/AT/CH markets (de-DE)
+- 📱 **Mobile-first design**: Works flawlessly from smartphone to desktop (320px-1920px)
+- ⚡ **Instant feedback**: Optimistic UI updates - no waiting
+- 🎨 **Modern interface**: Beautiful ShadCN UI components with Tailwind CSS
+
+### Full CRUD Operations
+- ➕ **Create**: Add new birthdays via modal dialog with form validation
 - ✏️ **Update**: Edit existing birthdays with pre-filled forms
 - 🗑️ **Delete**: Remove birthdays with confirmation dialog
-- 📱 Mobile-first responsive design (320px - 1920px viewports)
-- 🌍 German localization (de-DE) for all UI text
-- 🎨 Modern UI with ShadCN components and Tailwind CSS
-- 🐳 Docker-ready with Docker Compose support
-- 💾 Simple JSON file storage (no database required)
-- ⚡ Fast API responses with optimistic UI updates
-- 🔒 No authentication required (designed for trusted environments)
+- 📋 **Read**: Browse all birthdays in card or table view
 
 ## Tech Stack
 
@@ -282,13 +296,23 @@ This approach demonstrates how AI coding agents can deliver production-ready app
 
 ### Project Principles
 
-1. **Simplicity First**: JSON storage before databases, direct implementations before abstractions
-2. **Responsive Design**: Mobile-first with ShadCN components
-3. **Docker-First**: All deployments containerized
-4. **No Authentication**: Internal network only, no login required
-5. **SpecKit Workflow**: All features follow structured specification → planning → implementation
+1. **Data Sovereignty**: Your data in plain JSON files - git-versionable, transparent, portable
+2. **Simplicity First**: No database complexity, direct implementations before abstractions
+3. **Privacy-Focused**: Self-hosted, no cloud services, no vendor lock-in
+4. **Mobile-First Design**: Responsive across all devices with ShadCN components
+5. **Docker-First Deployment**: All deployments containerized for easy setup
+6. **Trusted Environment**: Designed for families and small teams (BasicAuth coming soon)
+7. **SpecKit-Driven Development**: All features follow structured specification → planning → implementation
 
 For details, see [CLAUDE.md](./CLAUDE.md) and [Constitution](./.specify/memory/constitution.md).
+
+## About This Project
+
+> **🤖 AI-Generated Application**: This birthday planner was primarily built by an AI coding agent ([Claude Code](https://claude.com/claude-code)) using [SpecKit](https://github.com/specify-systems/specify) for structured feature development.
+
+The entire application—from specification to implementation—was developed through a systematic AI-driven workflow, demonstrating how AI coding agents can deliver production-ready applications when guided by structured methodologies. Each feature followed the SpecKit process: specification → planning → task generation → implementation → quality analysis.
+
+This makes the project both a useful birthday tracking tool and a reference implementation for AI-assisted software engineering.
 
 ## License
 

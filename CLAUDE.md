@@ -4,23 +4,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a **birthday planner web application** built as a **reference implementation for AI-assisted software development** using [SpecKit](https://github.com/specify-systems/specify). The application was primarily created by the Claude Code AI agent following a structured specification-to-implementation workflow.
+This is a **privacy-focused, self-hosted birthday planner** designed for families and small teams who value data sovereignty and simplicity. The application keeps your birthday data in plain JSON files on your server—no cloud dependencies, no vendor lock-in, complete transparency.
 
-The application provides a responsive birthday calendar with full CRUD operations, German localization, and Docker deployment—all designed for trusted environments without authentication.
+**Core User Benefits:**
+- 🔒 **Complete data ownership**: Plain JSON files on your server
+- 🐳 **One-command deployment**: `docker-compose up -d`
+- 🚫 **Zero vendor lock-in**: Git-versionable, human-readable data
+- 📦 **Easy backup**: Just commit `birthdays.json` to Git
+- 🌍 **German localization**: Perfect for DE/AT/CH markets
+- 📱 **Mobile-first design**: Works flawlessly across all devices
+
+The application provides a responsive birthday calendar with full CRUD operations, smart birthday grouping (upcoming vs. all others), automatic age calculation, and German date formatting.
 
 **Tech Stack:**
-- Next.js (frontend framework)
-- ShadCN (UI components)
-- JSON file storage (simple FileStore for data persistence)
-- Docker containerization
+- Next.js 16 (App Router) + React 19 + TypeScript 5.9+
+- ShadCN UI components + Tailwind CSS
+- JSON FileStore (simple file-based persistence)
+- Docker containerization (Alpine-based)
 
 **Key Architecture Decisions:**
-- **AI-Generated**: Entire codebase created by Claude Code AI agent using SpecKit workflow
-- **SpecKit-Driven**: All features follow specification → planning → implementation workflow
-- **No Authentication**: Designed for trusted environments (home networks, internal tools)
-- **Simple Data Storage**: File-based JSON storage (no database complexity)
-- **Responsive Design**: Mobile-first with ShadCN components
-- **Docker-First**: Containerized deployment with volume persistence
+- **Data Sovereignty First**: Your data in git-versionable JSON files - transparent, portable, human-readable
+- **Simplicity Over Complexity**: No database setup, no cloud services, minimal dependencies
+- **Privacy-Focused**: Self-hosted, no external API calls, no telemetry
+- **Trusted Environment**: Designed for home networks and small teams (BasicAuth planned for future)
+- **Docker-First Deployment**: Containerized with persistent volumes for easy updates
+- **Mobile-First Design**: Responsive across all devices with ShadCN components
+- **AI-Generated Codebase**: Built by Claude Code AI agent using SpecKit workflow
+- **SpecKit-Driven Development**: All features follow specification → planning → implementation
 
 ## Development Workflow (SpecKit)
 
@@ -152,8 +162,8 @@ The application runs as a Docker container with:
 - Multi-stage build (build + production stages)
 - Node.js Alpine base image for minimal footprint
 - Externalized volume mount for JSON FileStore at `/data`
-- Internal network access only (no public exposure)
-- Home lab deployment target
+- Designed for trusted environments (home networks, small teams)
+- Optional BasicAuth protection planned for future releases
 - Port 3000 exposed for web access
 
 ## Data Storage
