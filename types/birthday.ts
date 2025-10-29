@@ -46,3 +46,9 @@ export interface SplitBirthdays {
   upcoming: BirthdayWithOccurrence[];    // Section 1: Next 30 days
   future: BirthdayWithOccurrence[];      // Section 2: Remaining year
 }
+
+// BirthdaysByYear interface - Group birthdays by calendar year
+export interface BirthdaysByYear {
+  year: number;                          // Calendar year
+  birthdays: BirthdayWithOccurrence[];   // Birthdays in this year
+}

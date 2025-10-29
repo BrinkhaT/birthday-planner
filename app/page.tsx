@@ -7,7 +7,7 @@ import { BirthdayTable } from '@/components/birthday-table';
 import { BirthdayModal } from '@/components/birthday-modal';
 import { DeleteConfirmation } from '@/components/delete-confirmation';
 import { Birthday } from '@/types/birthday';
-import { splitBirthdays } from '@/lib/date-utils';
+import { splitBirthdays, groupBirthdaysByYear } from '@/lib/date-utils';
 import { i18nDE } from '@/lib/i18n-de';
 
 export default function Home() {
@@ -160,6 +160,12 @@ export default function Home() {
     return splitBirthdays(birthdays, today);
   }, [birthdays]);
 
+  // Group future birthdays by year
+  const futureByYear = useMemo(() => {
+    const today = new Date();
+    return groupBirthdaysByYear(future, today);
+  }, [future]);
+
   if (loading) {
     return (
       <main className="min-h-screen bg-background">
@@ -209,19 +215,7 @@ export default function Home() {
               Verpasse nie wieder einen Geburtstag!
             </p>
           </div>
-          <button
-            onClick={() => {
-              setModalMode('add');
-              setSelectedBirthday(null);
-              setIsModalOpen(true);
-            }}
-            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors min-h-[44px] min-w-[44px]"
-            title={i18nDE.tooltips.addBirthday}
-            aria-label={i18nDE.tooltips.addBirthday}
-          >
-            <Plus className="h-5 w-5" />
-            <span className="font-medium">{i18nDE.buttons.add}</span>
-          </button>
+
         </header>
 
         {/* T013-T015: Section 1 - Upcoming Birthdays (Next 30 Days) */}
@@ -230,7 +224,7 @@ export default function Home() {
             id="upcoming-heading"
             className="text-xl sm:text-2xl font-semibold text-foreground mb-4 sm:mb-6"
           >
-            Anstehende Geburtstage (Nächste 30 Tage)
+            Baldige Geburtstage
           </h2>
 
           {upcoming.length === 0 ? (
@@ -253,7 +247,7 @@ export default function Home() {
           )}
         </section>
 
-        {/* T026-T029: Section 2 - All Other Birthdays */}
+        {/* T026-T029: Section 2 - All Other Birthdays (Grouped by Year) */}
         <section aria-labelledby="future-heading" className="mt-12">
           <h2
             id="future-heading"
@@ -261,12 +255,44 @@ export default function Home() {
           >
             Alle weiteren Geburtstage
           </h2>
-          <BirthdayTable
-            birthdays={future}
-            emptyMessage="Keine weiteren Geburtstage vorhanden"
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
+          {futureByYear.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">
+                Keine weiteren Geburtstage vorhanden
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-8">
+              {futureByYear.map(({ year, birthdays }) => (
+                <div key={year}>
+                  <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-3">
+                    {year}
+                  </h3>
+                  <BirthdayTable
+                    birthdays={birthdays}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+        <section className={"mt-6"}>
+          <button
+              onClick={() => {
+                setModalMode('add');
+                setSelectedBirthday(null);
+                setIsModalOpen(true);
+              }}
+              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors min-h-[44px] min-w-[44px]"
+              title={i18nDE.tooltips.addBirthday}
+              aria-label={i18nDE.tooltips.addBirthday}
+          >
+            <Plus className="h-5 w-5" />
+            <span className="font-medium">{i18nDE.buttons.add}</span>
+          </button>
         </section>
 
         {/* Birthday Modal for Add/Edit operations */}

@@ -4,6 +4,7 @@ import {
   ParsedDate,
   BirthdayRanges,
   SplitBirthdays,
+  BirthdaysByYear,
 } from '@/types/birthday';
 
 // T005: parseBirthDate function - Parse ISO or German format
@@ -162,4 +163,38 @@ export function splitBirthdays(
     upcoming: sortBirthdays(upcoming),
     future: sortBirthdays(future),
   };
+}
+
+// groupBirthdaysByYear function - Group birthdays by calendar year
+/**
+ * Group birthdays by calendar year based on their next occurrence
+ * @param birthdays - Array of birthdays with occurrence information
+ * @param referenceDate - Reference date for grouping (typically today)
+ * @returns Array of year groups with birthdays, sorted by year
+ */
+export function groupBirthdaysByYear(
+  birthdays: BirthdayWithOccurrence[],
+  referenceDate: Date
+): BirthdaysByYear[] {
+  // Group birthdays by year of their next occurrence
+  const yearMap = new Map<number, BirthdayWithOccurrence[]>();
+
+  birthdays.forEach((birthday) => {
+    const year = birthday.nextOccurrence.getFullYear();
+
+    if (!yearMap.has(year)) {
+      yearMap.set(year, []);
+    }
+    yearMap.get(year)!.push(birthday);
+  });
+
+  // Convert map to array and sort by year
+  const yearGroups: BirthdaysByYear[] = Array.from(yearMap.entries())
+    .map(([year, birthdays]) => ({
+      year,
+      birthdays: sortBirthdays(birthdays),
+    }))
+    .sort((a, b) => a.year - b.year);
+
+  return yearGroups;
 }
