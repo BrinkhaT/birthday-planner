@@ -1,47 +1,4 @@
 {
-  "version": "1.1.0",
-  "birthdays": [
-    {
-      "id": "550e8400-e29b-41d4-a716-446655440000",
-      "name": "Paula",
-      "birthDate": "2024-10-02",
-      "createdAt": "2025-10-28T10:00:00.000Z",
-      "updatedAt": "2025-10-29T06:42:54.098Z"
-    },
-    {
-      "id": "550e8400-e29b-41d4-a716-446655440001",
-      "name": "Thomas",
-      "birthDate": "1988-08-29",
-      "createdAt": "2025-10-28T10:00:00.000Z",
-      "updatedAt": "2025-10-28T10:00:00.000Z"
-    },
-    {
-      "id": "550e8400-e29b-41d4-a716-446655440002",
-      "name": "Isabel",
-      "birthDate": "1990-07-12",
-      "createdAt": "2025-10-28T10:00:00.000Z",
-      "updatedAt": "2025-10-28T10:00:00.000Z"
-    },
-    {
-      "id": "550e8400-e29b-41d4-a716-446655440003",
-      "name": "Oma",
-      "birthDate": "1942-11-18",
-      "createdAt": "2025-10-28T10:00:00.000Z",
-      "updatedAt": "2025-10-29T06:36:05.324Z"
-    },
-    {
-      "id": "eb7dcd11-45c2-462d-817a-9ed511e05ee9",
-      "name": "Rodger Fleischer",
-      "birthDate": "--11-11",
-      "createdAt": "2025-10-28T22:17:22.194Z",
-      "updatedAt": "2025-10-28T22:17:22.194Z"
-    },
-    {
-      "id": "0c70c399-83d4-43fa-9b89-6855a043d9da",
-      "name": "Anett Brinkhaus",
-      "birthDate": "1964-10-29",
-      "createdAt": "2025-10-29T08:02:06.242Z",
-      "updatedAt": "2025-10-29T08:02:06.242Z"
-    }
-  ]
+  "version": "1.0.0",
+  "birthdays": []
 }
