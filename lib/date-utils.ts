@@ -1,0 +1,197 @@
+import {
+  Birthday,
+  BirthdayWithOccurrence,
+  ParsedDate,
+  SplitBirthdays,
+  BirthdaysByYear,
+} from '@/types/birthday';
+
+// T005: parseBirthDate function - Parse ISO or German format
+/**
+ * Parse a birthday string and extract day, month, and optional year
+ * @param birthDate - Birthday string in ISO format (YYYY-MM-DD or --MM-DD) or German format (DD.MM or DD.MM.YYYY)
+ * @returns Parsed date components
+ */
+export function parseBirthDate(birthDate: string): ParsedDate {
+  // Check for ISO format first (YYYY-MM-DD or --MM-DD)
+  const isoFullPattern = /^(\d{4})-(\d{2})-(\d{2})$/;
+  const isoShortPattern = /^--(\d{2})-(\d{2})$/;
+
+  const isoFullMatch = birthDate.match(isoFullPattern);
+  const isoShortMatch = birthDate.match(isoShortPattern);
+
+  if (isoFullMatch) {
+    // Full ISO date: YYYY-MM-DD
+    return {
+      day: parseInt(isoFullMatch[3], 10),
+      month: parseInt(isoFullMatch[2], 10),
+      year: parseInt(isoFullMatch[1], 10),
+    };
+  } else if (isoShortMatch) {
+    // Short ISO date (recurring): --MM-DD
+    return {
+      day: parseInt(isoShortMatch[2], 10),
+      month: parseInt(isoShortMatch[1], 10),
+      year: null,
+    };
+  }
+
+  // Fallback: German format (DD.MM or DD.MM.YYYY)
+  const parts = birthDate.split('.');
+
+  return {
+    day: parseInt(parts[0], 10),
+    month: parseInt(parts[1], 10),
+    year: parts[2] ? parseInt(parts[2], 10) : null,
+  };
+}
+
+// T006: isLeapYear helper function
+export function isLeapYear(year: number): boolean {
+  // Divisible by 4, except centuries unless divisible by 400
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+}
+
+// T007: getNextOccurrence function with leap year handling
+export function getNextOccurrence(
+  birthday: Birthday,
+  referenceDate: Date
+): Date {
+  const { day, month } = parseBirthDate(birthday.birthDate);
+
+  // Normalize reference date to start of day (00:00:00) for date-only comparison
+  const startOfToday = new Date(referenceDate);
+  startOfToday.setHours(0, 0, 0, 0);
+
+  // Try to create date in current year
+  let nextOccurrence = new Date(
+    referenceDate.getFullYear(),
+    month - 1,
+    day
+  );
+
+  // Handle Feb 29 in non-leap years
+  if (month === 2 && day === 29 && !isLeapYear(referenceDate.getFullYear())) {
+    // Fall back to Feb 28 (specification decision)
+    nextOccurrence = new Date(referenceDate.getFullYear(), 1, 28);
+  }
+
+  // If birthday already passed this year (before today), use next year
+  // Compare only dates, not times - birthdays that are today should count as upcoming
+  if (nextOccurrence < startOfToday) {
+    nextOccurrence.setFullYear(referenceDate.getFullYear() + 1);
+
+    // Re-check Feb 29 for next year
+    if (month === 2 && day === 29 && !isLeapYear(nextOccurrence.getFullYear())) {
+      nextOccurrence = new Date(nextOccurrence.getFullYear(), 1, 28);
+    }
+  }
+
+  return nextOccurrence;
+}
+
+// T008: calculateAge function with null handling
+// Returns the age the person will be at their next birthday
+export function calculateAge(
+  birthday: Birthday,
+  referenceDate: Date
+): number | null {
+  const { year } = parseBirthDate(birthday.birthDate);
+
+  if (!year) return null; // No birth year available
+
+  // Validate year is not in future (data error)
+  if (year > referenceDate.getFullYear()) return null;
+
+  // Calculate age at next occurrence (next birthday)
+  const nextOccurrence = getNextOccurrence(birthday, referenceDate);
+  const ageAtNextBirthday = nextOccurrence.getFullYear() - year;
+
+  return ageAtNextBirthday;
+}
+
+// T009: sortBirthdays function with two-level sort
+export function sortBirthdays(
+  birthdays: BirthdayWithOccurrence[]
+): BirthdayWithOccurrence[] {
+  return birthdays.sort((a, b) => {
+    // Primary sort: by next occurrence date
+    const dateDiff = a.nextOccurrence.getTime() - b.nextOccurrence.getTime();
+    if (dateDiff !== 0) return dateDiff;
+
+    // Secondary sort: alphabetically by name
+    return a.name.localeCompare(b.name);
+  });
+}
+
+// T010: splitBirthdays function with date range logic
+export function splitBirthdays(
+  birthdays: Birthday[],
+  referenceDate: Date
+): SplitBirthdays {
+  // Calculate date ranges
+  const upcomingStart = new Date(referenceDate);
+  upcomingStart.setHours(0, 0, 0, 0);
+
+  const upcomingEnd = new Date(referenceDate);
+  upcomingEnd.setDate(referenceDate.getDate() + 29);
+  upcomingEnd.setHours(23, 59, 59, 999);
+
+  const upcoming: BirthdayWithOccurrence[] = [];
+  const future: BirthdayWithOccurrence[] = [];
+
+  birthdays.forEach((birthday) => {
+    const nextOccurrence = getNextOccurrence(birthday, referenceDate);
+    const age = calculateAge(birthday, referenceDate);
+
+    const enriched: BirthdayWithOccurrence = {
+      ...birthday,
+      nextOccurrence,
+      age,
+    };
+
+    if (nextOccurrence <= upcomingEnd) {
+      upcoming.push(enriched);
+    } else {
+      future.push(enriched);
+    }
+  });
+
+  // Sort both arrays by date (ascending), then by name
+  return {
+    upcoming: sortBirthdays(upcoming),
+    future: sortBirthdays(future),
+  };
+}
+
+// groupBirthdaysByYear function - Group birthdays by calendar year
+/**
+ * Group birthdays by calendar year based on their next occurrence
+ * @param birthdays - Array of birthdays with occurrence information
+ * @returns Array of year groups with birthdays, sorted by year
+ */
+export function groupBirthdaysByYear(
+  birthdays: BirthdayWithOccurrence[]
+): BirthdaysByYear[] {
+  // Group birthdays by year of their next occurrence
+  const yearMap = new Map<number, BirthdayWithOccurrence[]>();
+
+  birthdays.forEach((birthday) => {
+    const year = birthday.nextOccurrence.getFullYear();
+
+    if (!yearMap.has(year)) {
+      yearMap.set(year, []);
+    }
+    yearMap.get(year)!.push(birthday);
+  });
+
+  // Convert map to array and sort by year
+  const yearGroups: BirthdaysByYear[] = Array.from(yearMap.entries())
+    .map(([year, birthdays]) => ({
+      year,
+      birthdays: sortBirthdays(birthdays),
+    }))
+    .sort((a, b) => a.year - b.year);
+
+  return yearGroups;
+}

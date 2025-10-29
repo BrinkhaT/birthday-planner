@@ -1,0 +1,286 @@
+openapi: 3.0.3
+info:
+  title: Birthday Planner CRUD API
+  description: API for creating, reading, updating, and deleting birthday entries
+  version: 1.0.0
+  contact:
+    name: Birthday Planner
+servers:
+  - url: http://localhost:3000/api
+    description: Local development server
+
+paths:
+  /birthdays:
+    get:
+      summary: List all birthdays
+      description: Retrieve a list of all birthday entries (existing endpoint)
+      operationId: listBirthdays
+      tags:
+        - Birthdays
+      responses:
+        '200':
+          description: Successful response with list of birthdays
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BirthdayWithAge'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /birthdays/create:
+    post:
+      summary: Create a new birthday
+      description: Add a new birthday entry to the system
+      operationId: createBirthday
+      tags:
+        - Birthdays
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBirthdayRequest'
+      responses:
+        '200':
+          description: Birthday created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Birthday'
+        '400':
+          description: Invalid input (validation error)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /birthdays/{id}:
+    put:
+      summary: Update an existing birthday
+      description: Update a birthday entry by ID
+      operationId: updateBirthday
+      tags:
+        - Birthdays
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Birthday entry UUID
+          schema:
+            type: string
+            format: uuid
+            example: "550e8400-e29b-41d4-a716-446655440000"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBirthdayRequest'
+      responses:
+        '200':
+          description: Birthday updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Birthday'
+        '400':
+          description: Invalid input (validation error)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Birthday not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      summary: Delete a birthday
+      description: Remove a birthday entry from the system
+      operationId: deleteBirthday
+      tags:
+        - Birthdays
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Birthday entry UUID
+          schema:
+            type: string
+            format: uuid
+            example: "550e8400-e29b-41d4-a716-446655440000"
+      responses:
+        '200':
+          description: Birthday deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Birthday successfully deleted"
+        '404':
+          description: Birthday not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Birthday:
+      type: object
+      required:
+        - id
+        - name
+        - birthdate
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the birthday entry
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Person's name
+          example: "Paula"
+        birthdate:
+          type: string
+          pattern: '^\d{2}\.\d{2}\.\d{4}$'
+          description: Birthdate in DD.MM.YYYY format
+          example: "02.10.2024"
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO-8601 timestamp of creation
+          example: "2025-10-28T10:00:00.000Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: ISO-8601 timestamp of last update
+          example: "2025-10-28T10:00:00.000Z"
+
+    BirthdayWithAge:
+      allOf:
+        - $ref: '#/components/schemas/Birthday'
+        - type: object
+          properties:
+            age:
+              type: integer
+              description: Current age in years
+              example: 35
+            nextBirthday:
+              type: string
+              pattern: '^\d{2}\.\d{2}\.\d{4}$'
+              description: Next birthday date in DD.MM.YYYY format
+              example: "02.10.2026"
+            daysUntil:
+              type: integer
+              description: Days until next birthday
+              example: 45
+
+    CreateBirthdayRequest:
+      type: object
+      required:
+        - name
+        - birthdate
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Person's name
+          example: "Isabel"
+        birthdate:
+          type: string
+          pattern: '^\d{2}\.\d{2}\.\d{4}$'
+          description: Birthdate in DD.MM.YYYY format
+          example: "12.07.1990"
+
+    UpdateBirthdayRequest:
+      type: object
+      required:
+        - name
+        - birthdate
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Person's name
+          example: "Isabel Maria"
+        birthdate:
+          type: string
+          pattern: '^\d{2}\.\d{2}\.\d{4}$'
+          description: Birthdate in DD.MM.YYYY format
+          example: "12.07.1990"
+
+    ErrorResponse:
+      type: object
+      required:
+        - success
+        - error
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+          description: Error message (in German for UI display)
+          example: "Name ist erforderlich"
+
+tags:
+  - name: Birthdays
+    description: Birthday CRUD operations

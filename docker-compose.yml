@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  birthday-planner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - birthday-data:/data
+    environment:
+      - NODE_ENV=production
+      - DATA_DIR=/data
+    restart: unless-stopped
+
+volumes:
+  birthday-data:
+    driver: local
