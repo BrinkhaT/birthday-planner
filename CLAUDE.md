@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a private birthday planner web application built as a responsive webapp for home lab deployment. The application provides a birthday calendar overview without authentication (internal network only).
+This is a **birthday planner web application** built as a **reference implementation for AI-assisted software development** using [SpecKit](https://github.com/specify-systems/specify). The application was primarily created by the Claude Code AI agent following a structured specification-to-implementation workflow.
+
+The application provides a responsive birthday calendar with full CRUD operations, German localization, and Docker deployment—all designed for trusted environments without authentication.
 
 **Tech Stack:**
 - Next.js (frontend framework)
@@ -13,12 +15,30 @@ This is a private birthday planner web application built as a responsive webapp 
 - Docker containerization
 
 **Key Architecture Decisions:**
-- No authentication system (internal network access only)
-- File-based JSON storage mounted as Docker volume
-- Responsive design for various devices
-- Docker deployment with externalized data volume
+- **AI-Generated**: Entire codebase created by Claude Code AI agent using SpecKit workflow
+- **SpecKit-Driven**: All features follow specification → planning → implementation workflow
+- **No Authentication**: Designed for trusted environments (home networks, internal tools)
+- **Simple Data Storage**: File-based JSON storage (no database complexity)
+- **Responsive Design**: Mobile-first with ShadCN components
+- **Docker-First**: Containerized deployment with volume persistence
 
 ## Development Workflow (SpecKit)
+
+**This project demonstrates AI-assisted software development** where Claude Code AI agent acts as the primary developer, following SpecKit's structured methodology.
+
+### How This Project Was Built
+
+Every feature in this application was created through an AI-driven workflow:
+1. Human provides natural language feature description
+2. AI agent (`/speckit.specify`) converts it to formal specification
+3. AI agent (`/speckit.plan`) creates implementation plan with design artifacts
+4. AI agent (`/speckit.tasks`) generates dependency-ordered task list
+5. AI agent (`/speckit.implement`) writes all code, tests, and configuration
+6. AI agent (`/speckit.analyze`) validates consistency across artifacts
+
+**Result**: A production-ready application built primarily by AI, with human oversight and direction.
+
+### SpecKit Workflow
 
 This project uses SpecKit for structured feature development. All features must be developed following the SpecKit workflow:
 

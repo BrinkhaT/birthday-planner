@@ -1,6 +1,8 @@
 # Birthday Planner
 
-A responsive web application for tracking upcoming birthdays, built for home lab deployment.
+A responsive web application for tracking upcoming birthdays with full CRUD operations.
+
+> **🤖 AI-Generated Project**: This application was primarily built by an AI coding agent ([Claude Code](https://claude.com/claude-code)) using [SpecKit](https://github.com/specify-systems/specify) for structured feature development. The entire development process—from specification to implementation—was orchestrated through SpecKit's systematic workflow, demonstrating modern AI-assisted software engineering.
 
 **Status:** ✅ CRUD operations complete - Application is fully functional and ready for deployment
 
@@ -16,7 +18,7 @@ A responsive web application for tracking upcoming birthdays, built for home lab
 - 🐳 Docker-ready with Docker Compose support
 - 💾 Simple JSON file storage (no database required)
 - ⚡ Fast API responses with optimistic UI updates
-- 🔒 Internal network deployment (no authentication needed)
+- 🔒 No authentication required (designed for trusted environments)
 
 ## Tech Stack
 
@@ -54,6 +56,25 @@ docker-compose down
 ```
 
 The application will be available at [http://localhost:3000](http://localhost:3000).
+
+### Using Pre-built Docker Image
+
+Pull and run the pre-built image from Docker Hub:
+
+```bash
+# Pull the latest image
+docker pull brinkhat/birthday-planner:latest
+
+# Run with Docker Compose (create docker-compose.yml first)
+docker-compose up -d
+
+# Or run directly with docker
+docker run -d \
+  -p 3000:3000 \
+  -v birthday-data:/data \
+  --name birthday-planner \
+  brinkhat/birthday-planner:latest
+```
 
 ## Project Structure
 
@@ -142,6 +163,25 @@ The application uses a multi-stage Docker build for optimized production deploym
 - **Production stage**: Runs on Node.js Alpine (minimal footprint)
 - **Volume mount**: `/data` directory for persistent storage
 
+### Publishing to Docker Hub
+
+To publish your own version to Docker Hub:
+
+```bash
+# Build the image with your Docker Hub username
+docker build -t brinkhat/birthday-planner:latest .
+
+# Tag with version
+docker tag brinkhat/birthday-planner:latest brinkhat/birthday-planner:1.0.0
+
+# Login to Docker Hub
+docker login
+
+# Push to Docker Hub
+docker push brinkhat/birthday-planner:latest
+docker push brinkhat/birthday-planner:1.0.0
+```
+
 ### Volume Persistence
 
 Birthday data persists across container restarts using Docker volumes:
@@ -189,13 +229,37 @@ npm run lint
 
 ## Architecture & Development
 
-### SpecKit-Driven Development
+### AI-Assisted Development with SpecKit
 
-This project uses [SpecKit](https://github.com/specify-systems/specify) for structured feature development:
+This project serves as a **real-world example of AI-assisted software engineering** using:
 
-- Feature specifications in `specs/` directory
-- Constitution-driven development (see `.specify/memory/constitution.md`)
-- Slash commands for workflow automation (see `.claude/commands/`)
+- **[Claude Code](https://claude.com/claude-code)**: An AI coding agent by Anthropic
+- **[SpecKit](https://github.com/specify-systems/specify)**: A structured specification-to-implementation framework
+
+#### How It Was Built
+
+The entire application was developed through a systematic AI-driven workflow:
+
+1. **Specification Phase**: Natural language feature descriptions were converted into formal specifications
+2. **Planning Phase**: Implementation plans with design artifacts (data models, API contracts, research notes)
+3. **Task Generation**: Dependency-ordered task lists generated from specifications
+4. **Implementation**: Code generation following the task list with automated testing
+5. **Quality Analysis**: Cross-artifact consistency checks and validation
+
+Each feature (tech baseline, split view, CRUD operations) followed this exact workflow, with the AI agent handling:
+- Code generation
+- Component design
+- API implementation
+- Docker configuration
+- Testing and validation
+
+#### Project Structure
+
+- **`specs/`**: Feature specifications and implementation artifacts for each feature
+- **`.specify/`**: SpecKit configuration, templates, and project constitution
+- **`.claude/`**: Slash commands for workflow automation
+
+This approach demonstrates how AI coding agents can deliver production-ready applications when guided by structured methodologies like SpecKit.
 
 ### Implemented Features
 
@@ -232,4 +296,29 @@ ISC
 
 ## Contributing
 
-This is a private home lab application. Development follows the SpecKit workflow - see `.specify/` directory for templates and constitution.
+Contributions are welcome! This project serves as a reference implementation for AI-assisted development with SpecKit.
+
+### Development Workflow
+
+All feature development follows the SpecKit methodology:
+
+1. Create a feature specification using `/speckit.specify`
+2. Generate an implementation plan with `/speckit.plan`
+3. Create ordered tasks with `/speckit.tasks`
+4. Implement with `/speckit.implement`
+
+See the `.specify/` directory for templates and the project constitution.
+
+### For AI Agents
+
+If you're an AI coding agent working on this project, refer to [CLAUDE.md](./CLAUDE.md) for project-specific guidance and workflow instructions.
+
+### For Human Developers
+
+While this project was primarily built by an AI agent, human contributions are encouraged! You can:
+- Add new features following the SpecKit workflow
+- Improve existing functionality
+- Enhance documentation
+- Report issues or suggest improvements
+
+Please ensure all contributions maintain the project's principles (see `.specify/memory/constitution.md`).
