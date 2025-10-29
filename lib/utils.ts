@@ -1,13 +1,17 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { isoToGermanDate } from '@/lib/validations';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function formatBirthDate(dateString: string): string {
-  // Format: DD.MM or DD.MM.YYYY -> Display format
-  return dateString;
+  // Convert ISO format (YYYY-MM-DD or --MM-DD) to German format (DD.MM.YYYY or DD.MM)
+  const germanDate = isoToGermanDate(dateString);
+
+  // If conversion succeeds, return German format; otherwise return original
+  return germanDate || dateString;
 }
 
 export function validateBirthDate(dateString: string): boolean {

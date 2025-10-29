@@ -6,8 +6,37 @@ import {
   SplitBirthdays,
 } from '@/types/birthday';
 
-// T005: parseBirthDate function
+// T005: parseBirthDate function - Parse ISO or German format
+/**
+ * Parse a birthday string and extract day, month, and optional year
+ * @param birthDate - Birthday string in ISO format (YYYY-MM-DD or --MM-DD) or German format (DD.MM or DD.MM.YYYY)
+ * @returns Parsed date components
+ */
 export function parseBirthDate(birthDate: string): ParsedDate {
+  // Check for ISO format first (YYYY-MM-DD or --MM-DD)
+  const isoFullPattern = /^(\d{4})-(\d{2})-(\d{2})$/;
+  const isoShortPattern = /^--(\d{2})-(\d{2})$/;
+
+  const isoFullMatch = birthDate.match(isoFullPattern);
+  const isoShortMatch = birthDate.match(isoShortPattern);
+
+  if (isoFullMatch) {
+    // Full ISO date: YYYY-MM-DD
+    return {
+      day: parseInt(isoFullMatch[3], 10),
+      month: parseInt(isoFullMatch[2], 10),
+      year: parseInt(isoFullMatch[1], 10),
+    };
+  } else if (isoShortMatch) {
+    // Short ISO date (recurring): --MM-DD
+    return {
+      day: parseInt(isoShortMatch[2], 10),
+      month: parseInt(isoShortMatch[1], 10),
+      year: null,
+    };
+  }
+
+  // Fallback: German format (DD.MM or DD.MM.YYYY)
   const parts = birthDate.split('.');
 
   return {

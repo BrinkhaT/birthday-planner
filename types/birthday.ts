@@ -1,7 +1,7 @@
 export interface Birthday {
   id: string;
   name: string;
-  birthDate: string; // Format: DD.MM (no year) or DD.MM.YYYY (4-digit year)
+  birthDate: string; // Format: ISO 8601 (YYYY-MM-DD or --MM-DD for recurring dates without year)
   createdAt: string; // ISO-8601
   updatedAt: string; // ISO-8601
 }

@@ -1,15 +1,25 @@
 'use client';
 
 import { useEffect, useState, useMemo } from 'react';
+import { Plus } from 'lucide-react';
 import { BirthdayCard } from '@/components/birthday-card';
 import { BirthdayTable } from '@/components/birthday-table';
+import { BirthdayModal } from '@/components/birthday-modal';
 import { Birthday } from '@/types/birthday';
 import { splitBirthdays } from '@/lib/date-utils';
+import { i18nDE } from '@/lib/i18n-de';
 
 export default function Home() {
   const [birthdays, setBirthdays] = useState<Birthday[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Modal state for add/edit operations
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
+  const [selectedBirthday, setSelectedBirthday] = useState<Birthday | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchBirthdays() {
@@ -33,6 +43,42 @@ export default function Home() {
 
     fetchBirthdays();
   }, []);
+
+  // T012, T013: Handle birthday form submission (add mode)
+  const handleBirthdaySubmit = async (data: { name: string; birthdate: string }) => {
+    try {
+      setIsSubmitting(true);
+      setSubmitError(null);
+
+      const response = await fetch('/api/birthdays/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || i18nDE.error.saveFailed);
+      }
+
+      const result = await response.json();
+
+      // Optimistic update: Add new birthday to state
+      setBirthdays((prev) => [...prev, result.birthday]);
+
+      // Close modal and reset state
+      setIsModalOpen(false);
+      setSelectedBirthday(null);
+      setSubmitError(null);
+    } catch (err) {
+      console.error('Error submitting birthday:', err);
+      setSubmitError(err instanceof Error ? err.message : i18nDE.error.saveFailed);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // T012: Add useMemo hook to compute split birthdays
   const { upcoming, future } = useMemo(() => {
@@ -80,13 +126,28 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 sm:py-12 max-w-7xl">
-        <header className="mb-8 sm:mb-12">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-2">
-            🎂 Geburtstagplaner
-          </h1>
-          <p className="text-muted-foreground text-base sm:text-lg">
-            Verpasse nie wieder einen Geburtstag!
-          </p>
+        <header className="mb-8 sm:mb-12 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-2">
+              🎂 Geburtstagplaner
+            </h1>
+            <p className="text-muted-foreground text-base sm:text-lg">
+              Verpasse nie wieder einen Geburtstag!
+            </p>
+          </div>
+          <button
+            onClick={() => {
+              setModalMode('add');
+              setSelectedBirthday(null);
+              setIsModalOpen(true);
+            }}
+            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors min-h-[44px] min-w-[44px]"
+            title={i18nDE.tooltips.addBirthday}
+            aria-label={i18nDE.tooltips.addBirthday}
+          >
+            <Plus className="h-5 w-5" />
+            <span className="font-medium">{i18nDE.buttons.add}</span>
+          </button>
         </header>
 
         {/* T013-T015: Section 1 - Upcoming Birthdays (Next 30 Days) */}
@@ -126,6 +187,21 @@ export default function Home() {
             emptyMessage="Keine weiteren Geburtstage vorhanden"
           />
         </section>
+
+        {/* Birthday Modal for Add/Edit operations */}
+        <BirthdayModal
+          isOpen={isModalOpen}
+          mode={modalMode}
+          selectedBirthday={selectedBirthday}
+          onClose={() => {
+            setIsModalOpen(false);
+            setSelectedBirthday(null);
+            setSubmitError(null);
+          }}
+          onSubmit={handleBirthdaySubmit}
+          isLoading={isSubmitting}
+          error={submitError}
+        />
       </div>
     </main>
   );
