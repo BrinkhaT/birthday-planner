@@ -1,17 +1,31 @@
 <!--
 Sync Impact Report:
-Version Change: 1.1.0 → 1.1.1
-Change Type: PATCH - Clarified German Localization principle to explicitly include all UI text
+Version Change: 1.1.1 → 2.0.0
+Change Type: MAJOR - Backward-incompatible principle change (authentication policy reversed)
+
 Modified Principles:
-  - Principle VI: German Localization - Expanded to emphasize ALL frontend text must be German
+  - Principle V: "No Authentication Required" → "Optional Authentication"
+    - Previously: Authentication MUST NOT be implemented (NON-NEGOTIABLE)
+    - Now: Authentication MAY be optionally enabled via environment variables
+    - Rationale: Maintains default trusted-network deployment while allowing security hardening when needed
+
 Added Sections: None
 Removed Sections: None
+
 Templates Status:
-  ✅ plan-template.md - Constitution check already validates German formatting
-  ✅ spec-template.md - Acceptance scenarios already verify German formats
-  ✅ tasks-template.md - Tasks already implement German formatting
-  ✅ Implementation complete - All frontend texts translated (app/page.tsx, birthday-table.tsx, birthday-card.tsx, layout.tsx)
-Follow-up TODOs: None - all frontend texts already implemented in German
+  ✅ plan-template.md - Constitution check validates optional features correctly
+  ✅ spec-template.md - Acceptance scenarios already handle optional features
+  ✅ tasks-template.md - Task structure supports optional feature implementation
+  ⚠️  Implementation already complete - Feature 004-basicauth-env implemented and tested
+
+Feature 004-basicauth-env Implementation:
+  - proxy.ts: Next.js 16 proxy for BasicAuth interception
+  - lib/auth.ts: Credential validation with timing-attack resistance
+  - instrumentation.ts: Fail-fast startup validation
+  - docker-compose.yml: Environment variable configuration
+  - All acceptance criteria met and tested
+
+Follow-up TODOs: None - constitutional amendment reflects completed implementation
 -->
 
 # Birthday Planner Constitution
@@ -67,17 +81,35 @@ The application MUST be containerized and deployment-ready:
 **Rationale**: Docker ensures consistent deployment, easy updates, and proper
 data separation in home lab infrastructure.
 
-### V. No Authentication Required
+### V. Optional Authentication
 
-The application MUST NOT implement authentication mechanisms:
-- Direct access to all features without login
-- No user management system
+The application MUST support both trusted-network and secured deployment modes:
+
+**Default Mode (No Authentication)**:
+- Direct access to all features without login or credentials
+- No user management system required
 - No password storage or session handling
 - Security relies on network isolation (internal network only)
-- Consider this principle NON-NEGOTIABLE for initial versions
+- MUST remain the default behavior to preserve simplicity
 
-**Rationale**: Application runs on internal home network only. Authentication
-adds unnecessary complexity for private, trusted network deployment.
+**Optional BasicAuth Mode**:
+- MAY be enabled via environment variable (ENABLE_BASICAUTH=true)
+- MUST use HTTP Basic Authentication (RFC 7617) when enabled
+- MUST validate credentials with timing-attack resistant comparison
+- MUST fail-fast at startup if credentials missing when enabled
+- MUST provide German-language error messages and prompts
+- MUST have zero performance overhead when disabled (early-return architecture)
+
+**Security Requirements When Enabled**:
+- Constant-time credential comparison to prevent timing attacks
+- Fail-fast validation: Application MUST NOT start with misconfigured credentials
+- Strong password requirements documented in deployment guide
+- HTTPS strongly recommended for production (documented warning)
+
+**Rationale**: Application primarily runs on trusted internal home networks where
+authentication adds unnecessary complexity. Optional BasicAuth allows security
+hardening for edge cases (internet-exposed deployments, shared networks) while
+maintaining simplicity as the default.
 
 ### VI. German Localization
 
@@ -85,7 +117,7 @@ ALL user-facing content MUST be in German language with German formatting conven
 
 **Language Requirements**:
 - **ALL UI Text**: Headings, labels, buttons, messages, tooltips in German
-- **Error Messages**: All error and status messages in German
+- **Error Messages**: All error and status messages in German (including auth errors)
 - **Empty States**: All placeholder and empty state messages in German
 - **Metadata**: Page titles, descriptions, and meta tags in German
 - **HTML Attributes**: `lang="de"` attribute on root HTML element
@@ -104,6 +136,7 @@ ALL user-facing content MUST be in German language with German formatting conven
 - "Fehler beim Laden" not "Error loading"
 - "Anstehende Geburtstage" not "Upcoming Birthdays"
 - "Keine Geburtstage vorhanden" not "No birthdays found"
+- "Authentifizierung erforderlich" not "Authentication required" (BasicAuth)
 
 **Rationale**: Application is deployed in German-speaking household. Complete German
 localization (both language and formatting) provides intuitive user experience and
@@ -117,15 +150,22 @@ eliminates confusion with international date/number formats and English terminol
 - **UI Components**: ShadCN component library
 - **Data Storage**: JSON file storage (FileStore pattern)
 - **Containerization**: Docker
-- **Deployment Target**: Home lab internal network
+- **Deployment Target**: Home lab internal network (optionally internet-exposed with BasicAuth)
 - **Localization**: German locale (de-DE) for all formatting and German language for all text
 
 ### Prohibited Technologies (Initial Version)
 
 - Database systems (PostgreSQL, MySQL, MongoDB, etc.)
-- Authentication libraries or frameworks
+- Complex authentication frameworks (OAuth, JWT, session management)
 - External API dependencies requiring internet access
 - Server-side rendering requiring external services
+
+**Note on BasicAuth**: HTTP Basic Authentication is permitted as an OPTIONAL security
+layer (environment-variable controlled) because it meets simplicity requirements:
+- Zero external dependencies (Node.js built-ins only)
+- No config files or complex setup
+- Stateless (no session management)
+- Standards-compliant (RFC 7617)
 
 **Rationale**: Keep the technology stack minimal, maintainable, and suitable
 for offline home lab deployment without external dependencies.
@@ -180,7 +220,7 @@ Data files MUST include:
 - Timestamp fields for creation and modification (ISO-8601 format internally)
 - Unique identifiers for each record
 - Validation-friendly structure
-- Date fields stored in German DD.MM.YYYY format or DD.MM format
+- Date fields stored in ISO-8601 format internally, displayed in German DD.MM.YYYY or DD.MM. format
 
 **Rationale**: JSON FileStore provides simplicity, readability, backup ease,
 and sufficient performance for private birthday calendar use case.
@@ -216,4 +256,4 @@ implementation plan's "Complexity Tracking" section, documenting:
 - MINOR: New principles added or material guidance expansions
 - PATCH: Clarifications, wording improvements, non-semantic fixes
 
-**Version**: 1.1.1 | **Ratified**: 2025-10-28 | **Last Amended**: 2025-10-28
+**Version**: 2.0.0 | **Ratified**: 2025-10-28 | **Last Amended**: 2025-10-30
