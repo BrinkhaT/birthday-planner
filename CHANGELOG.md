@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.1.1](https://github.com/BrinkhaT/birthday-planner/compare/1.1.0...1.1.1) (2025-10-30)
+
+
+### Bug Fixes
+
+* remove redundant SARIF upload step in CodeQL workflow ([de49d62](https://github.com/BrinkhaT/birthday-planner/commit/de49d625b3fe05b09ae851a1b2303afb6f442e9e))
+* remove unused variable in futureByYear useMemo ([88ede7c](https://github.com/BrinkhaT/birthday-planner/commit/88ede7cc3aeac23afe1f294e7ff5aa494280d605))
+
+
+### Miscellaneous Chores
+
+* change Dependabot schedule to daily for testing ([70584d4](https://github.com/BrinkhaT/birthday-planner/commit/70584d47aee4a4dc992c3f7198e141c416423939))
+
+
+### Continuous Integration
+
+* add CodeQL security analysis and Dependabot ([fb1da73](https://github.com/BrinkhaT/birthday-planner/commit/fb1da73db48fc0fcd124d084497cc384a8aae296))
+* add security scanning and enhance CI/CD pipeline ([1d8f5dc](https://github.com/BrinkhaT/birthday-planner/commit/1d8f5dc3a4982f06b46f3e5d6515c291a586c505))
+* integrate PR validation jobs into develop workflow ([5609af2](https://github.com/BrinkhaT/birthday-planner/commit/5609af2bdb44489f831fe171884d26853bfa440a))
+
 ## [1.1.0](https://github.com/BrinkhaT/birthday-planner/compare/1.0.0...1.1.0) (2025-10-29)
 
 
