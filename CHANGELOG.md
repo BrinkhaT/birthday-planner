@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.1.2](https://github.com/BrinkhaT/birthday-planner/compare/1.1.1...1.1.2) (2025-10-30)
+
+
+### Miscellaneous Chores
+
+* dependency updates and release automation improvements ([564c6ec](https://github.com/BrinkhaT/birthday-planner/commit/564c6ec00c78ea2c93dd38d2018f5905ce180bd5))
+* revert Dependabot schedule from daily to weekly ([3906ba7](https://github.com/BrinkhaT/birthday-planner/commit/3906ba7a752f79681f991adbcec902895d9bdac1))
+
+
+### Continuous Integration
+
+* add automatic release sync from main to develop ([5aa85a6](https://github.com/BrinkhaT/birthday-planner/commit/5aa85a65ccf35ffa9d5be09eba118cfa5dd86b02))
+* **deps:** Bump actions/checkout from 4 to 5 ([14eacd8](https://github.com/BrinkhaT/birthday-planner/commit/14eacd89a25326f3eab8b4fa8a317f0be781cf71))
+* **deps:** Bump actions/upload-artifact from 4 to 5 ([ef8cfa7](https://github.com/BrinkhaT/birthday-planner/commit/ef8cfa730fdde27cecc3be9edcbb9990d772a43b))
+* **deps:** Bump github/codeql-action from 3 to 4 ([5fa3190](https://github.com/BrinkhaT/birthday-planner/commit/5fa3190cf2bd4d982ee4188b5236723f7211fb27))
+
 ## [1.1.1](https://github.com/BrinkhaT/birthday-planner/compare/1.1.0...1.1.1) (2025-10-30)
 
 
