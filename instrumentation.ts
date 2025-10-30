@@ -36,7 +36,6 @@ export function register() {
 
     // Success message
     console.log('✓ BasicAuth aktiviert und Zugangsdaten validiert');
-    console.log(`  Benutzername: ${username}`);
   } else {
     // Info message when disabled
     console.log('ℹ BasicAuth ist deaktiviert');
