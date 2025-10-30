@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.4](https://github.com/BrinkhaT/birthday-planner/compare/1.1.3...1.1.4) (2025-10-30)
+
+
+### Bug Fixes
+
+* use RELEASE_TOKEN to trigger sync-release workflow ([1cfa05f](https://github.com/BrinkhaT/birthday-planner/commit/1cfa05f3d81f5c49de72b75c2f8a1bb477b348b6))
+
+
+### Miscellaneous Chores
+
+* add @types/node ignore rule to maintain Node 20 LTS ([3fc7189](https://github.com/BrinkhaT/birthday-planner/commit/3fc7189a6271631c57fe7e78c0091e89247a72d4))
+* release preparation - workflow fixes and dependency updates ([e0ed234](https://github.com/BrinkhaT/birthday-planner/commit/e0ed234f3b502655bbceeba04ca07737ed866256))
+
 ## [1.1.3](https://github.com/BrinkhaT/birthday-planner/compare/1.1.2...1.1.3) (2025-10-30)
 
 
