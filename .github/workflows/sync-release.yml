@@ -1,0 +1,116 @@
+name: Sync Release to Develop
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-to-develop:
+    name: Sync Release to Develop
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create sync branch and push
+        id: create-branch
+        run: |
+          # Extract version from release tag
+          VERSION="${{ github.event.release.tag_name }}"
+          BRANCH_NAME="sync/release-${VERSION}-to-develop"
+
+          echo "branch_name=${BRANCH_NAME}" >> $GITHUB_OUTPUT
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+          # Create sync branch from current main
+          git checkout -b "$BRANCH_NAME"
+
+          # Push sync branch to remote
+          git push origin "$BRANCH_NAME"
+
+      - name: Create Pull Request to develop
+        id: create-pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ steps.create-branch.outputs.version }}"
+          BRANCH_NAME="${{ steps.create-branch.outputs.branch_name }}"
+
+          # Create PR with detailed description
+          PR_URL=$(gh pr create \
+            --base develop \
+            --head "$BRANCH_NAME" \
+            --title "chore: sync release ${VERSION} to develop" \
+            --label "automated,release-sync,chore" \
+            --body "## Automated Release Sync
+
+          Syncing release **${VERSION}** from \`main\` to \`develop\`.
+
+          **Changes included:**
+          - ✅ Version bump in \`package.json\`: \`${VERSION}\`
+          - ✅ CHANGELOG.md updates
+
+          **Release Notes:** ${{ github.event.release.html_url }}
+
+          **Auto-Merge:** ✅ Enabled (merges automatically when checks pass)
+
+          **Merge Conflicts:** If conflicts occur, this PR will stay open for manual resolution.
+
+          ---
+
+          ### What happens next?
+
+          1. CI/CD checks will run on this PR
+          2. If all checks pass and no conflicts: **Auto-merged** ✅
+          3. If conflicts detected: **Stays open for manual resolution** ⚠️
+          4. After merge: Branch will be deleted automatically
+
+          ---
+          🤖 Generated automatically by GitHub Actions")
+
+          echo "pr_url=${PR_URL}" >> $GITHUB_OUTPUT
+
+          # Extract PR number from URL
+          PR_NUMBER=$(echo "$PR_URL" | grep -o '[0-9]*$')
+          echo "pr_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
+
+      - name: Enable auto-merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER="${{ steps.create-pr.outputs.pr_number }}"
+
+          # Wait a moment for PR to be fully created
+          sleep 2
+
+          # Enable auto-merge with merge commit (not squash)
+          gh pr merge "$PR_NUMBER" \
+            --auto \
+            --merge \
+            --delete-branch
+
+      - name: Summary
+        run: |
+          echo "### Release Sync Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Release:** ${{ steps.create-branch.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** \`${{ steps.create-branch.outputs.branch_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Pull Request:** ${{ steps.create-pr.outputs.pr_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Auto-Merge:** ✅ Enabled" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The PR will be automatically merged when all checks pass." >> $GITHUB_STEP_SUMMARY
+          echo "If conflicts occur, the PR will stay open for manual resolution." >> $GITHUB_STEP_SUMMARY

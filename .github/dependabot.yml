@@ -5,7 +5,8 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
       time: "06:30"
       timezone: "Europe/Berlin"
     open-pull-requests-limit: 5
@@ -35,7 +36,8 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
       time: "06:30"
       timezone: "Europe/Berlin"
     open-pull-requests-limit: 3
