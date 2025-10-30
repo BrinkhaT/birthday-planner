@@ -182,6 +182,8 @@ Birthday data is persisted in JSON FileStore:
 - JSON FileStore (existing - no changes required) (002-split-birthday-view)
 - TypeScript 5.9+, Node.js 20.x + Next.js 16 (App Router), React 19, ShadCN UI components, Lucide React (icons), Tailwind CSS (003-crud-operations)
 - JSON FileStore (file-based persistence at /data/birthdays.json) (003-crud-operations)
+- TypeScript 5.9+, Node.js 20.x, Next.js 16 (App Router) + Next.js built-in middleware system, Node.js Buffer API for Base64 decoding (004-basicauth-env)
+- N/A (no data storage changes - authentication state managed by browser) (004-basicauth-env)
 
 **Frontend Stack:**
 - TypeScript 5.9+

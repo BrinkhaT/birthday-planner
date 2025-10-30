@@ -28,6 +28,12 @@ A simple, privacy-focused birthday planner designed for families and small teams
 - ⚡ **Instant feedback**: Optimistic UI updates - no waiting
 - 🎨 **Modern interface**: Beautiful ShadCN UI components with Tailwind CSS
 
+### Optional Security
+- 🔐 **HTTP Basic Authentication**: Optional password protection via environment variables
+- 🛡️ **Timing-attack resistant**: Constant-time credential comparison
+- 🚀 **Zero overhead when disabled**: Early-return architecture for maximum performance
+- ⚠️ **Fail-fast validation**: Application won't start with misconfigured credentials
+
 ### Full CRUD Operations
 - ➕ **Create**: Add new birthdays via modal dialog with form validation
 - ✏️ **Update**: Edit existing birthdays with pre-filled forms
@@ -110,6 +116,7 @@ birthday-planner-speckit/
 │   ├── birthday-modal.tsx   # Modal wrapper for add/edit operations
 │   └── delete-confirmation.tsx  # Delete confirmation dialog
 ├── lib/                     # Utility functions
+│   ├── auth.ts              # Authentication utilities (BasicAuth validation)
 │   ├── filestore.ts         # JSON file operations
 │   ├── validations.ts       # Form validation and date conversion
 │   ├── i18n-de.ts           # German localization strings
@@ -119,6 +126,8 @@ birthday-planner-speckit/
 │   └── birthday.ts          # Birthday type definitions
 ├── data/                    # JSON data directory
 │   └── birthdays.json       # Birthday data file (ISO format)
+├── proxy.ts                 # Next.js 16 proxy for BasicAuth
+├── instrumentation.ts       # Startup validation hook
 ├── Dockerfile               # Docker configuration
 └── docker-compose.yml       # Docker Compose setup
 ```
@@ -163,11 +172,44 @@ All operations provide instant feedback with optimistic UI updates.
 Create a `.env.local` file for local development:
 
 ```env
+# Data storage directory
 DATA_DIR=./data
+
+# Node environment
 NODE_ENV=development
+
+# Optional: HTTP Basic Authentication
+# Uncomment to enable password protection
+# ENABLE_BASICAUTH=true
+# BASICAUTH_USERNAME=admin
+# BASICAUTH_PASSWORD=your_secure_password
 ```
 
 For Docker deployment, these are configured in `docker-compose.yml`.
+
+### BasicAuth Configuration
+
+To enable HTTP Basic Authentication:
+
+1. **Development**: Add to `.env.local`:
+   ```env
+   ENABLE_BASICAUTH=true
+   BASICAUTH_USERNAME=admin
+   BASICAUTH_PASSWORD=your_secure_password
+   ```
+
+2. **Docker**: Uncomment in `docker-compose.yml`:
+   ```yaml
+   environment:
+     - ENABLE_BASICAUTH=true
+     - BASICAUTH_USERNAME=admin
+     - BASICAUTH_PASSWORD=your_secure_password
+   ```
+
+3. **Security Notes**:
+   - Use strong passwords in production
+   - Always use HTTPS in production environments
+   - Application will fail to start if credentials are missing when enabled
 
 ## Docker Deployment
 
@@ -294,6 +336,12 @@ This approach demonstrates how AI coding agents can deliver production-ready app
   - Tasks: `specs/003-crud-operations/tasks.md`
   - Features: Add, Edit, Delete with German localization and validation
 
+- **004-basicauth-env** (✅ Complete): Optional HTTP Basic Authentication
+  - Specification: `specs/004-basicauth-env/spec.md`
+  - Implementation plan: `specs/004-basicauth-env/plan.md`
+  - Tasks: `specs/004-basicauth-env/tasks.md`
+  - Features: Environment-based BasicAuth, Next.js 16 proxy, fail-fast validation
+
 ### Project Principles
 
 1. **Data Sovereignty**: Your data in plain JSON files - git-versionable, transparent, portable
@@ -301,7 +349,7 @@ This approach demonstrates how AI coding agents can deliver production-ready app
 3. **Privacy-Focused**: Self-hosted, no cloud services, no vendor lock-in
 4. **Mobile-First Design**: Responsive across all devices with ShadCN components
 5. **Docker-First Deployment**: All deployments containerized for easy setup
-6. **Trusted Environment**: Designed for families and small teams (BasicAuth coming soon)
+6. **Optional Security**: Designed for trusted environments with optional BasicAuth for additional protection
 7. **SpecKit-Driven Development**: All features follow structured specification → planning → implementation
 
 For details, see [CLAUDE.md](./CLAUDE.md) and [Constitution](./.specify/memory/constitution.md).

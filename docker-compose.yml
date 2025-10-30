@@ -12,6 +12,12 @@ services:
     environment:
       - NODE_ENV=production
       - DATA_DIR=/data
+      # Optional BasicAuth Protection
+      # Uncomment to enable HTTP Basic Authentication
+      # ⚠️ SECURITY WARNING: Use strong passwords and HTTPS in production!
+      # - ENABLE_BASICAUTH=true
+      # - BASICAUTH_USERNAME=admin
+      # - BASICAUTH_PASSWORD=change_this_to_secure_password
     restart: unless-stopped
 
 volumes:
