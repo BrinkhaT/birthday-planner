@@ -50,3 +50,27 @@ updates:
       include: "scope"
     reviewers:
       - "BrinkhaT"
+
+  # Docker base image updates
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:30"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 3
+    target-branch: "develop"
+    labels:
+      - "docker"
+      - "dependencies"
+      - "automated"
+    commit-message:
+      prefix: "chore(docker)"
+      include: "scope"
+    reviewers:
+      - "BrinkhaT"
+    ignore:
+      # Prevent Node 21+ updates - stay on Node 20.x LTS
+      - dependency-name: "node"
+        update-types: ["version-update:semver-major"]
