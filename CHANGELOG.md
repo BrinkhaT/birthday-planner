@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.3](https://github.com/BrinkhaT/birthday-planner/compare/1.1.2...1.1.3) (2025-10-30)
+
+
+### Miscellaneous Chores
+
+* add Docker base image monitoring to Dependabot ([9938309](https://github.com/BrinkhaT/birthday-planner/commit/9938309bf1b0d57667f385b1fe1018eb06a68f87))
+* add Docker monitoring to Dependabot with Node 20 pinning ([70fd5e1](https://github.com/BrinkhaT/birthday-planner/commit/70fd5e17730d6d3eac5fa1bddfd1dd1628e7bb5e))
+
 ## [1.1.2](https://github.com/BrinkhaT/birthday-planner/compare/1.1.1...1.1.2) (2025-10-30)
 
 
