@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.2.0](https://github.com/BrinkhaT/birthday-planner/compare/1.1.4...1.2.0) (2025-10-30)
+
+
+### Features
+
+* Optionale BasicAuth-Absicherung (Next.js 16) ([039cbea](https://github.com/BrinkhaT/birthday-planner/commit/039cbea5545660ccf3b08a4f27730fad2b1635e0))
+* optionale BasicAuth-Absicherung mit Next.js 16 Proxy ([1528a85](https://github.com/BrinkhaT/birthday-planner/commit/1528a85b1dfcf8ac6e868416eb4e0a7889af83dc))
+
+
+### Documentation
+
+* amend constitution to v2.0.0 (optional authentication) ([8023045](https://github.com/BrinkhaT/birthday-planner/commit/8023045f2de173c09bd9efa7848f2087ad08dc06))
+* update README.md for BasicAuth feature ([c6df016](https://github.com/BrinkhaT/birthday-planner/commit/c6df016916bd16973e7c1d72b5d2ef5e14917bff))
+
+
+### Miscellaneous Chores
+
+* sync release 1.1.4 to develop ([431c9bd](https://github.com/BrinkhaT/birthday-planner/commit/431c9bd2151dc4f66b4737e414d890715bbf51db))
+
 ## [1.1.4](https://github.com/BrinkhaT/birthday-planner/compare/1.1.3...1.1.4) (2025-10-30)
 
 
