@@ -162,7 +162,6 @@ export default function Home() {
 
   // Group future birthdays by year
   const futureByYear = useMemo(() => {
-    const today = new Date();
     return groupBirthdaysByYear(future);
   }, [future]);
 
