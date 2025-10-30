@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 // Extend Jest matchers
 import '@testing-library/jest-dom';
 
