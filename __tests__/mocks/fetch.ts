@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Test utility: mockFetch
 export const mockFetchSuccess = (data: any) => {
-  const mockFn = global.fetch as jest.MockedFunction<typeof global.fetch>;
   return jest.spyOn(global as any, 'fetch').mockResolvedValue({
     ok: true,
     status: 200,
@@ -9,7 +9,6 @@ export const mockFetchSuccess = (data: any) => {
 };
 
 export const mockFetchError = (status: number, error: string) => {
-  const mockFn = global.fetch as jest.MockedFunction<typeof global.fetch>;
   return jest.spyOn(global as any, 'fetch').mockResolvedValue({
     ok: false,
     status,
@@ -18,6 +17,5 @@ export const mockFetchError = (status: number, error: string) => {
 };
 
 export const mockFetchNetworkError = () => {
-  const mockFn = global.fetch as jest.MockedFunction<typeof global.fetch>;
   return jest.spyOn(global as any, 'fetch').mockRejectedValue(new Error('Network error'));
 };

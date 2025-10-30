@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 // Mock fs/promises module BEFORE any imports
 jest.mock('fs/promises');
 

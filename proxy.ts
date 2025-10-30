@@ -80,7 +80,7 @@ function validateBasicAuth(authHeader: string | null): boolean {
     const passwordMatch = timingSafeEqual(passwordBuffer, expectedPasswordBuffer);
 
     return usernameMatch && passwordMatch;
-  } catch (error) {
+  } catch {
     return false;
   }
 }

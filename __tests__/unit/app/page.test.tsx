@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 /**
  * Unit tests for app/page.tsx - Frontend Hook Logic Testing
  * Tests cover:

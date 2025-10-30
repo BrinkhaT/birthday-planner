@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * Integration Tests: PUT/DELETE /api/birthdays/[id]
  *

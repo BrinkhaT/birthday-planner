@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // Integration tests for filestore using real file I/O
 // This approach provides higher confidence and works without mocking issues
 
