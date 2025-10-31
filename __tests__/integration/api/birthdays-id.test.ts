@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * Integration Tests: PUT/DELETE /api/birthdays/[id]
  *
@@ -587,6 +586,10 @@ describe('DELETE /api/birthdays/[id]', () => {
 
       // Assert
       expect(response.status).toBe(200);
+      expect(data).toEqual({
+        success: true,
+        message: 'Geburtstag erfolgreich gelöscht',
+      });
       const calledWith = mockedWriteBirthdays.mock.calls[0][0];
       expect(calledWith.birthdays).toHaveLength(0);
     });

@@ -74,14 +74,18 @@ describe('GET /api/birthdays', () => {
   describe('Error Cases', () => {
     it('should return 500 when filestore read fails', async () => {
       // Arrange
-      const errorMessage = 'Failed to read file';
-      mockedReadBirthdays.mockRejectedValue(new Error(errorMessage));
+      mockedReadBirthdays.mockRejectedValue(new Error('Failed to read file'));
 
       // Act
       const response = await GET();
+      const data = await response.json();
 
       // Assert
       expect(response.status).toBe(500);
+      expect(data).toEqual({
+        error: 'Failed to load birthdays',
+        message: 'Unable to read birthday data from storage',
+      });
     });
 
     it('should return error message when filestore read fails', async () => {
