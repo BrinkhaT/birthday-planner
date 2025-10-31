@@ -85,7 +85,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/coverage-final.json,./coverage/lcov.info
-          flags: unittests,integration
+          flags: develop
           name: codecov-develop
           fail_ci_if_error: false
 

@@ -31,13 +31,9 @@ comment:
   require_head: yes
 
 flags:
-  unittests:
+  develop:
     paths:
-      - __tests__/unit/
-    carryforward: false
-  integration:
-    paths:
-      - __tests__/integration/
+      - __tests__/
     carryforward: false
   pr-validation:
     carryforward: false
