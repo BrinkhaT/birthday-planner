@@ -4,9 +4,9 @@
 // Unmock fs/promises to use real file system operations
 jest.unmock('fs/promises');
 
-import { tmpdir } from 'os';
+import * as tmp from 'tmp';
 import { join } from 'path';
-import { rm, readFile, mkdir, writeFile } from 'fs/promises';
+import { readFile, mkdir, writeFile } from 'fs/promises';
 import { readBirthdays, writeBirthdays } from '@/lib/filestore';
 import {
   EMPTY_STORE,
@@ -17,12 +17,14 @@ import {
 } from '@/__tests__/fixtures/birthdays';
 
 describe('filestore (integration)', () => {
+  let tmpDirObj: tmp.DirResult;
   let testDir: string;
   let originalDataDir: string | undefined;
 
   beforeEach(async () => {
-    // Create unique temp directory for each test
-    testDir = join(tmpdir(), `filestore-test-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+    // Create secure temp directory for each test
+    tmpDirObj = tmp.dirSync({ unsafeCleanup: true });
+    testDir = tmpDirObj.name;
     originalDataDir = process.env.DATA_DIR;
     process.env.DATA_DIR = testDir;
   });
@@ -35,9 +37,9 @@ describe('filestore (integration)', () => {
       delete process.env.DATA_DIR;
     }
 
-    // Clean up test directory
+    // Clean up test directory using tmp's secure cleanup
     try {
-      await rm(testDir, { recursive: true, force: true });
+      tmpDirObj.removeCallback();
     } catch {
       // Ignore cleanup errors
     }
