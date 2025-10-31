@@ -106,6 +106,29 @@ jobs:
           npm run test:ci -- --silent --coverageReporters=text-summary 2>&1 | tail -20 >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
 
+  validate-commits:
+    name: Validate Commit Messages
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate all commit messages in PR
+        run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to HEAD --verbose
+
   docker-build-test:
     name: Docker Build Test
     runs-on: ubuntu-latest
@@ -161,7 +184,7 @@ jobs:
   ci-summary:
     name: CI Summary
     runs-on: ubuntu-latest
-    needs: [lint, build, test, docker-build-test, docker-push]
+    needs: [lint, build, test, validate-commits, docker-build-test, docker-push]
     if: always()
 
     steps:
@@ -175,6 +198,7 @@ jobs:
           echo "  Lint: ${{ needs.lint.result }}"
           echo "  Build: ${{ needs.build.result }}"
           echo "  Test: ${{ needs.test.result }}"
+          echo "  Validate Commits: ${{ needs.validate-commits.result }}"
           echo "  Docker Build Test: ${{ needs.docker-build-test.result }}"
           echo "  Docker Push: ${{ needs.docker-push.result }}"
           echo ""
@@ -185,6 +209,14 @@ jobs:
              [ "${{ needs.test.result }}" != "success" ]; then
             echo "❌ CI checks failed"
             exit 1
+          fi
+
+          # Check commit validation (only runs on PR)
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            if [ "${{ needs.validate-commits.result }}" != "success" ]; then
+              echo "❌ Commit message validation failed"
+              exit 1
+            fi
           fi
 
           # Check docker jobs (only one runs depending on event type)
