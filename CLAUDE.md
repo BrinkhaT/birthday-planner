@@ -184,6 +184,8 @@ Birthday data is persisted in JSON FileStore:
 - JSON FileStore (file-based persistence at /data/birthdays.json) (003-crud-operations)
 - TypeScript 5.9+, Node.js 20.x, Next.js 16 (App Router) + Next.js built-in middleware system, Node.js Buffer API for Base64 decoding (004-basicauth-env)
 - N/A (no data storage changes - authentication state managed by browser) (004-basicauth-env)
+- TypeScript 5.9+ / Node.js 20.x + Jest 29.x, @testing-library/react 16.x, @testing-library/react-hooks 8.x, @types/jest 29.x (005-comprehensive-testing)
+- N/A (testing infrastructure - tests will mock filestore operations) (005-comprehensive-testing)
 
 **Frontend Stack:**
 - TypeScript 5.9+

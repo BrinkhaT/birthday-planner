@@ -2,10 +2,13 @@ import { readFile, writeFile, rename, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { BirthdayStore } from '@/types/birthday';
 
-const DATA_DIR = process.env.DATA_DIR || join(process.cwd(), 'data');
+// Get DATA_DIR dynamically to support test environment changes
+function getDataDir(): string {
+  return process.env.DATA_DIR || join(process.cwd(), 'data');
+}
 
 export async function readBirthdays(): Promise<BirthdayStore> {
-  const filePath = join(DATA_DIR, 'birthdays.json');
+  const filePath = join(getDataDir(), 'birthdays.json');
 
   try {
     const data = await readFile(filePath, 'utf-8');
@@ -21,7 +24,7 @@ export async function readBirthdays(): Promise<BirthdayStore> {
 
       // Ensure data directory exists
       try {
-        await mkdir(DATA_DIR, { recursive: true });
+        await mkdir(getDataDir(), { recursive: true });
       } catch {
         // Directory might already exist, ignore
       }
@@ -41,12 +44,12 @@ export async function readBirthdays(): Promise<BirthdayStore> {
 }
 
 export async function writeBirthdays(store: BirthdayStore): Promise<void> {
-  const filePath = join(DATA_DIR, 'birthdays.json');
+  const filePath = join(getDataDir(), 'birthdays.json');
   const temp = filePath + '.tmp';
 
   try {
     // Ensure data directory exists
-    await mkdir(DATA_DIR, { recursive: true });
+    await mkdir(getDataDir(), { recursive: true });
 
     // Write to temporary file first
     await writeFile(temp, JSON.stringify(store, null, 2), 'utf-8');

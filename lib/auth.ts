@@ -63,7 +63,7 @@ export function validateBasicAuth(authHeader: string | null): boolean {
     const passwordMatch = timingSafeEqual(passwordBuffer, expectedPasswordBuffer);
 
     return usernameMatch && passwordMatch;
-  } catch (error) {
+  } catch {
     // Invalid Base64 or malformed Authorization header
     return false;
   }
