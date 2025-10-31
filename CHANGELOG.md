@@ -1,5 +1,47 @@
 # Changelog
 
+## [1.3.0](https://github.com/BrinkhaT/birthday-planner/compare/1.2.0...1.3.0) (2025-10-31)
+
+
+### Features
+
+* comprehensive testing infrastructure (005-comprehensive-testing) ([7180933](https://github.com/BrinkhaT/birthday-planner/commit/7180933393e505f294b88581ccdf7b09c67f1364))
+* implement comprehensive testing infrastructure (005-comprehensive-testing) ([64adbcd](https://github.com/BrinkhaT/birthday-planner/commit/64adbcd49ed1a290c582e45f7cd2fc73100c00f8))
+
+
+### Bug Fixes
+
+* **ci:** resolve Codecov multiple flags error ([f051dfd](https://github.com/BrinkhaT/birthday-planner/commit/f051dfdea5d0266f2af0bed3c81b4708f1e76962))
+* resolve all ESLint issues (89→2 warnings) ([537ec61](https://github.com/BrinkhaT/birthday-planner/commit/537ec61e6ef46919ac9e3536bf9eb5d01b9c983d))
+
+
+### Code Refactoring
+
+* **tests:** remove eslint-disable and fix unused variables ([0aed133](https://github.com/BrinkhaT/birthday-planner/commit/0aed1338d01868c99b1fc52651f7b67144b6e676))
+
+
+### Documentation
+
+* add comprehensive testing specification and planning docs ([bfe0208](https://github.com/BrinkhaT/birthday-planner/commit/bfe0208a5a102afa67139ba4a9cfe667fa505ae5))
+* amend constitution to v2.1.0 (add testing infrastructure principle) ([bd2cc33](https://github.com/BrinkhaT/birthday-planner/commit/bd2cc330f7dccc04a4a7f7e5d341a30aa15d1fed))
+
+
+### Miscellaneous Chores
+
+* migrate from .eslintignore to eslint.config.mjs ([4650877](https://github.com/BrinkhaT/birthday-planner/commit/46508774e4c3feae54918cb22ddbf19d3652b473))
+* sync release 1.2.0 to develop ([60a540d](https://github.com/BrinkhaT/birthday-planner/commit/60a540da676c8b4358a1afd5c2f4d4a57713850f))
+
+
+### Continuous Integration
+
+* add conventional commit validation for PRs to develop ([d488f65](https://github.com/BrinkhaT/birthday-planner/commit/d488f65d2fc1d50813e35b1fefe86be50e6620fa))
+* add test coverage to GitHub Actions workflows ([3075ab5](https://github.com/BrinkhaT/birthday-planner/commit/3075ab58eff0a2c677324afa428f5302a7502f39))
+
+
+### Tests
+
+* validate response bodies in integration tests ([4772e56](https://github.com/BrinkhaT/birthday-planner/commit/4772e566cf58d65445685471b3f4aa5323ce6649))
+
 ## [1.2.0](https://github.com/BrinkhaT/birthday-planner/compare/1.1.4...1.2.0) (2025-10-30)
 
 
