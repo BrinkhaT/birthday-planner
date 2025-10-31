@@ -1,31 +1,25 @@
 <!--
 Sync Impact Report:
-Version Change: 1.1.1 → 2.0.0
-Change Type: MAJOR - Backward-incompatible principle change (authentication policy reversed)
+Version Change: 2.0.0 → 2.1.0
+Change Type: MINOR - New principle added (testing infrastructure requirements)
 
-Modified Principles:
-  - Principle V: "No Authentication Required" → "Optional Authentication"
-    - Previously: Authentication MUST NOT be implemented (NON-NEGOTIABLE)
-    - Now: Authentication MAY be optionally enabled via environment variables
-    - Rationale: Maintains default trusted-network deployment while allowing security hardening when needed
+Modified Principles: None
 
-Added Sections: None
+Added Sections:
+  - Principle VII: "Comprehensive Testing Infrastructure"
+    - Rationale: Codifies testing standards and infrastructure implemented in feature 005-comprehensive-testing
+    - Requirements: Jest 29.x, 80%+ global coverage, <10s execution, organized test structure
+    - Impact: All future features must include comprehensive tests following established patterns
+
 Removed Sections: None
 
 Templates Status:
-  ✅ plan-template.md - Constitution check validates optional features correctly
-  ✅ spec-template.md - Acceptance scenarios already handle optional features
-  ✅ tasks-template.md - Task structure supports optional feature implementation
-  ⚠️  Implementation already complete - Feature 004-basicauth-env implemented and tested
+  ✅ plan-template.md - Constitution check already validates testing requirements
+  ✅ spec-template.md - Acceptance scenarios support test criteria
+  ✅ tasks-template.md - Task structure includes test phases
+  ✅ Implementation complete - Feature 005-comprehensive-testing established testing infrastructure
 
-Feature 004-basicauth-env Implementation:
-  - proxy.ts: Next.js 16 proxy for BasicAuth interception
-  - lib/auth.ts: Credential validation with timing-attack resistance
-  - instrumentation.ts: Fail-fast startup validation
-  - docker-compose.yml: Environment variable configuration
-  - All acceptance criteria met and tested
-
-Follow-up TODOs: None - constitutional amendment reflects completed implementation
+Follow-up TODOs: None - all templates align with new testing principle
 -->
 
 # Birthday Planner Constitution
@@ -142,6 +136,58 @@ ALL user-facing content MUST be in German language with German formatting conven
 localization (both language and formatting) provides intuitive user experience and
 eliminates confusion with international date/number formats and English terminology.
 
+### VII. Comprehensive Testing Infrastructure
+
+All application logic MUST be covered by automated tests following established patterns:
+
+**Test Framework Requirements**:
+- **Framework**: Jest 29.x with React Testing Library 16.x
+- **Configuration**: Next.js preset with SWC transforms for fast execution
+- **Execution Speed**: Full test suite MUST execute in < 10 seconds
+- **Zero Failures**: All tests must pass before merging to main branches
+
+**Test Organization**:
+- **Unit Tests** (`__tests__/unit/`): Pure functions and isolated logic (90-100% coverage target)
+  - lib/ modules (date-utils, validations, filestore)
+  - Isolated React hooks and state management
+- **Integration Tests** (`__tests__/integration/`): API routes and component interactions (100% coverage target)
+  - All API endpoints (GET, POST, PUT, DELETE)
+  - Success and error scenarios
+- **Test Fixtures** (`__tests__/fixtures/`): Reusable test data (birthdays, dates, validation cases)
+- **Test Mocks** (`__tests__/mocks/`, `__mocks__/`): Mock utilities for fs, fetch, Next.js APIs
+
+**Coverage Requirements**:
+- **Global Minimum**: 80% statements, 80% branches, 80% functions
+- **Critical Modules**: 100% coverage for core business logic (date-utils, validations)
+- **API Routes**: 100% coverage including all error paths
+- **FileStore**: 90%+ coverage for file operations and atomic writes
+- **Frontend Hooks**: 80%+ coverage for state management logic
+
+**Testing Standards**:
+- **Naming**: `<source-file>.test.ts` or `<source-file>.test.tsx` mirroring source structure
+- **Descriptions**: Given/When/Then style with behavior-focused test names
+- **Deterministic**: Use reference dates from fixtures, never `new Date()` directly
+- **Isolated**: Clone fixtures before mutation (`structuredClone()`), clear mocks between tests
+- **German Localization**: Validate error messages match `i18n-de.ts` strings
+- **Documentation**: Maintain `__tests__/README.md` with testing patterns and best practices
+
+**Test Execution**:
+- **Local Development**: `npm test` for all tests, `npm test -- --watch` for watch mode
+- **Coverage Reports**: `npm test -- --coverage` generates HTML reports in `coverage/lcov-report/`
+- **CI Integration**: `npm test:ci` for continuous integration with coverage enforcement
+
+**Prohibited Practices**:
+- ❌ Testing implementation details (test behavior, not internals)
+- ❌ Shared state between tests (causes flakiness)
+- ❌ Non-deterministic tests (random data, current time without mocking)
+- ❌ Committing `.only()` or `.skip()` to version control
+- ❌ Slow tests (> 1 second per test file indicates mocking issues)
+
+**Rationale**: Comprehensive automated testing ensures code quality, prevents regressions,
+validates business logic correctness (especially date calculations and German formatting),
+and enables confident refactoring. The established testing infrastructure provides patterns
+and utilities for efficient test authoring while maintaining fast execution times.
+
 ## Technology Stack Requirements
 
 ### Mandatory Technologies
@@ -150,6 +196,7 @@ eliminates confusion with international date/number formats and English terminol
 - **UI Components**: ShadCN component library
 - **Data Storage**: JSON file storage (FileStore pattern)
 - **Containerization**: Docker
+- **Testing**: Jest 29.x with React Testing Library 16.x
 - **Deployment Target**: Home lab internal network (optionally internet-exposed with BasicAuth)
 - **Localization**: German locale (de-DE) for all formatting and German language for all text
 
@@ -180,7 +227,8 @@ for offline home lab deployment without external dependencies.
 4. **Task Generation**: Generate ordered tasks with `/speckit.tasks`
 5. **Analysis Phase**: Validate with `/speckit.analyze` before implementation
 6. **Implementation Phase**: Execute `/speckit.implement` to complete tasks
-7. **Validation**: Test feature independently before integration
+7. **Testing Phase**: Write comprehensive tests following established patterns
+8. **Validation**: Verify tests pass and coverage meets thresholds before integration
 
 ### Incremental Delivery
 
@@ -256,4 +304,4 @@ implementation plan's "Complexity Tracking" section, documenting:
 - MINOR: New principles added or material guidance expansions
 - PATCH: Clarifications, wording improvements, non-semantic fixes
 
-**Version**: 2.0.0 | **Ratified**: 2025-10-28 | **Last Amended**: 2025-10-30
+**Version**: 2.1.0 | **Ratified**: 2025-10-28 | **Last Amended**: 2025-10-30
