@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Unit tests for app/page.tsx - Frontend Hook Logic Testing
  * Tests cover:
@@ -11,14 +11,13 @@
  * - Optimistic UI updates
  */
 
-import { render, screen, waitFor, act } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '@/app/page';
 import { Birthday } from '@/types/birthday';
 import {
   BIRTHDAY_WITH_YEAR,
   BIRTHDAY_WITHOUT_YEAR,
-  BIRTHDAY_PAST,
 } from '../../fixtures/birthdays';
 import { mockFetchSuccess, mockFetchError, mockFetchNetworkError } from '../../mocks/fetch';
 
@@ -936,7 +935,6 @@ describe('Home Page - Frontend Hook Logic', () => {
     });
 
     it('should not update if selectedBirthday is null', async () => {
-      const user = userEvent.setup();
       fetchMock = mockFetchSuccess({ birthdays: [] });
 
       render(<Home />);

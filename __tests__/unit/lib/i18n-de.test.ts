@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Optional tests for i18n-de.ts German localization strings
  *
@@ -148,7 +148,7 @@ describe('i18n-de', () => {
     it('has consistent naming patterns (no missing translations)', () => {
       // All keys should have values (no undefined)
       const getAllValues = (obj: any): any[] => {
-        return Object.entries(obj).flatMap(([key, value]) => {
+        return Object.values(obj).flatMap((value) => {
           if (typeof value === 'object' && value !== null) {
             return getAllValues(value);
           }
@@ -163,7 +163,7 @@ describe('i18n-de', () => {
 
     it('has no empty strings (all translations filled)', () => {
       const getAllStrings = (obj: any): string[] => {
-        return Object.entries(obj).flatMap(([key, value]) => {
+        return Object.values(obj).flatMap((value) => {
           if (typeof value === 'object' && value !== null && typeof value !== 'function') {
             return getAllStrings(value);
           }

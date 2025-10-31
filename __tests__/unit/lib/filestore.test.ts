@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Mock fs/promises module BEFORE any imports
 jest.mock('fs/promises');
 
@@ -446,7 +446,7 @@ describe.skip('filestore', () => {
         // Act
         try {
           await writeBirthdays(POPULATED_STORE);
-        } catch (e) {
+        } catch {
           // Expected to throw
         }
 

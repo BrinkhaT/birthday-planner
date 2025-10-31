@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // Integration tests for filestore using real file I/O
 // This approach provides higher confidence and works without mocking issues
 
@@ -39,7 +38,7 @@ describe('filestore (integration)', () => {
     // Clean up test directory
     try {
       await rm(testDir, { recursive: true, force: true });
-    } catch (error) {
+    } catch {
       // Ignore cleanup errors
     }
   });

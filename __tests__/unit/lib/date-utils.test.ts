@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   parseBirthDate,
   isLeapYear,
@@ -10,16 +9,13 @@ import {
 } from '@/lib/date-utils';
 import { Birthday, BirthdayWithOccurrence } from '@/types/birthday';
 import {
-  BIRTHDAY_WITH_YEAR,
   BIRTHDAY_WITHOUT_YEAR,
-  BIRTHDAY_LEAP_YEAR,
 } from '@/__tests__/fixtures/birthdays';
 import {
   REF_DATE_LEAP_YEAR,
   REF_DATE_NON_LEAP,
   REF_DATE_MID_YEAR,
   REF_DATE_YEAR_END,
-  REF_DATE_YEAR_START,
 } from '@/__tests__/fixtures/dates';
 
 describe('parseBirthDate', () => {
