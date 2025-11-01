@@ -7,7 +7,8 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Edit, Trash2 } from 'lucide-react';
-import { formatBirthDate } from '@/lib/utils';
+import { formatBirthDate, cn } from '@/lib/utils';
+import { isMilestoneBirthday } from '@/lib/date-utils';
 
 interface BirthdayCardProps {
   birthday: Birthday | BirthdayWithOccurrence;
@@ -22,9 +23,13 @@ function hasAge(birthday: Birthday | BirthdayWithOccurrence): birthday is Birthd
 
 export function BirthdayCard({ birthday, onEdit, onDelete }: BirthdayCardProps) {
   const age = hasAge(birthday) ? birthday.age : null;
+  const isMilestone = isMilestoneBirthday(age);
 
   return (
-    <Card className="w-full">
+    <Card className={cn(
+      "w-full",
+      isMilestone && "border-l-4 border-l-amber-500 bg-amber-50 dark:bg-amber-950/20"
+    )}>
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex-1">

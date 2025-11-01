@@ -195,3 +195,15 @@ export function groupBirthdaysByYear(
 
   return yearGroups;
 }
+
+/**
+ * Determine if a birthday age is a milestone (18 or multiple of 10)
+ * @param age - The age at next birthday (or null if birth year unavailable)
+ * @returns true if milestone, false otherwise
+ */
+export function isMilestoneBirthday(age: number | null): boolean {
+  if (age === null) return false;
+  if (age === 18) return true; // Special milestone: legal adulthood
+  if (age % 10 === 0 && age >= 10) return true; // Decade milestones (10, 20, 30, etc.)
+  return false;
+}

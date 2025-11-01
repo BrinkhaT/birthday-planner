@@ -223,12 +223,16 @@ describe('Home Page - Frontend Hook Logic', () => {
         id: 'upcoming-1',
         name: 'Upcoming Person',
         birthDate: getDateInFuture(5), // 5 days from now
+        createdAt: '2024-01-01T00:00:00.000Z',
+        updatedAt: '2024-01-01T00:00:00.000Z',
       };
 
       const futureBirthday: Birthday = {
         id: 'future-1',
         name: 'Future Person',
         birthDate: getDateInFuture(60), // 60 days from now
+        createdAt: '2024-01-01T00:00:00.000Z',
+        updatedAt: '2024-01-01T00:00:00.000Z',
       };
 
       fetchMock = mockFetchSuccess({ birthdays: [upcomingBirthday, futureBirthday] });
@@ -251,12 +255,16 @@ describe('Home Page - Frontend Hook Logic', () => {
         id: 'upcoming-1',
         name: 'Upcoming Person',
         birthDate: getDateInFuture(10),
+      createdAt: "2024-01-01T00:00:00.000Z",
+      updatedAt: "2024-01-01T00:00:00.000Z",
       };
 
       const futureBirthday: Birthday = {
         id: 'future-1',
         name: 'Future Person',
         birthDate: getDateInFuture(100),
+      createdAt: "2024-01-01T00:00:00.000Z",
+      updatedAt: "2024-01-01T00:00:00.000Z",
       };
 
       fetchMock = mockFetchSuccess({ birthdays: [upcomingBirthday, futureBirthday] });
@@ -298,6 +306,8 @@ describe('Home Page - Frontend Hook Logic', () => {
         id: 'new-1',
         name: 'New Person',
         birthDate: getDateInFuture(15),
+      createdAt: "2024-01-01T00:00:00.000Z",
+      updatedAt: "2024-01-01T00:00:00.000Z",
       };
 
       fetchMock.mockResolvedValueOnce({
@@ -652,6 +662,8 @@ describe('Home Page - Frontend Hook Logic', () => {
         id: 'new-1',
         name: 'Test Name',
         birthDate: '2000-01-01',
+      createdAt: "2024-01-01T00:00:00.000Z",
+      updatedAt: "2024-01-01T00:00:00.000Z",
       };
 
       fetchMock.mockResolvedValueOnce({
@@ -705,6 +717,8 @@ describe('Home Page - Frontend Hook Logic', () => {
         id: 'new-1',
         name: 'Test Name',
         birthDate: '2000-01-01',
+      createdAt: "2024-01-01T00:00:00.000Z",
+      updatedAt: "2024-01-01T00:00:00.000Z",
       };
 
       fetchMock.mockResolvedValueOnce({
@@ -820,6 +834,8 @@ describe('Home Page - Frontend Hook Logic', () => {
         id: BIRTHDAY_WITH_YEAR.id,
         name: 'Test Name',
         birthDate: '2000-01-01',
+      createdAt: "2024-01-01T00:00:00.000Z",
+      updatedAt: "2024-01-01T00:00:00.000Z",
       };
 
       fetchMock.mockResolvedValueOnce({
@@ -972,6 +988,8 @@ describe('Home Page - Frontend Hook Logic', () => {
         id: 'new-1',
         name: 'Test Name',
         birthDate: '2000-01-01',
+      createdAt: "2024-01-01T00:00:00.000Z",
+      updatedAt: "2024-01-01T00:00:00.000Z",
       };
 
       fetchMock.mockImplementation(() => {
@@ -1015,6 +1033,8 @@ describe('Home Page - Frontend Hook Logic', () => {
         id: BIRTHDAY_WITH_YEAR.id,
         name: 'Test Name',
         birthDate: '2000-01-01',
+      createdAt: "2024-01-01T00:00:00.000Z",
+      updatedAt: "2024-01-01T00:00:00.000Z",
       };
 
       fetchMock.mockImplementation(() => {
