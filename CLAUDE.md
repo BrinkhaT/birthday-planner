@@ -186,6 +186,8 @@ Birthday data is persisted in JSON FileStore:
 - N/A (no data storage changes - authentication state managed by browser) (004-basicauth-env)
 - TypeScript 5.9+ / Node.js 20.x + Jest 29.x, @testing-library/react 16.x, @testing-library/react-hooks 8.x, @types/jest 29.x (005-comprehensive-testing)
 - N/A (testing infrastructure - tests will mock filestore operations) (005-comprehensive-testing)
+- TypeScript 5.9+ / Node.js 20.x + Next.js 16 (App Router), React 19, ShadCN UI components, Tailwind CSS, Lucide React (icons) (006-milestone-birthday-highlights)
+- N/A (no data storage changes - reads existing birthday data with birth years) (006-milestone-birthday-highlights)
 
 **Frontend Stack:**
 - TypeScript 5.9+
