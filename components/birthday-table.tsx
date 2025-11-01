@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Edit, Trash2 } from 'lucide-react';
-import { isMilestoneBirthday } from '@/lib/date-utils';
+import { isMilestoneBirthday, getMilestoneEmoji } from '@/lib/date-utils';
 import { cn } from '@/lib/utils';
 
 export interface BirthdayTableProps {
@@ -74,6 +74,11 @@ export function BirthdayTable({
                 <TableCell>{formatDate(birthday.nextOccurrence)}</TableCell>
                 {/* T023: Name with age in parentheses (e.g., "Max Mustermann (24 Jahre)") */}
                 <TableCell>
+                  {isMilestone && (
+                    <span className="mr-2 text-lg" aria-label="Milestone birthday">
+                      {getMilestoneEmoji(birthday.age)}
+                    </span>
+                  )}
                   {birthday.name}
                   {birthday.age !== null && ` (${birthday.age} Jahre)`}
                 </TableCell>

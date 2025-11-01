@@ -207,3 +207,13 @@ export function isMilestoneBirthday(age: number | null): boolean {
   if (age % 10 === 0 && age >= 10) return true; // Decade milestones (10, 20, 30, etc.)
   return false;
 }
+
+/**
+ * Get the emoji for a milestone birthday
+ * @param age - The age at next birthday
+ * @returns Emoji string: ⭐ for 18, 🎉 for decade milestones
+ */
+export function getMilestoneEmoji(age: number | null): string {
+  if (age === 18) return '⭐';
+  return '🎉';
+}
