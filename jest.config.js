@@ -42,22 +42,8 @@ const customJestConfig = {
     '**/__tests__/**/*.test.tsx',
   ],
 
-  // Transform with SWC (faster than ts-jest)
-  transform: {
-    '^.+\\.(t|j)sx?$': ['@swc/jest', {
-      jsc: {
-        parser: {
-          syntax: 'typescript',
-          tsx: true,
-        },
-        transform: {
-          react: {
-            runtime: 'automatic',
-          },
-        },
-      },
-    }],
-  },
+  // Next.js handles transformation automatically
+  // No custom transform needed - nextJest wrapper handles it
 
   // Ignore patterns
   testPathIgnorePatterns: [
