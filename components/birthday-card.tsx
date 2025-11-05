@@ -7,7 +7,8 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Edit, Trash2 } from 'lucide-react';
-import { formatBirthDate } from '@/lib/utils';
+import { formatBirthDate, cn } from '@/lib/utils';
+import { isMilestoneBirthday, getMilestoneEmoji } from '@/lib/date-utils';
 
 interface BirthdayCardProps {
   birthday: Birthday | BirthdayWithOccurrence;
@@ -22,11 +23,16 @@ function hasAge(birthday: Birthday | BirthdayWithOccurrence): birthday is Birthd
 
 export function BirthdayCard({ birthday, onEdit, onDelete }: BirthdayCardProps) {
   const age = hasAge(birthday) ? birthday.age : null;
+  const isMilestone = isMilestoneBirthday(age);
 
   return (
-    <Card className="w-full">
+    <Card className={cn(
+      "w-full relative",
+      isMilestone && "border-l-4 border-l-amber-500 bg-amber-50 dark:bg-amber-950/20"
+    )}>
       <CardHeader>
-        <div className="flex items-start justify-between">
+
+        <div className="flex items-center justify-between">
           <div className="flex-1">
             <CardTitle className="text-xl">{birthday.name}</CardTitle>
             <CardDescription>
@@ -34,32 +40,40 @@ export function BirthdayCard({ birthday, onEdit, onDelete }: BirthdayCardProps) 
               {age !== null ? (<><br />{`${age} Jahre`}</>) : null}
             </CardDescription>
           </div>
-          {(onEdit || onDelete) && (
+          {(onEdit || onDelete || isMilestone) && (
             <div className="flex gap-1">
-              {onEdit && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onEdit(birthday)}
-                  className="h-11 w-11 min-h-[44px] min-w-[44px]"
-                  aria-label="Geburtstag bearbeiten"
-                  title="Geburtstag bearbeiten"
-                >
-                  <Edit className="h-4 w-4" />
-                </Button>
-              )}
-              {onDelete && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onDelete(birthday)}
-                  className="h-11 w-11 min-h-[44px] min-w-[44px] text-destructive hover:text-destructive hover:bg-destructive/10"
-                  aria-label="Geburtstag löschen"
-                  title="Geburtstag löschen"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              )}
+              <div className="flex items-center">
+                  {isMilestone && (
+                      <div className="text-2xl mr-4" aria-label="Milestone birthday">
+                        {getMilestoneEmoji(age)}
+                      </div>
+                  )}
+                  {onEdit && (
+                      <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => onEdit(birthday)}
+                          className="h-11 w-11 min-h-[44px] min-w-[44px]"
+                          aria-label="Geburtstag bearbeiten"
+                          title="Geburtstag bearbeiten"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                  )}
+                  {onDelete && (
+                      <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => onDelete(birthday)}
+                          className="h-11 w-11 min-h-[44px] min-w-[44px] text-destructive hover:text-destructive hover:bg-destructive/10"
+                          aria-label="Geburtstag löschen"
+                          title="Geburtstag löschen"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                  )}
+              </div>
+
             </div>
           )}
         </div>

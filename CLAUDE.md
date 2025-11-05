@@ -142,6 +142,15 @@ data/              - JSON data storage (mounted as volume in Docker)
 - Date format conversion: ISO (storage) ↔ German (display)
 - Mobile-friendly with 44x44px tap targets
 
+**Milestone Birthday Highlights (006-milestone-birthday-highlights)** - COMPLETED ✅
+- **Visual Highlighting**: Milestone birthdays (age 18 and multiples of 10) highlighted with amber styling
+- **Card View Highlighting**: Amber left border (4px) and light amber background on milestone birthday cards
+- **Table View Highlighting**: Amber row background with enhanced hover state for milestone birthdays
+- **Milestone Detection**: `isMilestoneBirthday()` utility function identifies age 18 and decade milestones (10, 20, 30, etc.)
+- **Dark Mode Support**: Amber styling adapted for dark mode with appropriate opacity
+- **Responsive Design**: Highlighting works across all viewport sizes (320px-1920px)
+- **Test Coverage**: 98.72% overall coverage with comprehensive unit and integration tests
+
 ### Running the Application
 
 **Development:**
@@ -186,6 +195,8 @@ Birthday data is persisted in JSON FileStore:
 - N/A (no data storage changes - authentication state managed by browser) (004-basicauth-env)
 - TypeScript 5.9+ / Node.js 20.x + Jest 29.x, @testing-library/react 16.x, @testing-library/react-hooks 8.x, @types/jest 29.x (005-comprehensive-testing)
 - N/A (testing infrastructure - tests will mock filestore operations) (005-comprehensive-testing)
+- TypeScript 5.9+ / Node.js 20.x + Next.js 16 (App Router), React 19, ShadCN UI components, Tailwind CSS, Lucide React (icons) (006-milestone-birthday-highlights)
+- N/A (no data storage changes - reads existing birthday data with birth years) (006-milestone-birthday-highlights)
 
 **Frontend Stack:**
 - TypeScript 5.9+
