@@ -197,6 +197,8 @@ Birthday data is persisted in JSON FileStore:
 - N/A (testing infrastructure - tests will mock filestore operations) (005-comprehensive-testing)
 - TypeScript 5.9+ / Node.js 20.x + Next.js 16 (App Router), React 19, ShadCN UI components, Tailwind CSS, Lucide React (icons) (006-milestone-birthday-highlights)
 - N/A (no data storage changes - reads existing birthday data with birth years) (006-milestone-birthday-highlights)
+- TypeScript 5.9+ / Node.js 20.x + Next.js 16 (App Router), React 19, Tailwind CSS, ShadCN UI components (007-theme-switcher)
+- Browser localStorage for theme preference persistence (007-theme-switcher)
 
 **Frontend Stack:**
 - TypeScript 5.9+
