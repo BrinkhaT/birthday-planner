@@ -99,20 +99,20 @@
 
 ### Tests for User Story 2
 
-- [ ] T021 [P] [US2] Unit test for ThemeToggle component rendering in __tests__/unit/components/theme-toggle.test.tsx (verify button, icon, ARIA label)
-- [ ] T022 [P] [US2] Unit test for ThemeToggle click handler in __tests__/unit/components/theme-toggle.test.tsx (verify toggleTheme called)
-- [ ] T023 [P] [US2] Unit test for icon changes based on theme in __tests__/unit/components/theme-toggle.test.tsx (Moon in light, Sun in dark)
-- [ ] T024 [US2] Integration test for manual toggle flow in __tests__/integration/theme-integration.test.tsx (click → theme changes → DOM updated)
-- [ ] T025 [US2] Integration test for toggle accessibility in __tests__/integration/theme-integration.test.tsx (keyboard navigation, ARIA labels)
+- [x] T021 [P] [US2] Unit test for ThemeToggle component rendering in __tests__/unit/components/theme-toggle.test.tsx (verify button, icon, ARIA label)
+- [x] T022 [P] [US2] Unit test for ThemeToggle click handler in __tests__/unit/components/theme-toggle.test.tsx (verify toggleTheme called)
+- [x] T023 [P] [US2] Unit test for icon changes based on theme in __tests__/unit/components/theme-toggle.test.tsx (Moon in light, Sun in dark)
+- [x] T024 [US2] Integration test for manual toggle flow in __tests__/integration/theme-integration.test.tsx (click → theme changes → DOM updated)
+- [x] T025 [US2] Integration test for toggle accessibility in __tests__/integration/theme-integration.test.tsx (keyboard navigation, ARIA labels)
 
 ### Implementation for User Story 2
 
-- [ ] T026 [P] [US2] Create ThemeToggle component in components/theme-toggle.tsx with ShadCN Button, Sun/Moon icons from Lucide React
-- [ ] T027 [US2] Implement toggleTheme function in useTheme hook (cycles light ↔ dark)
-- [ ] T028 [US2] Add onClick handler to ThemeToggle calling toggleTheme from useTheme hook
-- [ ] T029 [US2] Add German ARIA labels to ThemeToggle button using i18nTheme strings (changes based on current theme)
-- [ ] T030 [US2] Add ThemeToggle to app/page.tsx header section for testing (temporary placement)
-- [ ] T031 [US2] Verify theme toggle is visible and functional in both light and dark modes
+- [x] T026 [P] [US2] Create ThemeToggle component in components/theme-toggle.tsx with ShadCN Button, Sun/Moon icons from Lucide React
+- [x] T027 [US2] Implement toggleTheme function in useTheme hook (cycles light ↔ dark) - Already implemented in Phase 2
+- [x] T028 [US2] Add onClick handler to ThemeToggle calling toggleTheme from useTheme hook
+- [x] T029 [US2] Add German ARIA labels to ThemeToggle button using i18nTheme strings (changes based on current theme)
+- [x] T030 [US2] Add ThemeToggle to app/page.tsx header section for testing (temporary placement)
+- [x] T031 [US2] Verify theme toggle is visible and functional in both light and dark modes
 
 **Checkpoint**: User Story 2 complete - manual toggle working, theme switches instantly
 

@@ -3,9 +3,11 @@
  * Tests end-to-end theme application including DOM manipulation
  */
 
-import { render, waitFor } from "@testing-library/react"
+import { render, waitFor, screen } from "@testing-library/react"
+import { userEvent } from "@testing-library/user-event"
 import { ThemeProvider } from "@/components/theme-provider"
 import { useTheme } from "@/lib/hooks/use-theme"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { localStorageMock } from "@/__tests__/mocks/localStorage"
 import { setupMatchMediaMock } from "@/__tests__/mocks/matchMedia"
 
@@ -159,5 +161,294 @@ describe("Theme Integration - Page Load Scenarios", () => {
         expect(display.textContent).toBe("light")
       })
     })
+  })
+})
+
+describe("Theme Integration - Manual Toggle Flow (T024)", () => {
+  it("should toggle theme from light to dark when clicking toggle button", async () => {
+    const user = userEvent.setup()
+    setupMatchMediaMock(false) // Start with light
+
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+        <TestComponent />
+      </ThemeProvider>
+    )
+
+    // Initial state: light mode
+    await waitFor(() => {
+      expect(document.documentElement.classList.contains("dark")).toBe(false)
+    })
+
+    const themeDisplay = screen.getByTestId("current-theme")
+    expect(themeDisplay.textContent).toBe("light")
+
+    // Click toggle button
+    const toggleButton = screen.getByRole("button")
+    await user.click(toggleButton)
+
+    // Should now be dark mode
+    await waitFor(() => {
+      expect(document.documentElement.classList.contains("dark")).toBe(true)
+      expect(themeDisplay.textContent).toBe("dark")
+    })
+  })
+
+  it("should toggle theme from dark to light when clicking toggle button", async () => {
+    const user = userEvent.setup()
+    setupMatchMediaMock(true) // Start with dark
+
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+        <TestComponent />
+      </ThemeProvider>
+    )
+
+    // Initial state: dark mode
+    await waitFor(() => {
+      expect(document.documentElement.classList.contains("dark")).toBe(true)
+    })
+
+    const themeDisplay = screen.getByTestId("current-theme")
+    expect(themeDisplay.textContent).toBe("dark")
+
+    // Click toggle button
+    const toggleButton = screen.getByRole("button")
+    await user.click(toggleButton)
+
+    // Should now be light mode
+    await waitFor(() => {
+      expect(document.documentElement.classList.contains("dark")).toBe(false)
+      expect(themeDisplay.textContent).toBe("light")
+    })
+  })
+
+  it("should apply theme change to DOM immediately without page refresh", async () => {
+    const user = userEvent.setup()
+    setupMatchMediaMock(false)
+
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+      </ThemeProvider>
+    )
+
+    const toggleButton = screen.getByRole("button")
+
+    // Initial: no dark class
+    expect(document.documentElement.classList.contains("dark")).toBe(false)
+
+    // Toggle to dark
+    await user.click(toggleButton)
+
+    // Should update DOM immediately (no delay)
+    await waitFor(
+      () => {
+        expect(document.documentElement.classList.contains("dark")).toBe(true)
+      },
+      { timeout: 100 }
+    ) // Should be instant (< 100ms)
+
+    // Toggle back to light
+    await user.click(toggleButton)
+
+    await waitFor(
+      () => {
+        expect(document.documentElement.classList.contains("dark")).toBe(false)
+      },
+      { timeout: 100 }
+    )
+  })
+
+  it("should persist manual theme selection to localStorage", async () => {
+    const user = userEvent.setup()
+    setupMatchMediaMock(false)
+
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+      </ThemeProvider>
+    )
+
+    const toggleButton = screen.getByRole("button")
+
+    // Toggle to dark
+    await user.click(toggleButton)
+
+    await waitFor(() => {
+      expect(localStorageMock.getItem("theme-preference")).toBe("dark")
+    })
+
+    // Toggle back to light
+    await user.click(toggleButton)
+
+    await waitFor(() => {
+      expect(localStorageMock.getItem("theme-preference")).toBe("light")
+    })
+  })
+
+  it("should update all components when theme is toggled", async () => {
+    const user = userEvent.setup()
+    setupMatchMediaMock(false)
+
+    const { getAllByTestId } = render(
+      <ThemeProvider>
+        <ThemeToggle />
+        <TestComponent />
+        <TestComponent />
+        <TestComponent />
+      </ThemeProvider>
+    )
+
+    const toggleButton = screen.getByRole("button")
+
+    // Toggle to dark
+    await user.click(toggleButton)
+
+    await waitFor(() => {
+      const themeDisplays = getAllByTestId("current-theme")
+      themeDisplays.forEach((display) => {
+        expect(display.textContent).toBe("dark")
+      })
+    })
+  })
+})
+
+describe("Theme Integration - Toggle Accessibility (T025)", () => {
+  it("should be keyboard navigable with Tab key", async () => {
+    const user = userEvent.setup()
+    setupMatchMediaMock(false)
+
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+      </ThemeProvider>
+    )
+
+    const toggleButton = screen.getByRole("button")
+
+    // Tab to button
+    await user.tab()
+
+    // Button should be focused
+    expect(toggleButton).toHaveFocus()
+  })
+
+  it("should toggle theme when pressing Enter key", async () => {
+    const user = userEvent.setup()
+    setupMatchMediaMock(false)
+
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+      </ThemeProvider>
+    )
+
+    const toggleButton = screen.getByRole("button")
+
+    // Focus button
+    await user.tab()
+    expect(toggleButton).toHaveFocus()
+
+    // Press Enter
+    await user.keyboard("{Enter}")
+
+    await waitFor(() => {
+      expect(document.documentElement.classList.contains("dark")).toBe(true)
+    })
+  })
+
+  it("should toggle theme when pressing Space key", async () => {
+    const user = userEvent.setup()
+    setupMatchMediaMock(false)
+
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+      </ThemeProvider>
+    )
+
+    const toggleButton = screen.getByRole("button")
+
+    // Focus button
+    await user.tab()
+    expect(toggleButton).toHaveFocus()
+
+    // Press Space
+    await user.keyboard(" ")
+
+    await waitFor(() => {
+      expect(document.documentElement.classList.contains("dark")).toBe(true)
+    })
+  })
+
+  it("should have proper ARIA label that changes based on theme", async () => {
+    const user = userEvent.setup()
+    setupMatchMediaMock(false)
+
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+      </ThemeProvider>
+    )
+
+    const toggleButton = screen.getByRole("button")
+
+    // In light mode: "switch to dark mode"
+    expect(toggleButton).toHaveAttribute(
+      "aria-label",
+      "Zu dunklem Modus wechseln"
+    )
+
+    // Toggle to dark
+    await user.click(toggleButton)
+
+    await waitFor(() => {
+      // In dark mode: "switch to light mode"
+      expect(toggleButton).toHaveAttribute(
+        "aria-label",
+        "Zu hellem Modus wechseln"
+      )
+    })
+  })
+
+  it("should be accessible by screen readers", async () => {
+    setupMatchMediaMock(false)
+
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+      </ThemeProvider>
+    )
+
+    const toggleButton = screen.getByRole("button")
+
+    // Button should have accessible name via aria-label
+    expect(toggleButton).toHaveAccessibleName("Zu dunklem Modus wechseln")
+
+    // Button should be discoverable by role
+    expect(screen.getByRole("button")).toBeInTheDocument()
+  })
+
+  it("should maintain focus after toggle", async () => {
+    const user = userEvent.setup()
+    setupMatchMediaMock(false)
+
+    render(
+      <ThemeProvider>
+        <ThemeToggle />
+      </ThemeProvider>
+    )
+
+    const toggleButton = screen.getByRole("button")
+
+    // Focus and click
+    await user.tab()
+    await user.click(toggleButton)
+
+    // Focus should remain on button after toggle
+    expect(toggleButton).toHaveFocus()
   })
 })

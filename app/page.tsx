@@ -6,6 +6,7 @@ import { BirthdayCard } from '@/components/birthday-card';
 import { BirthdayTable } from '@/components/birthday-table';
 import { BirthdayModal } from '@/components/birthday-modal';
 import { DeleteConfirmation } from '@/components/delete-confirmation';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { Birthday } from '@/types/birthday';
 import { splitBirthdays, groupBirthdaysByYear } from '@/lib/date-utils';
 import { i18nDE } from '@/lib/i18n-de';
@@ -214,7 +215,7 @@ export default function Home() {
               Verpasse nie wieder einen Geburtstag!
             </p>
           </div>
-
+          <ThemeToggle />
         </header>
 
         {/* T013-T015: Section 1 - Upcoming Birthdays (Next 30 Days) */}
