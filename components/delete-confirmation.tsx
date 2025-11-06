@@ -35,8 +35,8 @@ export function DeleteConfirmation({
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
-          <p className="text-sm text-gray-700">{i18nDE.confirmation.deleteMessage}</p>
-          <p className="text-sm text-red-600 font-medium">
+          <p className="text-sm text-muted-foreground">{i18nDE.confirmation.deleteMessage}</p>
+          <p className="text-sm text-destructive font-medium">
             {i18nDE.confirmation.deleteWarning}
           </p>
         </div>
@@ -45,7 +45,7 @@ export function DeleteConfirmation({
             type="button"
             onClick={onCancel}
             disabled={isLoading}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium text-foreground bg-background border border-border rounded-md hover:bg-accent disabled:opacity-50"
           >
             {i18nDE.buttons.cancel}
           </button>
@@ -53,7 +53,7 @@ export function DeleteConfirmation({
             type="button"
             onClick={onConfirm}
             disabled={isLoading}
-            className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium text-destructive-foreground bg-destructive rounded-md hover:bg-destructive/90 disabled:opacity-50"
           >
             {isLoading ? i18nDE.loading.deleting : i18nDE.buttons.delete}
           </button>

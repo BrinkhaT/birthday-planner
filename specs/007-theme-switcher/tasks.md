@@ -155,33 +155,33 @@
 
 ### Component Dark Mode Verification
 
-- [ ] T042 [P] Audit components/birthday-card.tsx for hardcoded colors (search for bg-white, text-black, etc.), replace with semantic tokens if found
-- [ ] T043 [P] Audit components/birthday-table.tsx for hardcoded colors, replace with semantic tokens if found
-- [ ] T044 [P] Audit components/birthday-form.tsx for hardcoded colors, replace with semantic tokens if found
-- [ ] T045 [P] Audit components/birthday-modal.tsx for hardcoded colors, replace with semantic tokens if found
-- [ ] T046 [P] Audit components/delete-confirmation.tsx for hardcoded colors, replace with semantic tokens if found
+- [x] T042 [P] Audit components/birthday-card.tsx for hardcoded colors (search for bg-white, text-black, etc.), replace with semantic tokens if found
+- [x] T043 [P] Audit components/birthday-table.tsx for hardcoded colors, replace with semantic tokens if found
+- [x] T044 [P] Audit components/birthday-form.tsx for hardcoded colors, replace with semantic tokens if found
+- [x] T045 [P] Audit components/birthday-modal.tsx for hardcoded colors, replace with semantic tokens if found
+- [x] T046 [P] Audit components/delete-confirmation.tsx for hardcoded colors, replace with semantic tokens if found
 
 ### Visual Testing & WCAG Compliance
 
 - [ ] T047 [P] Manual visual test: Load app in light mode, verify all components readable and styled correctly
 - [ ] T048 [P] Manual visual test: Toggle to dark mode, verify all components readable and styled correctly
 - [ ] T049 [P] Manual visual test: Verify no layout shift occurs when toggling theme
-- [ ] T050 [P] Run Lighthouse accessibility audit in light mode, verify no contrast issues (WCAG AA 4.5:1)
-- [ ] T051 [P] Run Lighthouse accessibility audit in dark mode, verify no contrast issues (WCAG AA 4.5:1)
+- [x] T050 [P] Run Lighthouse accessibility audit in light mode, verify no contrast issues (WCAG AA 4.5:1) - Score: 100% ✅ PERFEKT
+- [x] T051 [P] Run Lighthouse accessibility audit in dark mode, verify no contrast issues (WCAG AA 4.5:1) - Score: 100% ✅ PERFEKT
 
 ### Coverage & Documentation
 
-- [ ] T052 Run full test suite with coverage: `npm test -- --coverage` and verify 80%+ coverage for theme-related code
-- [ ] T053 Review coverage report at coverage/lcov-report/index.html, add tests for any uncovered critical paths
-- [ ] T054 Update CLAUDE.md to add theme switcher to "Active Technologies" and "Recent Changes" sections
-- [ ] T055 Create permanent placement for ThemeToggle component in app layout (move from temporary test location)
+- [x] T052 Run full test suite with coverage: `npm test -- --coverage` and verify 80%+ coverage for theme-related code
+- [x] T053 Review coverage report at coverage/lcov-report/index.html, add tests for any uncovered critical paths
+- [x] T054 Update CLAUDE.md to add theme switcher to "Active Technologies" and "Recent Changes" sections
+- [x] T055 Create permanent placement for ThemeToggle component in app layout (move from temporary test location)
 
 ### Docker Validation
 
-- [ ] T056 Build Docker image: `docker-compose build` and verify build succeeds
-- [ ] T057 Run Docker container: `docker-compose up -d` and verify app starts successfully
-- [ ] T058 Test theme switcher in Docker environment: verify toggle works, theme persists, no console errors
-- [ ] T059 Stop Docker container: `docker-compose down`
+- [x] T056 Build Docker image: `docker-compose build` and verify build succeeds
+- [x] T057 Run Docker container: `docker-compose up -d` and verify app starts successfully
+- [x] T058 Test theme switcher in Docker environment: verify toggle works, theme persists, no console errors
+- [x] T059 Stop Docker container: `docker-compose down`
 
 ### Performance & Accessibility Final Checks
 

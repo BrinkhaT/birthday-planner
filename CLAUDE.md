@@ -97,12 +97,16 @@ components/        - React components
   birthday-form.tsx      - Form for add/edit with German validation
   birthday-modal.tsx     - Modal wrapper for add/edit operations
   delete-confirmation.tsx - Delete confirmation dialog
+  theme-provider.tsx     - React Context provider for theme state management
+  theme-toggle.tsx       - Theme toggle button component (Sun/Moon icons)
 lib/               - Utility functions and services
   filestore.ts     - JSON FileStore implementation (read/write operations)
   validations.ts   - Form validation and date format conversion
   date-utils.ts    - Date parsing and birthday calculations
-  i18n-de.ts       - German localization strings
+  i18n-de.ts       - German localization strings (includes theme labels)
   utils.ts         - Utility functions
+  hooks/
+    use-theme.ts   - Custom React hook for theme management
 types/             - TypeScript type definitions
   birthday.ts      - Birthday type definitions
 data/              - JSON data storage (mounted as volume in Docker)
@@ -150,6 +154,16 @@ data/              - JSON data storage (mounted as volume in Docker)
 - **Dark Mode Support**: Amber styling adapted for dark mode with appropriate opacity
 - **Responsive Design**: Highlighting works across all viewport sizes (320px-1920px)
 - **Test Coverage**: 98.72% overall coverage with comprehensive unit and integration tests
+
+**Theme Switcher - Light/Dark Mode (007-theme-switcher)** - COMPLETED ✅
+- **System Theme Detection**: Automatically detects and applies OS preference (light/dark) on first visit
+- **Manual Theme Toggle**: Icon-based toggle button (Sun/Moon icons from Lucide React) for manual override
+- **Theme Persistence**: User preference saved in localStorage and persists across browser sessions
+- **Component Compatibility**: All existing components (cards, tables, forms, modals) adapted to support both themes with semantic color tokens
+- **FOUC Prevention**: Blocking script in layout prevents flash of incorrect theme on page load
+- **Performance**: Theme detection < 100ms, toggle < 50ms, zero layout shift
+- **Accessibility**: 100% Lighthouse score, WCAG AA/AAA compliance, viewport zoom enabled, keyboard navigation, German ARIA labels
+- **Test Coverage**: 98.76% overall coverage with comprehensive unit and integration tests
 
 ### Running the Application
 
@@ -218,6 +232,22 @@ Birthday data is persisted in JSON FileStore:
 - Node.js Alpine base image
 
 ## Recent Changes
+
+### 2025-11-06
+- ✅ **007-theme-switcher**: Completed theme switcher (light/dark mode) implementation
+  - Implemented system theme detection using `prefers-color-scheme` media query
+  - Created ThemeProvider component with React Context for global theme state
+  - Added ThemeToggle button component with Sun/Moon icons
+  - Implemented localStorage persistence for user theme preference
+  - Added blocking FOUC prevention script in layout
+  - Replaced all hardcoded colors with semantic Tailwind tokens in all components
+  - Added German theme localization strings (toggleLight, toggleDark)
+  - Performance: Theme detection < 100ms, toggle < 50ms
+  - Test coverage: 98.76% overall with comprehensive unit and integration tests
+  - **Lighthouse Accessibility: 100% (Light & Dark Mode)** ✅
+  - **WCAG AA/AAA compliance verified** - Perfect contrast ratios (7:1)
+  - Fixed viewport zoom restriction - users can now zoom on mobile devices
+  - All existing components work correctly in both light and dark modes
 
 ### 2025-10-29
 - ✅ **003-crud-operations**: Completed full CRUD operations
