@@ -29,5 +29,7 @@ module.exports = {
     'subject-empty': [2, 'never'],
     // Header (type + scope + subject) max length
     'header-max-length': [2, 'always', 100],
+    // Body max line length - disabled to allow long URLs/links in Dependabot commits
+    'body-max-line-length': [0, 'always', Infinity],
   },
 };
