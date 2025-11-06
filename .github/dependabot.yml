@@ -16,7 +16,6 @@ updates:
       - "automated"
     commit-message:
       prefix: "chore(deps)"
-      include: "scope"
     reviewers:
       - "BrinkhaT"
     ignore:
@@ -71,7 +70,6 @@ updates:
       - "automated"
     commit-message:
       prefix: "chore(docker)"
-      include: "scope"
     reviewers:
       - "BrinkhaT"
     ignore:
