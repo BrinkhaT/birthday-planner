@@ -81,6 +81,10 @@ jest.mock('@/components/delete-confirmation', () => ({
   },
 }));
 
+jest.mock('@/components/theme-toggle', () => ({
+  ThemeToggle: () => <button data-testid="theme-toggle">Toggle Theme</button>,
+}));
+
 describe('Home Page - Frontend Hook Logic', () => {
   let fetchMock: jest.SpyInstance;
 

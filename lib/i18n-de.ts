@@ -75,6 +75,16 @@ export const i18nDE = {
     deleting: "Wird gelöscht...",
     loading: "Lädt...",
   },
+
+  // Theme switcher
+  theme: {
+    toggleLight: "Zu hellem Modus wechseln",
+    toggleDark: "Zu dunklem Modus wechseln",
+    themeLabel: "Theme",
+    lightMode: "Heller Modus",
+    darkMode: "Dunkler Modus",
+    systemMode: "System",
+  },
 } as const;
 
 export type I18nDE = typeof i18nDE;

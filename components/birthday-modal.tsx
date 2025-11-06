@@ -40,8 +40,8 @@ export function BirthdayModal({
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         {error && (
-          <div className="rounded-md bg-red-50 p-4 border border-red-200">
-            <p className="text-sm text-red-800">{error}</p>
+          <div className="rounded-md bg-destructive/10 p-4 border border-destructive/20">
+            <p className="text-sm text-destructive">{error}</p>
           </div>
         )}
         <BirthdayForm

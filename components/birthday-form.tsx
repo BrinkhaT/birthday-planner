@@ -65,10 +65,10 @@ export function BirthdayForm({ birthday, onSubmit, onCancel, isLoading = false }
           placeholder={i18nDE.form.namePlaceholder}
           required
           disabled={isLoading}
-          className={errors.name ? "border-red-500" : ""}
+          className={errors.name ? "border-destructive" : ""}
         />
         {errors.name && (
-          <p className="text-sm text-red-500">{errors.name}</p>
+          <p className="text-sm text-destructive">{errors.name}</p>
         )}
       </div>
 
@@ -83,10 +83,10 @@ export function BirthdayForm({ birthday, onSubmit, onCancel, isLoading = false }
           placeholder={i18nDE.form.birthdatePlaceholder}
           required
           disabled={isLoading}
-          className={errors.birthdate ? "border-red-500" : ""}
+          className={errors.birthdate ? "border-destructive" : ""}
         />
         {errors.birthdate && (
-          <p className="text-sm text-red-500">{errors.birthdate}</p>
+          <p className="text-sm text-destructive">{errors.birthdate}</p>
         )}
       </div>
 
@@ -96,14 +96,14 @@ export function BirthdayForm({ birthday, onSubmit, onCancel, isLoading = false }
           type="button"
           onClick={onCancel}
           disabled={isLoading}
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
+          className="px-4 py-2 text-sm font-medium text-foreground bg-background border border-border rounded-md hover:bg-accent disabled:opacity-50"
         >
           {i18nDE.buttons.cancel}
         </button>
         <button
           type="submit"
           disabled={isLoading}
-          className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-primary/90 disabled:opacity-50"
+          className="px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90 disabled:opacity-50"
         >
           {isLoading ? i18nDE.loading.saving : i18nDE.buttons.save}
         </button>
