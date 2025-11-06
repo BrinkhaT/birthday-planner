@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import {
   ThemeContext,
   type Theme,
@@ -13,15 +13,41 @@ interface ThemeProviderProps {
   storageKey?: string
 }
 
+// Helper to get initial preference from storage
+function getInitialPreference(storageKey: string, defaultTheme: ThemePreference): ThemePreference {
+  if (typeof window === "undefined") return defaultTheme
+
+  try {
+    const storedPreference = localStorage.getItem(storageKey)
+    if (
+      storedPreference === "light" ||
+      storedPreference === "dark" ||
+      storedPreference === "system"
+    ) {
+      return storedPreference
+    }
+  } catch {
+    // localStorage unavailable
+  }
+  return defaultTheme
+}
+
 export function ThemeProvider({
   children,
   defaultTheme = "system",
   storageKey = "theme-preference",
 }: ThemeProviderProps) {
-  const [preference, setPreference] = useState<ThemePreference>(defaultTheme)
+  const [preference, setPreference] = useState<ThemePreference>(() =>
+    getInitialPreference(storageKey, defaultTheme)
+  )
   const [systemPreference, setSystemPreference] = useState<Theme>("light")
-  const [theme, setThemeState] = useState<Theme>("light")
   const [mounted, setMounted] = useState(false)
+
+  // Compute theme from preference and system preference
+  const theme = useMemo(
+    () => (preference === "system" ? systemPreference : preference),
+    [preference, systemPreference]
+  )
 
   // Detect system preference
   useEffect(() => {
@@ -41,37 +67,22 @@ export function ThemeProvider({
     }
   }, [])
 
-  // Load preference from storage on mount
+  // Mark as mounted after hydration
   useEffect(() => {
-    try {
-      const storedPreference = localStorage.getItem(storageKey)
-      if (
-        storedPreference === "light" ||
-        storedPreference === "dark" ||
-        storedPreference === "system"
-      ) {
-        setPreference(storedPreference)
-      }
-    } catch (error) {
-      // localStorage unavailable (private browsing, etc.)
-      console.warn("Theme persistence unavailable:", error)
-    }
+    // Intentional: prevents hydration mismatch by delaying render until client-side
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
-  }, [storageKey])
+  }, [])
 
-  // Compute and apply theme
+  // Apply theme to DOM
   useEffect(() => {
-    const computedTheme = preference === "system" ? systemPreference : preference
-    setThemeState(computedTheme)
-
-    // Apply to DOM
     const root = document.documentElement
-    if (computedTheme === "dark") {
+    if (theme === "dark") {
       root.classList.add("dark")
     } else {
       root.classList.remove("dark")
     }
-  }, [preference, systemPreference])
+  }, [theme])
 
   const setTheme = (newPreference: ThemePreference) => {
     setPreference(newPreference)

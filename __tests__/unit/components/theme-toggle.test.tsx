@@ -67,7 +67,7 @@ describe("ThemeToggle Component - Rendering (T021)", () => {
   })
 
   it("should have proper ARIA label based on current theme", () => {
-    const { rerender } = render(
+    render(
       <ThemeProvider>
         <ThemeToggle />
       </ThemeProvider>

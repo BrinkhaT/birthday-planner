@@ -25,7 +25,7 @@ beforeEach(() => {
 
 describe("useTheme hook - System Preference Detection", () => {
   it("should detect light mode when system preference is light", async () => {
-    const { mockMediaQueryList } = setupMatchMediaMock(false) // false = light mode
+    setupMatchMediaMock(false) // false = light mode
 
     const { result } = renderHook(() => useTheme(), {
       wrapper: ({ children }) => <ThemeProvider>{children}</ThemeProvider>,
@@ -38,7 +38,7 @@ describe("useTheme hook - System Preference Detection", () => {
   })
 
   it("should detect dark mode when system preference is dark", async () => {
-    const { mockMediaQueryList } = setupMatchMediaMock(true) // true = dark mode
+    setupMatchMediaMock(true) // true = dark mode
 
     const { result } = renderHook(() => useTheme(), {
       wrapper: ({ children }) => <ThemeProvider>{children}</ThemeProvider>,
