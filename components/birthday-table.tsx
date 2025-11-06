@@ -10,6 +10,8 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Edit, Trash2 } from 'lucide-react';
+import { isMilestoneBirthday, getMilestoneEmoji } from '@/lib/date-utils';
+import { cn } from '@/lib/utils';
 
 export interface BirthdayTableProps {
   birthdays: BirthdayWithOccurrence[];
@@ -57,47 +59,62 @@ export function BirthdayTable({
         </TableHeader>
         {/* T021: TableBody with map over birthdays array */}
         <TableBody>
-          {birthdays.map((birthday) => (
-            <TableRow key={birthday.id}>
-              {/* T022: Date formatting for nextOccurrence display */}
-              <TableCell>{formatDate(birthday.nextOccurrence)}</TableCell>
-              {/* T023: Name with age in parentheses (e.g., "Max Mustermann (24 Jahre)") */}
-              <TableCell>
-                {birthday.name}
-                {birthday.age !== null && ` (${birthday.age} Jahre)`}
-              </TableCell>
-              {(onEdit || onDelete) && (
+          {birthdays.map((birthday) => {
+            // T009: Check if this is a milestone birthday
+            const isMilestone = isMilestoneBirthday(birthday.age);
+
+            return (
+              <TableRow
+                key={birthday.id}
+                className={cn(
+                  isMilestone && "bg-amber-50 dark:bg-amber-950/20 hover:bg-amber-100 dark:hover:bg-amber-900/30"
+                )}
+              >
+                {/* T022: Date formatting for nextOccurrence display */}
+                <TableCell>{formatDate(birthday.nextOccurrence)}</TableCell>
+                {/* T023: Name with age in parentheses (e.g., "Max Mustermann (24 Jahre)") */}
                 <TableCell>
-                  <div className="flex gap-1">
-                    {onEdit && (
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => onEdit(birthday)}
-                        className="h-11 w-11 min-h-[44px] min-w-[44px]"
-                        aria-label="Geburtstag bearbeiten"
-                        title="Geburtstag bearbeiten"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                    )}
-                    {onDelete && (
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => onDelete(birthday)}
-                        className="h-11 w-11 min-h-[44px] min-w-[44px] text-destructive hover:text-destructive hover:bg-destructive/10"
-                        aria-label="Geburtstag löschen"
-                        title="Geburtstag löschen"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
+                  {isMilestone && (
+                    <span className="mr-2 text-lg" aria-label="Milestone birthday">
+                      {getMilestoneEmoji(birthday.age)}
+                    </span>
+                  )}
+                  {birthday.name}
+                  {birthday.age !== null && ` (${birthday.age} Jahre)`}
                 </TableCell>
-              )}
-            </TableRow>
-          ))}
+                {(onEdit || onDelete) && (
+                  <TableCell>
+                    <div className="flex gap-1">
+                      {onEdit && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => onEdit(birthday)}
+                          className="h-11 w-11 min-h-[44px] min-w-[44px]"
+                          aria-label="Geburtstag bearbeiten"
+                          title="Geburtstag bearbeiten"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                      )}
+                      {onDelete && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => onDelete(birthday)}
+                          className="h-11 w-11 min-h-[44px] min-w-[44px] text-destructive hover:text-destructive hover:bg-destructive/10"
+                          aria-label="Geburtstag löschen"
+                          title="Geburtstag löschen"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                  </TableCell>
+                )}
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </div>

@@ -81,8 +81,8 @@ describe('filestore (integration)', () => {
             BIRTHDAY_WITH_YEAR,
             BIRTHDAY_WITHOUT_YEAR,
             BIRTHDAY_LEAP_YEAR,
-            { id: 'test-004', name: 'Test User', birthDate: '1990-01-01' },
-            { id: 'test-005', name: 'Another User', birthDate: '--05-20' },
+            { id: 'test-004', name: 'Test User', birthDate: '1990-01-01', createdAt: '2024-01-01T00:00:00.000Z', updatedAt: '2024-01-01T00:00:00.000Z' },
+            { id: 'test-005', name: 'Another User', birthDate: '--05-20', createdAt: '2024-01-01T00:00:00.000Z', updatedAt: '2024-01-01T00:00:00.000Z' },
           ],
         };
 
@@ -253,6 +253,8 @@ describe('filestore (integration)', () => {
           id: 'custom-id',
           name: 'Test Name with Spëcial Chårs',
           birthDate: '1990-12-31',
+        createdAt: '2024-01-01T00:00:00.000Z',
+        updatedAt: '2024-01-01T00:00:00.000Z',
         };
         const store = {
           version: '1.0.0',
@@ -331,6 +333,8 @@ describe('filestore (integration)', () => {
               id: `test-${i}`,
               name: `Person ${i}`,
               birthDate: '1990-01-01',
+            createdAt: '2024-01-01T00:00:00.000Z',
+            updatedAt: '2024-01-01T00:00:00.000Z',
             }],
           };
           await writeBirthdays(store);
@@ -348,6 +352,8 @@ describe('filestore (integration)', () => {
           id: `birthday-${i}`,
           name: `Person ${i}`,
           birthDate: i % 2 === 0 ? '1990-01-01' : '--06-15',
+          createdAt: '2024-01-01T00:00:00.000Z',
+          updatedAt: '2024-01-01T00:00:00.000Z',
         }));
         const largeStore = {
           version: '1.0.0',

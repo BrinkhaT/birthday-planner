@@ -69,6 +69,8 @@ describe('getNextOccurrence', () => {
       id: 'test-1',
       name: 'Test',
       birthDate: '2000-12-25',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
     };
     const result = getNextOccurrence(birthday, REF_DATE_MID_YEAR);
     expect(result.getFullYear()).toBe(2025);
@@ -81,6 +83,8 @@ describe('getNextOccurrence', () => {
       id: 'test-1',
       name: 'Test',
       birthDate: '2000-01-10',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
     };
     const result = getNextOccurrence(birthday, REF_DATE_MID_YEAR);
     expect(result.getFullYear()).toBe(2026);
@@ -93,6 +97,8 @@ describe('getNextOccurrence', () => {
       id: 'test-1',
       name: 'Leap Year Baby',
       birthDate: '2000-02-29',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
     };
     const result = getNextOccurrence(birthday, REF_DATE_NON_LEAP);
     expect(result.getFullYear()).toBe(2025);
@@ -105,6 +111,8 @@ describe('getNextOccurrence', () => {
       id: 'test-1',
       name: 'Leap Year Baby',
       birthDate: '2000-02-29',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
     };
     const result = getNextOccurrence(birthday, REF_DATE_LEAP_YEAR);
     expect(result.getFullYear()).toBe(2024);
@@ -117,6 +125,8 @@ describe('getNextOccurrence', () => {
       id: 'test-1',
       name: 'New Year',
       birthDate: '2000-01-05',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
     };
     const result = getNextOccurrence(birthday, REF_DATE_YEAR_END);
     expect(result.getFullYear()).toBe(2026);
@@ -131,6 +141,8 @@ describe('calculateAge', () => {
       id: 'test-1',
       name: 'Test',
       birthDate: '2000-12-25',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
     };
     const result = calculateAge(birthday, REF_DATE_MID_YEAR);
     expect(result).toBe(25); // Will turn 25 at next birthday (Dec 25, 2025)
@@ -146,6 +158,8 @@ describe('calculateAge', () => {
       id: 'test-1',
       name: 'Future',
       birthDate: '3000-12-25',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
     };
     const result = calculateAge(birthday, REF_DATE_MID_YEAR);
     expect(result).toBeNull();
@@ -156,6 +170,8 @@ describe('calculateAge', () => {
       id: 'test-1',
       name: 'Past',
       birthDate: '2000-01-10',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
     };
     const result = calculateAge(birthday, REF_DATE_MID_YEAR);
     expect(result).toBe(26); // Next birthday is Jan 10, 2026, will be 26
@@ -169,6 +185,8 @@ describe('sortBirthdays', () => {
         id: 'test-1',
         name: 'Charlie',
         birthDate: '2000-12-25',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2025-12-25'),
         age: 25,
       },
@@ -176,6 +194,8 @@ describe('sortBirthdays', () => {
         id: 'test-2',
         name: 'Alice',
         birthDate: '2000-01-10',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2026-01-10'),
         age: 26,
       },
@@ -183,6 +203,8 @@ describe('sortBirthdays', () => {
         id: 'test-3',
         name: 'Bob',
         birthDate: '2000-06-15',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2025-06-15'),
         age: 25,
       },
@@ -201,6 +223,8 @@ describe('sortBirthdays', () => {
         id: 'test-1',
         name: 'Charlie',
         birthDate: '2000-12-25',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2025-12-25'),
         age: 25,
       },
@@ -208,6 +232,8 @@ describe('sortBirthdays', () => {
         id: 'test-2',
         name: 'Alice',
         birthDate: '2000-12-25',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2025-12-25'),
         age: 25,
       },
@@ -215,6 +241,8 @@ describe('sortBirthdays', () => {
         id: 'test-3',
         name: 'Bob',
         birthDate: '2000-12-25',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2025-12-25'),
         age: 25,
       },
@@ -235,16 +263,22 @@ describe('splitBirthdays', () => {
         id: 'test-1',
         name: 'Soon',
         birthDate: '--06-20', // 5 days from REF_DATE_MID_YEAR (Jun 15)
+        createdAt: '2024-01-01T00:00:00.000Z',
+        updatedAt: '2024-01-01T00:00:00.000Z',
       },
       {
         id: 'test-2',
         name: 'Later',
         birthDate: '--12-25', // 6+ months away
+        createdAt: '2024-01-01T00:00:00.000Z',
+        updatedAt: '2024-01-01T00:00:00.000Z',
       },
       {
         id: 'test-3',
         name: 'Within30',
         birthDate: '--07-10', // 25 days from REF_DATE_MID_YEAR
+        createdAt: '2024-01-01T00:00:00.000Z',
+        updatedAt: '2024-01-01T00:00:00.000Z',
       },
     ];
 
@@ -271,16 +305,22 @@ describe('splitBirthdays', () => {
         id: 'test-1',
         name: 'Charlie',
         birthDate: '--06-25',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
       },
       {
         id: 'test-2',
         name: 'Alice',
         birthDate: '--06-20',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
       },
       {
         id: 'test-3',
         name: 'Bob',
         birthDate: '--06-20',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
       },
     ];
 
@@ -303,11 +343,15 @@ describe('splitBirthdays', () => {
         id: 'test-1',
         name: 'Boundary',
         birthDate: '--07-14', // Exactly 29 days from Jun 15
+        createdAt: '2024-01-01T00:00:00.000Z',
+        updatedAt: '2024-01-01T00:00:00.000Z',
       },
       {
         id: 'test-2',
         name: 'JustPast',
         birthDate: '--07-16', // 31 days from Jun 15 - just past boundary
+        createdAt: '2024-01-01T00:00:00.000Z',
+        updatedAt: '2024-01-01T00:00:00.000Z',
       },
     ];
 
@@ -330,6 +374,8 @@ describe('groupBirthdaysByYear', () => {
         id: 'test-1',
         name: 'ThisYear1',
         birthDate: '2000-12-25',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2025-12-25'),
         age: 25,
       },
@@ -337,6 +383,8 @@ describe('groupBirthdaysByYear', () => {
         id: 'test-2',
         name: 'NextYear',
         birthDate: '2000-01-10',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2026-01-10'),
         age: 26,
       },
@@ -344,6 +392,8 @@ describe('groupBirthdaysByYear', () => {
         id: 'test-3',
         name: 'ThisYear2',
         birthDate: '2000-11-20',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2025-11-20'),
         age: 25,
       },
@@ -371,6 +421,8 @@ describe('groupBirthdaysByYear', () => {
         id: 'test-1',
         name: 'Year2027',
         birthDate: '2000-01-10',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2027-01-10'),
         age: 27,
       },
@@ -378,6 +430,8 @@ describe('groupBirthdaysByYear', () => {
         id: 'test-2',
         name: 'Year2025',
         birthDate: '2000-12-25',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2025-12-25'),
         age: 25,
       },
@@ -385,6 +439,8 @@ describe('groupBirthdaysByYear', () => {
         id: 'test-3',
         name: 'Year2026',
         birthDate: '2000-06-15',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2026-06-15'),
         age: 26,
       },
@@ -403,6 +459,8 @@ describe('groupBirthdaysByYear', () => {
         id: 'test-1',
         name: 'Charlie',
         birthDate: '2000-12-25',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2025-12-25'),
         age: 25,
       },
@@ -410,6 +468,8 @@ describe('groupBirthdaysByYear', () => {
         id: 'test-2',
         name: 'Alice',
         birthDate: '2000-06-15',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2025-06-15'),
         age: 25,
       },
@@ -417,6 +477,8 @@ describe('groupBirthdaysByYear', () => {
         id: 'test-3',
         name: 'Bob',
         birthDate: '2000-09-20',
+      createdAt: '2024-01-01T00:00:00.000Z',
+      updatedAt: '2024-01-01T00:00:00.000Z',
         nextOccurrence: new Date('2025-09-20'),
         age: 25,
       },

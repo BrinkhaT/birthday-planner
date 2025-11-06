@@ -21,8 +21,8 @@ module.exports = {
     ],
     // Scope is optional (e.g., ci, tests, api)
     'scope-empty': [0, 'never'],
-    // Subject should start lowercase (conventional commits standard)
-    'subject-case': [2, 'always', 'lower-case'],
+    // Subject should start lowercase or sentence-case (allows Dependabot "Bump" commits)
+    'subject-case': [2, 'always', ['lower-case', 'sentence-case']],
     // Subject should not end with a period
     'subject-full-stop': [2, 'never', '.'],
     // Subject should not be empty

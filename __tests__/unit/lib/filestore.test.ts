@@ -479,6 +479,7 @@ describe.skip('filestore', () => {
         const callOrder: string[] = [];
         mockMkdir.mockImplementation(async () => {
           callOrder.push('mkdir');
+          return undefined;
         });
         mockWriteFile.mockImplementation(async () => {
           callOrder.push('write');
