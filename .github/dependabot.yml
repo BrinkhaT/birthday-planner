@@ -22,6 +22,9 @@ updates:
       # Prevent Node 21+ type definitions - stay on Node 20.x LTS
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+      # Prevent Tailwind CSS v4 - breaking changes with new CSS-only config
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
     groups:
       # Group patch and minor updates together
       patch-updates:
