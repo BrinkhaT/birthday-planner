@@ -199,3 +199,111 @@ describe("useTheme hook - Theme Computation", () => {
     })
   })
 })
+
+describe("useTheme hook - localStorage Persistence (T032, T033)", () => {
+  it("T032: should write to localStorage when theme changes via setTheme", async () => {
+    setupMatchMediaMock(false) // system is light
+
+    const { result } = renderHook(() => useTheme(), {
+      wrapper: ({ children }) => <ThemeProvider>{children}</ThemeProvider>,
+    })
+
+    // Initial state - no manual preference set
+    expect(localStorageMock.getItem("theme-preference")).toBeNull()
+
+    // Change theme manually
+    await act(async () => {
+      result.current.setTheme("dark")
+    })
+
+    await waitFor(() => {
+      // Should persist to localStorage
+      expect(localStorageMock.getItem("theme-preference")).toBe("dark")
+    })
+
+    // Change again
+    await act(async () => {
+      result.current.setTheme("light")
+    })
+
+    await waitFor(() => {
+      expect(localStorageMock.getItem("theme-preference")).toBe("light")
+    })
+
+    // Set to system
+    await act(async () => {
+      result.current.setTheme("system")
+    })
+
+    await waitFor(() => {
+      expect(localStorageMock.getItem("theme-preference")).toBe("system")
+    })
+  })
+
+  it("T033: should read from localStorage on initialization and apply preference", async () => {
+    setupMatchMediaMock(false) // system is light
+
+    // Set stored preference before initialization
+    localStorageMock.setItem("theme-preference", "dark")
+
+    const { result } = renderHook(() => useTheme(), {
+      wrapper: ({ children }) => <ThemeProvider>{children}</ThemeProvider>,
+    })
+
+    await waitFor(() => {
+      // Should load and apply stored preference
+      expect(result.current.preference).toBe("dark")
+      expect(result.current.theme).toBe("dark")
+    })
+  })
+
+  it("T033: should read 'system' preference from localStorage correctly", async () => {
+    setupMatchMediaMock(true) // system is dark
+
+    // User explicitly set "system" preference
+    localStorageMock.setItem("theme-preference", "system")
+
+    const { result } = renderHook(() => useTheme(), {
+      wrapper: ({ children }) => <ThemeProvider>{children}</ThemeProvider>,
+    })
+
+    await waitFor(() => {
+      expect(result.current.preference).toBe("system")
+      expect(result.current.theme).toBe("dark") // Should follow system
+    })
+  })
+
+  it("T034: should handle localStorage write errors gracefully", async () => {
+    setupMatchMediaMock(false)
+
+    // Mock localStorage.setItem to throw error
+    const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation()
+    const originalSetItem = localStorageMock.setItem
+    localStorageMock.setItem = jest.fn(() => {
+      throw new Error("QuotaExceededError")
+    })
+
+    const { result } = renderHook(() => useTheme(), {
+      wrapper: ({ children }) => <ThemeProvider>{children}</ThemeProvider>,
+    })
+
+    // Should not crash when localStorage write fails
+    await act(async () => {
+      result.current.setTheme("dark")
+    })
+
+    await waitFor(() => {
+      // Theme should still change in memory
+      expect(result.current.theme).toBe("dark")
+      // Should log warning
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        "Failed to persist theme preference:",
+        expect.any(Error)
+      )
+    })
+
+    // Cleanup
+    localStorageMock.setItem = originalSetItem
+    consoleWarnSpy.mockRestore()
+  })
+})

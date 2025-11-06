@@ -316,6 +316,174 @@ describe("Theme Integration - Manual Toggle Flow (T024)", () => {
   })
 })
 
+describe("Theme Integration - Persistence (T035, T036)", () => {
+  it("T035: should persist theme across simulated page reload", async () => {
+    const user = userEvent.setup()
+    setupMatchMediaMock(false) // system is light
+
+    // First "session" - user manually sets dark theme
+    const { unmount } = render(
+      <ThemeProvider>
+        <ThemeToggle />
+        <TestComponent />
+      </ThemeProvider>
+    )
+
+    const toggleButton = screen.getByRole("button")
+    await user.click(toggleButton)
+
+    await waitFor(() => {
+      expect(localStorageMock.getItem("theme-preference")).toBe("dark")
+      expect(document.documentElement.classList.contains("dark")).toBe(true)
+    })
+
+    // Unmount to simulate page navigation/close
+    unmount()
+    document.documentElement.classList.remove("dark")
+
+    // Second "session" - user returns to app (new render)
+    render(
+      <ThemeProvider>
+        <TestComponent />
+      </ThemeProvider>
+    )
+
+    await waitFor(() => {
+      const themeDisplay = screen.getByTestId("current-theme")
+      // Should restore dark theme from localStorage
+      expect(themeDisplay.textContent).toBe("dark")
+      expect(document.documentElement.classList.contains("dark")).toBe(true)
+    })
+  })
+
+  it("T035: should persist 'light' selection across page reload when system is dark", async () => {
+    const user = userEvent.setup()
+    setupMatchMediaMock(true) // system is dark
+
+    // First session
+    const { unmount } = render(
+      <ThemeProvider>
+        <ThemeToggle />
+        <TestComponent />
+      </ThemeProvider>
+    )
+
+    // User is in dark mode (system default)
+    await waitFor(() => {
+      expect(document.documentElement.classList.contains("dark")).toBe(true)
+    })
+
+    // User manually switches to light
+    const toggleButton = screen.getByRole("button")
+    await user.click(toggleButton)
+
+    await waitFor(() => {
+      expect(localStorageMock.getItem("theme-preference")).toBe("light")
+      expect(document.documentElement.classList.contains("dark")).toBe(false)
+    })
+
+    // Simulate reload
+    unmount()
+    document.documentElement.classList.add("dark") // Reset to dark
+
+    // Second session
+    render(
+      <ThemeProvider>
+        <TestComponent />
+      </ThemeProvider>
+    )
+
+    await waitFor(() => {
+      // Should restore light theme despite system being dark
+      expect(screen.getByTestId("current-theme").textContent).toBe("light")
+      expect(document.documentElement.classList.contains("dark")).toBe(false)
+    })
+  })
+
+  it("T036: should prioritize manual selection over system preference", async () => {
+    setupMatchMediaMock(false) // system is light
+
+    // User manually selected dark mode previously
+    localStorageMock.setItem("theme-preference", "dark")
+
+    render(
+      <ThemeProvider>
+        <TestComponent />
+      </ThemeProvider>
+    )
+
+    await waitFor(() => {
+      const themeDisplay = screen.getByTestId("current-theme")
+      const systemDisplay = screen.getByTestId("system-preference")
+
+      // System says light
+      expect(systemDisplay.textContent).toBe("light")
+
+      // But app uses dark (manual selection wins)
+      expect(themeDisplay.textContent).toBe("dark")
+      expect(document.documentElement.classList.contains("dark")).toBe(true)
+    })
+  })
+
+  it("T036: manual selection should prevent system preference changes from affecting theme", async () => {
+    const { triggerChange } = setupMatchMediaMock(false) // system starts light
+
+    // User manually selected light mode
+    localStorageMock.setItem("theme-preference", "light")
+
+    render(
+      <ThemeProvider>
+        <TestComponent />
+      </ThemeProvider>
+    )
+
+    await waitFor(() => {
+      expect(document.documentElement.classList.contains("dark")).toBe(false)
+    })
+
+    // System preference changes to dark
+    triggerChange(true)
+
+    await waitFor(() => {
+      const systemDisplay = screen.getByTestId("system-preference")
+      const themeDisplay = screen.getByTestId("current-theme")
+
+      // System preference should update
+      expect(systemDisplay.textContent).toBe("dark")
+
+      // But theme should stay light (manual selection priority)
+      expect(themeDisplay.textContent).toBe("light")
+      expect(document.documentElement.classList.contains("dark")).toBe(false)
+    })
+  })
+
+  it("T036: should follow system preference changes only when preference is 'system'", async () => {
+    const { triggerChange } = setupMatchMediaMock(false) // system starts light
+
+    // User explicitly wants system preference
+    localStorageMock.setItem("theme-preference", "system")
+
+    render(
+      <ThemeProvider>
+        <TestComponent />
+      </ThemeProvider>
+    )
+
+    await waitFor(() => {
+      expect(screen.getByTestId("current-theme").textContent).toBe("light")
+    })
+
+    // System changes to dark
+    triggerChange(true)
+
+    await waitFor(() => {
+      // Theme should follow system change
+      expect(screen.getByTestId("current-theme").textContent).toBe("dark")
+      expect(document.documentElement.classList.contains("dark")).toBe(true)
+    })
+  })
+})
+
 describe("Theme Integration - Toggle Accessibility (T025)", () => {
   it("should be keyboard navigable with Tab key", async () => {
     const user = userEvent.setup()

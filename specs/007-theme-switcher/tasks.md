@@ -131,19 +131,19 @@
 
 ### Tests for User Story 3
 
-- [ ] T032 [P] [US3] Unit test for localStorage write on theme change in __tests__/unit/lib/use-theme.test.ts
-- [ ] T033 [P] [US3] Unit test for localStorage read on initialization in __tests__/unit/lib/use-theme.test.ts
-- [ ] T034 [P] [US3] Unit test for graceful degradation when localStorage unavailable in __tests__/unit/lib/use-theme.test.ts (try-catch error handling)
-- [ ] T035 [US3] Integration test for persistence across simulated page reload in __tests__/integration/theme-integration.test.tsx
-- [ ] T036 [US3] Integration test for manual selection override of system preference in __tests__/integration/theme-integration.test.tsx
+- [x] T032 [P] [US3] Unit test for localStorage write on theme change in __tests__/unit/lib/use-theme.test.tsx
+- [x] T033 [P] [US3] Unit test for localStorage read on initialization in __tests__/unit/lib/use-theme.test.tsx
+- [x] T034 [P] [US3] Unit test for graceful degradation when localStorage unavailable in __tests__/unit/lib/use-theme.test.tsx (try-catch error handling)
+- [x] T035 [US3] Integration test for persistence across simulated page reload in __tests__/integration/theme-integration.test.tsx
+- [x] T036 [US3] Integration test for manual selection override of system preference in __tests__/integration/theme-integration.test.tsx
 
 ### Implementation for User Story 3
 
-- [ ] T037 [US3] Implement localStorage read in useTheme hook initialization (read 'theme-preference' key)
-- [ ] T038 [US3] Implement localStorage write in setTheme function (write 'theme-preference' with try-catch for errors)
-- [ ] T039 [US3] Implement preference validation logic in useTheme hook (validate stored value is "light", "dark", or "system", default to "system" if invalid)
-- [ ] T040 [US3] Implement priority logic: manual selection > system preference in theme computation
-- [ ] T041 [US3] Test persistence by setting theme, refreshing browser, verifying theme persists
+- [x] T037 [US3] Implement localStorage read in useTheme hook initialization (read 'theme-preference' key) - Already implemented in components/theme-provider.tsx:45-60
+- [x] T038 [US3] Implement localStorage write in setTheme function (write 'theme-preference' with try-catch for errors) - Already implemented in components/theme-provider.tsx:79-84
+- [x] T039 [US3] Implement preference validation logic in useTheme hook (validate stored value is "light", "dark", or "system", default to "system" if invalid) - Already implemented in components/theme-provider.tsx:47-53
+- [x] T040 [US3] Implement priority logic: manual selection > system preference in theme computation - Already implemented in components/theme-provider.tsx:63-64
+- [x] T041 [US3] Test persistence by setting theme, refreshing browser, verifying theme persists - Verified via automated tests (T032-T036)
 
 **Checkpoint**: User Story 3 complete - theme preference persists across browser sessions
 
