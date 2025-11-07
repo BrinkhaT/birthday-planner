@@ -15,15 +15,25 @@ const { TextEncoder, TextDecoder } = require('util');
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
+// Polyfill for ReadableStream (required by undici)
+const { ReadableStream, WritableStream, TransformStream } = require('node:stream/web');
+global.ReadableStream = ReadableStream;
+global.WritableStream = WritableStream;
+global.TransformStream = TransformStream;
+
+// Polyfill for MessageChannel/MessagePort (required by undici)
+const { MessageChannel, MessagePort } = require('node:worker_threads');
+global.MessageChannel = MessageChannel;
+global.MessagePort = MessagePort;
+
 // Import whatwg-fetch for Request/Response polyfills
 require('whatwg-fetch');
 
-// Import node-fetch for better Request/Response support
-const nodeFetch = require('node-fetch');
-const { Request, Headers } = nodeFetch;
+// Import undici for better Request/Response support (Node.js native fetch)
+const { fetch, Request, Response, Headers } = require('undici');
 
 // Create a custom Response that includes the json() static method
-class CustomResponse extends nodeFetch.Response {
+class CustomResponse extends Response {
   static json(data, init) {
     const body = JSON.stringify(data);
     return new CustomResponse(body, {
@@ -39,4 +49,4 @@ class CustomResponse extends nodeFetch.Response {
 global.Request = Request;
 global.Response = CustomResponse;
 global.Headers = Headers;
-global.fetch = nodeFetch.default;
+global.fetch = fetch;
