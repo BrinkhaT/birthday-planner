@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.4.1](https://github.com/BrinkhaT/birthday-planner/compare/1.4.0...1.4.1) (2025-11-07)
+
+
+### Bug Fixes
+
+* **ci:** disable body-max-line-length in commitlint for dependabot compatibility ([8b776e2](https://github.com/BrinkhaT/birthday-planner/commit/8b776e2e53cb181675b759cd80caae2787a1be6a))
+* **test:** migrate from node-fetch to undici for jest 30 compatibility ([e968a57](https://github.com/BrinkhaT/birthday-planner/commit/e968a5738e080cdda8ec7d4d78ac2b9e2c1e3b04))
+
+
+### Miscellaneous Chores
+
+* **deps:** bump the major-updates group with 7 updates ([ef83125](https://github.com/BrinkhaT/birthday-planner/commit/ef8312522081b37670457dba15090d7914ef24f9))
+* **deps:** bump the major-updates group with 7 updates ([f97430f](https://github.com/BrinkhaT/birthday-planner/commit/f97430f1c6b229188e9d81a50f6972bcb9972142))
+* **deps:** bump the patch-updates group with 4 updates ([8340eb8](https://github.com/BrinkhaT/birthday-planner/commit/8340eb865c6c68dec54572c9c08536abbfae7f65))
+* **deps:** bump the patch-updates group with 4 updates ([f7d99f7](https://github.com/BrinkhaT/birthday-planner/commit/f7d99f788a444c6c8c0ace0caae1c8c53c2e13b9))
+* **release:** release v1.5.0 ([26d3593](https://github.com/BrinkhaT/birthday-planner/commit/26d35934c61f031b6b35e86645a3132e72e05261))
+* sync release 1.4.0 to develop ([40b09d0](https://github.com/BrinkhaT/birthday-planner/commit/40b09d084e817e3046c5dc458bd785b05643ed4b))
+
 ## [1.4.0](https://github.com/BrinkhaT/birthday-planner/compare/1.3.0...1.4.0) (2025-11-06)
 
 
