@@ -1,5 +1,45 @@
 # Changelog
 
+## [1.4.0](https://github.com/BrinkhaT/birthday-planner/compare/1.3.0...1.4.0) (2025-11-06)
+
+
+### Features
+
+* add emoji indicators to milestone birthdays ([390a67c](https://github.com/BrinkhaT/birthday-planner/commit/390a67c0f711891d44008fd24cd93ba21d9894a8))
+* add manual theme toggle component (phase 4 - us2) ([71d2be2](https://github.com/BrinkhaT/birthday-planner/commit/71d2be23e7f5d55672d13cffabab4d2602033274))
+* add milestone birthday highlights specification and tasks ([1f8c04f](https://github.com/BrinkhaT/birthday-planner/commit/1f8c04fbbdc5637e2788569087d136a4e5f996dd))
+* add theme switcher specification and planning artifacts ([f496d3b](https://github.com/BrinkhaT/birthday-planner/commit/f496d3b7d356d863ca41d1967815c674339504c1))
+* complete theme switcher with 100% accessibility (phase 6) ([a6c5127](https://github.com/BrinkhaT/birthday-planner/commit/a6c51274a5220bd5b230c6a1039a6e08aa1475a5))
+* implement milestone birthday highlights ([0e31e23](https://github.com/BrinkhaT/birthday-planner/commit/0e31e23325a1f0170d4e64dbb73ac64aaea29ba3))
+* Milestone Birthday Highlights (006) ([f1e38d7](https://github.com/BrinkhaT/birthday-planner/commit/f1e38d7b4fdeb97fb5d907285a39780d677a6d70))
+* Theme Switcher (Light/Dark Mode) with 100% Accessibility ([bd4ff90](https://github.com/BrinkhaT/birthday-planner/commit/bd4ff902329211590d415741dee900b658919a72))
+
+
+### Bug Fixes
+
+* **ci:** allow sentence-case commits for dependabot compatibility ([43e8086](https://github.com/BrinkhaT/birthday-planner/commit/43e80866bb78db6c89b0e2198b5127a95ef818b2))
+* **ci:** allow sentence-case commits for dependabot compatibility ([160f137](https://github.com/BrinkhaT/birthday-planner/commit/160f137f981b2315502948a8de0cc1105b1f46da))
+* **ci:** block tailwind css v4 major updates in dependabot ([bea3f9e](https://github.com/BrinkhaT/birthday-planner/commit/bea3f9e28cfc810525d0dc2c4efec829e74d12b1))
+* **ci:** remove duplicate scope in dependabot commit messages ([a44f5ae](https://github.com/BrinkhaT/birthday-planner/commit/a44f5ae9730a386d09bf42d6a297f660d008fc52))
+* resolve eslint errors in theme components ([d723a06](https://github.com/BrinkhaT/birthday-planner/commit/d723a06d15bfbdc97ea4eb0d66f6d43b4002c035))
+
+
+### Miscellaneous Chores
+
+* sync release 1.3.0 to develop ([558c895](https://github.com/BrinkhaT/birthday-planner/commit/558c895e29b9285da043a58aedfe1592b5ec3abf))
+
+
+### Continuous Integration
+
+* **deps:** Bump codecov/codecov-action from 4 to 5 ([c45ea35](https://github.com/BrinkhaT/birthday-planner/commit/c45ea35a61f4bf085346fc74f6000c48ec46c042))
+* **deps:** Bump codecov/codecov-action from 4 to 5 ([3fd4fff](https://github.com/BrinkhaT/birthday-planner/commit/3fd4fff23147f6d86cd797db9a15c4493579dc28))
+
+
+### Tests
+
+* add comprehensive theme system tests (phase 3 - us1) ([f21f72f](https://github.com/BrinkhaT/birthday-planner/commit/f21f72fdbcd57cca82402a8699a1fd792db73564))
+* add localstorage persistence tests for theme switcher (phase 5) ([929a21d](https://github.com/BrinkhaT/birthday-planner/commit/929a21d23603ef842cd988eb15fe738b0bb04290))
+
 ## [1.3.0](https://github.com/BrinkhaT/birthday-planner/compare/1.2.0...1.3.0) (2025-10-31)
 
 
