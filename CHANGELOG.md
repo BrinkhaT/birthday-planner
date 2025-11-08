@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.2](https://github.com/BrinkhaT/birthday-planner/compare/1.4.1...1.4.2) (2025-11-08)
+
+
+### Miscellaneous Chores
+
+* **release:** release v1.5.0 ([0c6b583](https://github.com/BrinkhaT/birthday-planner/commit/0c6b583c400b9c4961510a1d48cd3486cddfa139))
+
+
+### Continuous Integration
+
+* **docker:** remove arm64 platform builds, keep amd64 only ([47a8e92](https://github.com/BrinkhaT/birthday-planner/commit/47a8e928227ffa670054d94dc0181593b05477b0))
+
 ## [1.4.1](https://github.com/BrinkhaT/birthday-planner/compare/1.4.0...1.4.1) (2025-11-07)
 
 
